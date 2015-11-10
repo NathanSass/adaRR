@@ -7,6 +7,8 @@ var TOILET = {
 	d: 4.5
 };
 
+var toiletArr = [];
+
 
 
 function isPointPerimeterOrInside(pt) {
@@ -61,13 +63,17 @@ function buildToilet() {
 	}
 
 	newToilet.w2 = secondPoint;
-	
-	if ( isPointPerimeterOrInside(secondPoint) ){
-		console.log("Valid bathroom endpoint", secondPoint);
+
+	var validToilet = true;
+
+	for (var coord in newToilet) { // checks that the coordinates are inside of the room
+		if (newToilet.hasOwnProperty(coord)) {
+			if ( isPointPerimeterOrInside(newToilet[coord]) ) { continue; }
+			validToilet = false;
+			break;
+		}
 	}
-
-	// Add newToilet to the array of possible bathroom configs
-
+	validToilet && console.log("We have a valid toilet");
 }
 
 
@@ -90,9 +96,9 @@ var bounding = {
 }
 
 // pt.y >= bounding.min_y && pt.y <= bounding.max_y && pt.x <= bounding.max_x && pt.x >= bounding.min_x // checks if on perimter
-pt.y > bounding.min_y && pt.y < bounding.max_y && pt.x<bounding.max_x && pt.x > bounding.min_x // checks if inside
+// pt.y > bounding.min_y && pt.y < bounding.max_y && pt.x<bounding.max_x && pt.x > bounding.min_x // checks if inside
 
-var pt = {y: 3, x: 2};
+// var pt = { y: 3, x: 2 };
 
 
 
