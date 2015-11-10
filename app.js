@@ -8,6 +8,8 @@ var TOILET = {
 	loc: 1
 };
 
+var roomCorners = [];
+
 function isPointPerimeterOrInside(pt) {
 	return pt.y <= room.y && pt.x <= room.x;
 	// pt.y >= bounding.min_y && pt.y <= bounding.max_y && pt.x <= bounding.max_x && pt.x >= bounding.min_x // checks if on perimter
@@ -21,7 +23,7 @@ function fixtureSecondHoriz(fixture, startPoint) { // returns toilet coord locat
 	var sPoint;
 	if (startPoint) {
 		sPoint = {
-			x: startingCoordinate.x + fixture.w,
+			x: startPoint.x + fixture.w,
 			y: startPoint.y
 		};
 	} else {
@@ -52,11 +54,13 @@ function fixtureSecondHoriz(fixture, startPoint) { // returns toilet coord locat
 			x: sPoint.x - fixture.w + fixture.loc,
 			y: sPoint.y
 		};
+		newFixture.note = "secondHorz, 2nd";
 	} else {
 		newFixture.loc = {
 			x: sPoint.x - fixture.loc,
 			y: sPoint.y
 		};
+		newFixture.note = "secondHorz, 1st";
 	}
 
 	return newFixture;
@@ -66,11 +70,11 @@ function fixtureSecondHoriz(fixture, startPoint) { // returns toilet coord locat
 ** returns a toilet coord location
 ** automatically builds justified bottom, second point builds top (clockwise)
 ***/
-function fixtureFirstVerical(fixture, startPoint) { // returns toilet coord location
+function fixtureFirstVertical(fixture, startPoint) { // returns toilet coord location
 	var sPoint;
 	if (startPoint) {
 		sPoint = {
-			x: startingCoordinate.x,
+			x: startPoint.x,
 			y: startPoint.y - fixture.w
 		};
 	} else {
@@ -101,11 +105,13 @@ function fixtureFirstVerical(fixture, startPoint) { // returns toilet coord loca
 			x: sPoint.x,
 			y: sPoint.y + fixture.w - fixture.loc
 		};
+		newFixture.note = "firstVert, 2nd";
 	} else {
 		newFixture.loc = {
 			x: sPoint.x,
 			y: sPoint.y + fixture.loc
 		};
+		newFixture.note = "firstVert, 1st";
 	}
 
 	return newFixture;
@@ -115,11 +121,11 @@ function fixtureFirstVerical(fixture, startPoint) { // returns toilet coord loca
 ** returns a toilet coord location
 ** automatically builds justified bottom, second point builds top (clockwise)
 ***/
-function fixtureSecondVerical(fixture, startPoint) { // returns toilet coord location
+function fixtureSecondVertical(fixture, startPoint) { // returns toilet coord location
 	var sPoint;
 	if (startPoint) {
 		sPoint = {
-			x: startingCoordinate.x,
+			x: startPoint.x,
 			y: startPoint.y + fixture.w
 		};
 	} else {
@@ -150,11 +156,13 @@ function fixtureSecondVerical(fixture, startPoint) { // returns toilet coord loc
 			x: sPoint.x,
 			y: sPoint.y + fixture.w - fixture.loc
 		};
+		newFixture.note = "secondVert, 2nd";
 	} else {
 		newFixture.loc = {
 			x: sPoint.x,
 			y: sPoint.y - fixture.loc
 		};
+		newFixture.note = "secondVert, 1st";
 	}
 
 	return newFixture;
@@ -168,7 +176,7 @@ function fixtureFirstHorizontal(fixture, startPoint) { // returns toilet coord l
 	var sPoint;
 	if (startPoint) {
 		sPoint = {
-			x: startingCoordinate.x - fixture.w,
+			x: startPoint.x - fixture.w,
 			y: startPoint.y
 		};
 	} else {
@@ -199,72 +207,77 @@ function fixtureFirstHorizontal(fixture, startPoint) { // returns toilet coord l
 			x: sPoint.x + fixture.w - fixture.loc,
 			y: sPoint.y
 		};
+		newFixture.note = "firstHorizontal, 2nd";
 	} else {
 		newFixture.loc = {
 			x: sPoint.x + fixture.loc,
 			y: sPoint.y
 		};
+		newFixture.note = "firstHorizontal, 1st";
+
 	}
 
 	return newFixture;
 }
 
+/*** Finds corners of the room
+** Bases rr construction off of corners
+** should advance array after using each on
+***/
+function findRoomCorners() {
+	roomCorners.push(startingCoordinate);
+	roomCorners.push({x: 0, y: room.y});
+	roomCorners.push({x: room.x, y: room.y});
+	roomCorners.push({x: room.x, y: 0});
+}
+
+function advanceStartingCoordinate() {
+	var currentCoordI = roomCorners.indexOf(startingCoordinate);
+	if(currentCoordI >= 3) { alert("Advanced too far"); }
+	startingCoordinate = roomCorners[currentCoordI + 1];
+}
+
 function buildToilet() {
-	var newToilet;
+	var newToilets = [];
 	
-	if ( (startingCoordinate.x === 0) && (startingCoordinate.y <= room.y) ) { 
+	if ( (startingCoordinate.x === 0) && (startingCoordinate.y <= room.y) ) { // [0,0], [0, 10]
 		console.log("first vertical");
-		newToilet = fixtureFirstVerical(TOILET, {x: 0, y: 7});
-	} // [0,0], [0, 10]
-	
-	// if ( (startingCoordinate.x >= 0) && (startingCoordinate.y === 0) ) { // [0, 0], [10, 0]
-	// 	console.log("first horizontal");
-	// 	newToilet = fixtureSecondHoriz(TOILET);
-	// }
-
-	// if ( (startingCoordinate.x === room.x) && (startingCoordinate.y >= 0 ) ) { console.log("first vertical"); } // [10,0] , [10, 10]
-
-	// if ( (startingCoordinate.x <= room.x) && (startingCoordinate.y === room.y) ) { console.log("second horizontal"); } // [0, 10], [10, 10]
-
-	
-	startingCoordinate = {x: 0, y: 0};
-	var b = fixtureSecondHoriz(TOILET, {x: 0, y:0});
-	b;
-
-	var validToilet = true;
-
-	for (var coord in newToilet) { // checks that the coordinates are inside of the room
-		if (newToilet.hasOwnProperty(coord)) {
-			if ( isPointPerimeterOrInside(newToilet[coord]) ) { continue; }
-			validToilet = false;
-			break;
-		}
+		newToilets.push( fixtureFirstVertical(TOILET) );
 	}
-	validToilet && console.log("We have a valid toilet");
+	if ( (startingCoordinate.x <= room.x) && (startingCoordinate.y === room.y) ) { // [0, 10], [10, 10]
+		console.log("first horizontal");
+		newToilets.push( fixtureFirstHorizontal(TOILET) );
+	}
+	if ( (startingCoordinate.x === room.x) && (startingCoordinate.y >= 0 ) ) { // [10, 10], [10,0]
+		console.log("second vertical");
+		newToilets.push( fixtureSecondVertical(TOILET) );
+	}
+	if ( (startingCoordinate.x >= 0) && (startingCoordinate.y === 0) ) { //  [10, 0], [0, 0]
+		console.log("first horizontal");
+		newToilets.push( fixtureSecondHoriz(TOILET) );
+	}
+
+		// var validToilet = true;
+
+		// for (var coord in newToilet) { // checks that the coordinates are inside of the room
+		// 	if (newToilet.hasOwnProperty(coord)) {
+		// 		if ( isPointPerimeterOrInside(newToilet[coord]) ) { continue; }
+		// 		validToilet = false;
+		// 		break;
+		// 	}
+		// }
+		// validToilet && console.log("We have a valid toilet");
+
+	return newToilets;
 }
 
 function findAcccesible (roomObj) {
 	room = roomObj;
 
+	findRoomCorners();
 	buildToilet();
 
 }
-
-
-var pt = {y: 3, x: 2};
-var bounding = {
-	min_y: 0,
-	min_x: 0,
-	max_y: 7,
-	max_x: 7
-};
-
-// pt.y >= bounding.min_y && pt.y <= bounding.max_y && pt.x <= bounding.max_x && pt.x >= bounding.min_x // checks if on perimter
-// pt.y > bounding.min_y && pt.y < bounding.max_y && pt.x<bounding.max_x && pt.x > bounding.min_x // checks if inside
-
-// var pt = { y: 3, x: 2 };
-
-
 
 
 var sampleBathRoom = {
