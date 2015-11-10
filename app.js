@@ -27,6 +27,16 @@ function buildToilet() {
 		w1: firstPoint,
 	};
 
+	if ( (startingCoordinate.x >= 0) && (startingCoordinate.y === 0) ) { console.log("first horizontal") }
+
+	if ( (startingCoordinate.x === room.x) && (startingCoordinate.y >= 0 ) ) { console.log("first vertical") }
+
+	if ( (startingCoordinate.x <= room.x) && (startingCoordinate.y === room.y) ) { console.log("second horizontal") }
+
+	if ( (startingCoordinate.x === 0) && (startingCoordinate.y <= room.y) // needs to make sure [0,0] doesnt get double counted.
+			&& (startingCoordinate.x !== startingCoordinate.y) ) { console.log("second vertical") }
+
+	///////////// First horizontal ////////////////// TODO: Need this for all cases
 	if (startingCoordinate.x < room.x) {  // checks in horizontal orientation
 		secondPoint = {
 			x: startingCoordinate.x + TOILET.w,
@@ -59,8 +69,9 @@ function buildToilet() {
 			x: secondPoint.x + TOILET.d,
 			y: secondPoint.y
 		};
-	
 	}
+
+	//////////////////////
 
 	newToilet.w2 = secondPoint;
 
