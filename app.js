@@ -10,7 +10,11 @@ var TOILET = {
 
 var roomCorners = [];
 
+/**
+** returns true if point is inside or on perimeter of room
+**/
 function isPointPerimeterOrInside(pt) {
+	// y = max_y, x = max_x
 	return pt.y <= room.y && pt.x <= room.x;
 	// pt.y >= bounding.min_y && pt.y <= bounding.max_y && pt.x <= bounding.max_x && pt.x >= bounding.min_x // checks if on perimter
 }
@@ -231,30 +235,48 @@ function findRoomCorners() {
 	roomCorners.push({x: room.x, y: 0});
 }
 
+/*** Advances the coordinate being worked with
+** Used in loops, returns false when all coordinates used.
+***/
 function advanceStartingCoordinate() {
 	var currentCoordI = roomCorners.indexOf(startingCoordinate);
-	if(currentCoordI >= 3) { alert("Advanced too far"); }
-	startingCoordinate = roomCorners[currentCoordI + 1];
+	currentCoordI += 1;
+	
+	if( roomCorners[currentCoordI] ) {
+		startingCoordinate = roomCorners[currentCoordI];
+		console.log("starting coordinate is ", startingCoordinate);
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function buildToilet() {
 	var newToilets = [];
 	
-	if ( (startingCoordinate.x === 0) && (startingCoordinate.y <= room.y) ) { // [0,0], [0, 10]
+	// Catches [0,0]
+	if ( (startingCoordinate.x === 0) && (startingCoordinate.y === 0) ) { // For [0,0] to [0, 10],
 		console.log("first vertical");
 		newToilets.push( fixtureFirstVertical(TOILET) );
+		newToilets.push( fixtureFirstVertical(TOILET, {x: 0, y: room.y }) );
 	}
-	if ( (startingCoordinate.x <= room.x) && (startingCoordinate.y === room.y) ) { // [0, 10], [10, 10]
+	// Catches [0, 10]
+	if ( (startingCoordinate.x === 0) && (startingCoordinate.y === room.y) ) { // For [0, 10] to [10, 10]
 		console.log("first horizontal");
 		newToilets.push( fixtureFirstHorizontal(TOILET) );
+		newToilets.push( fixtureFirstHorizontal(TOILET, {x: room.x, y: room.y}) );
 	}
-	if ( (startingCoordinate.x === room.x) && (startingCoordinate.y >= 0 ) ) { // [10, 10], [10,0]
+	// Catches [10, 10]
+	if ( (startingCoordinate.x === room.x) && (startingCoordinate.y === room.y ) ) { // [10, 10], [10,0]
 		console.log("second vertical");
 		newToilets.push( fixtureSecondVertical(TOILET) );
+		newToilets.push( fixtureSecondVertical(TOILET, {x: room.x, y: 0 }) );
 	}
-	if ( (startingCoordinate.x >= 0) && (startingCoordinate.y === 0) ) { //  [10, 0], [0, 0]
-		console.log("first horizontal");
+	// Catches [10, 0]
+	if ( (startingCoordinate.x === room.x) && (startingCoordinate.y === 0) ) { //  [10, 0], [0, 0]
+		console.log("second horizontal");
 		newToilets.push( fixtureSecondHoriz(TOILET) );
+		newToilets.push( fixtureSecondHoriz(TOILET, {x: 0, y: 0 }) );
 	}
 
 		// var validToilet = true;
@@ -271,18 +293,58 @@ function buildToilet() {
 	return newToilets;
 }
 
+/** Goes around the room and builds all possible fixtures
+*** Currently only implemented for toilets
+***/
+function buildFixtureAroundRoom(fixtureBuilderFunc) {
+	var allPossibleFixtures = [];
+	do {
+		allPossibleFixtures.push( fixtureBuilderFunc()[0] ); // BUGBUG: May have more possible
+		allPossibleFixtures.push( fixtureBuilderFunc()[1] );
+	} while( advanceStartingCoordinate() );
+	return allPossibleFixtures;
+}
+
+function findPossibleToiletLocations() {
+	var allPossibleToiletsArr = buildFixtureAroundRoom ( buildToilet );
+	var validToiletArr = []; // This will get populated with toilets 
+	allPossibleToiletsArr.forEach( function(toilet, i) {
+
+		var validToilet = true;
+		for (var coord in toilet) {
+			if (toilet.hasOwnProperty(coord) && coord != "note") { // note is used for me to visually keep track of things
+				
+				if (isPointPerimeterOrInside( toilet[coord])) { continue; }
+				validToilet = false;
+				break;
+			
+			}
+		
+		}
+
+		if (validToilet) {
+			validToiletArr.push(toilet);
+		}
+	});
+
+	return validToiletArr;
+}
+
 function findAcccesible (roomObj) {
 	room = roomObj;
 
 	findRoomCorners();
-	buildToilet();
+	var usefulToilets = findPossibleToiletLocations();
+	console.log(usefulToilets);
+
+	// buildToilet();
 
 }
 
 
 var sampleBathRoom = {
-	x: 7,
-	y: 7,
+	x: 10,
+	y: 10,
 	
 	door: {
 		pos1: [1, 0],
