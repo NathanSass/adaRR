@@ -4,8 +4,8 @@ var startingCoordinate = { x: 0, y: 0 };
 
 var TOILET = {
 	w: 5,
-	d: 4.5,
-	loc: 1
+	d: 5,
+	loc: 1.5
 };
 
 var roomCorners = [];
@@ -353,12 +353,12 @@ function findAcccesible (roomObj) {
 
 
 var sampleBathRoom = {
-	x: 10,
-	y: 10,
+	x: 8,
+	y: 5,
 	
 	door: {
-		pos1: { x: 1, y: 0 },
-		pos2: { x: 4, y: 0 }
+		pos1: { x: 0, y: 0 },
+		pos2: { x: 2.75, y: 0 }
 	}
 };
 findAcccesible(sampleBathRoom);
