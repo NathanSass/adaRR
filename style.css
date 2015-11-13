@@ -1,3 +1,7 @@
+html, body {
+	background: white;
+}
+
 canvas {
   /*border: solid 1px #000;*/
 }
