@@ -55,15 +55,10 @@ domReady(function() {
 
 function drawRoom() { // Stroke rect may be most appropriate here
 	ctx.beginPath();
-	// First Horiz
-	ctx.moveTo( ftToCm(ROOM.topLeft.x), ftToCm(ROOM.topLeft.y) );
-	ctx.lineTo( ftToCm(ROOM.topRight.x), ftToCm(ROOM.topRight.y) );
-	// First Vert
-	ctx.lineTo( ftToCm(ROOM.bottomRight.x), ftToCm(ROOM.bottomRight.y) );
-	// Second Horiz
-	ctx.lineTo( ftToCm(ROOM.bottomLeft.x), ftToCm(ROOM.bottomLeft.y) );
-	// Second Vert
-	ctx.lineTo( ftToCm(ROOM.topLeft.x), ftToCm(ROOM.topLeft.y) );
+
+	ctx.rect( ftToCm(ROOM.topLeft.x), ftToCm(ROOM.topLeft.y),
+		ftToCm(ROOM.bottomRight.x), ftToCm(ROOM.bottomRight.y) );
+	
 	ctx.lineWidth = inchToCm(2);
 	ctx.strokeStyle = "#5A5A5A";
 	ctx.stroke();
