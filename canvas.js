@@ -17,43 +17,42 @@ var ROOM = {
 };
 
 domReady(function() {
-    // Your code here
+	
 	canvas = document.getElementById("mainCanvas");
+	canvas.style.background = '#FDFDFD';
 	ctx = canvas.getContext("2d");
 	var angleInDegrees=0;
 
 	toiletWidth = inchToCm(20);
 	toiletDepth = inchToCm(30);
-	image    = document.createElement("img");
+	
+	image     = document.createElement("img");
+	image.src ="img/toilet_top.png";
+	
 	image.onload = function(){
+		drawRoom();
+		drawDoor();
+		
 		ctx.drawImage(image, 5, 5, toiletDepth, toiletWidth);
+		drawRotated(90);
+		// drawRotated(180);
+
 	};
-	image.src="img/toilet_top.png";
 
-	drawRoom();
-	drawDoor();
-
-	// $("#clockwise").click(function(){ 
-	//     angleInDegrees+=90;
-	//     drawRotated(angleInDegrees);
-	// });
-
-	// $("#counterclockwise").click(function(){ 
-	//     angleInDegrees-=90;
-	//     drawRotated(angleInDegrees);
-	// });
-
-	// function drawRotated(degrees){
- //    ctx.clearRect(0,0,canvas.width,canvas.height);
- //    ctx.save();
- //    ctx.translate(canvas.width/2,canvas.height/2);
- //    ctx.rotate(degrees*Math.PI/180);
- //    ctx.drawImage(image,-image.width/2,-image.width/2);
- //    ctx.restore();
-	// }
+	return;
 });
 
-function drawRoom() { // Stroke rect may be most appropriate here
+function drawRotated(degrees){
+  // ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.save();
+  ctx.translate(canvas.width/2,canvas.height/2);
+  ctx.rotate(degrees*Math.PI/180);
+  // need to reset translate before drawing image
+  ctx.drawImage(image,10,10, toiletDepth, toiletWidth);
+  ctx.restore();
+}
+
+function drawRoom() {
 	ctx.beginPath();
 
 	ctx.rect( ftToCm(ROOM.topLeft.x), ftToCm(ROOM.topLeft.y),
