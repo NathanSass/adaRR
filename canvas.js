@@ -28,7 +28,7 @@ domReady(function() {
 	image.onload = function(){
 		ctx.drawImage(image, 5, 5, toiletDepth, toiletWidth);
 	};
-	image.src="img/toilet_top.jpg";
+	image.src="img/toilet_top.png";
 
 	drawRoom();
 	drawDoor();
@@ -60,7 +60,9 @@ function drawRoom() { // Stroke rect may be most appropriate here
 		ftToCm(ROOM.bottomRight.x), ftToCm(ROOM.bottomRight.y) );
 	
 	ctx.lineWidth = inchToCm(2);
-	ctx.strokeStyle = "#5A5A5A";
+	ctx.fillStyle = '#F5F5F5';
+	ctx.fill();
+	ctx.strokeStyle = '#5A5A5A';
 	ctx.stroke();
 	
 	ctx.closePath();
@@ -72,7 +74,7 @@ function drawDoor() {
 	
 	ctx.moveTo( ftToCm(ROOM.door.pos1.x), ftToCm(ROOM.door.pos1.y) );
 	ctx.lineTo( ftToCm(ROOM.door.pos2.x), ftToCm(ROOM.door.pos2.y) );
-	ctx.lineWidth = 20;
+	ctx.lineWidth = inchToCm(2);
 	ctx.strokeStyle = "white";
 	ctx.stroke();
 	
