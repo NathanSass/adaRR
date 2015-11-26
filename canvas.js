@@ -33,9 +33,12 @@ domReady(function() {
 		drawRoom();
 		drawDoor();
 		
-		ctx.drawImage(image, 5, 5, toiletDepth, toiletWidth);
+		// ctx.drawImage(image, 5, 5, toiletDepth, toiletWidth);
+		
+		drawRotated(0);
 		drawRotated(90);
 		// drawRotated(180);
+		// drawRotated(270);
 
 	};
 
@@ -46,8 +49,16 @@ function drawRotated(degrees){
   // ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.save();
   ctx.translate(canvas.width/2,canvas.height/2);
-  ctx.rotate(degrees*Math.PI/180);
+  ctx.rotate(degrees * Math.PI/180);
   // need to reset translate before drawing image
+  if (degrees === 0) {
+		ctx.translate(-canvas.width/2, -canvas.height/2);
+  }
+  if (degrees === 90) {
+		var x = ( -canvas.width/ 2 ) ;
+		var y = ( canvas.height/2 ) - toiletDepth; //This maybe should be width
+		ctx.translate(x, y);
+  }
   ctx.drawImage(image,10,10, toiletDepth, toiletWidth);
   ctx.restore();
 }
