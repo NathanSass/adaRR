@@ -23,11 +23,14 @@ domReady(function() {
 	ctx = canvas.getContext("2d");
 	var angleInDegrees=0;
 
-	toiletWidth = inchToCm(20);
-	toiletDepth = inchToCm(30);
+	// toiletWidth = inchToCm(20);
+	// toiletDepth = inchToCm(30);
+
+	toiletWidth = inchToCm(25); // for toilet_top
+	toiletDepth = inchToCm(35);
 	
 	image     = document.createElement("img");
-	image.src ="img/toilet_top.png";
+	image.src ="img/toilet_top_1.png";
 	
 	image.onload = function(){
 		drawRoom();
@@ -35,13 +38,12 @@ domReady(function() {
 		
 		ctx.drawImage(image, 0, 0, toiletDepth, toiletWidth);
 
-		drawRotated(0);
-		drawRotated(90);
-		drawRotated(180);
-		drawRotated(270);
+		// drawRotated(0);
+		// drawRotated(90);
+		// drawRotated(180);
+		// drawRotated(270);
 
 	};
-
 	return;
 });
 
@@ -72,6 +74,7 @@ function drawRotated(degrees) {
   }
   ctx.drawImage(image, 0, 0, toiletDepth, toiletWidth);
   ctx.restore();
+  return;
 }
 
 function drawRoom() {
