@@ -33,11 +33,11 @@ domReady(function() {
 		drawRoom();
 		drawDoor();
 		
-		// ctx.drawImage(image, 5, 5, toiletDepth, toiletWidth);
-		
-		// drawRotated(0);
-		// drawRotated(90);
-		// drawRotated(180);
+		ctx.drawImage(image, 0, 0, toiletDepth, toiletWidth);
+
+		drawRotated(0);
+		drawRotated(90);
+		drawRotated(180);
 		drawRotated(270);
 
 	};
@@ -57,7 +57,7 @@ function drawRotated(degrees) {
   }
   if (degrees === 90) {
 		x = ( -canvas.width/ 2 ) ;
-		y = ( canvas.height/2 ) - toiletDepth; //This maybe should be width
+		y = ( canvas.height/2 ) - toiletWidth;
 		ctx.translate(x, y);
   }
   if (degrees === 180) {
@@ -70,7 +70,7 @@ function drawRotated(degrees) {
 		y = ( -canvas.height/2 );
 		ctx.translate(x, y);
   }
-  ctx.drawImage(image,10,10, toiletDepth, toiletWidth);
+  ctx.drawImage(image, 0, 0, toiletDepth, toiletWidth);
   ctx.restore();
 }
 
