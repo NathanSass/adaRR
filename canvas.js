@@ -1,4 +1,4 @@
-var ctx, canvas, image, toiletDepth, toiletWidth;
+var ctx, canvas, image, toiletWidth, toiletDepth;
 
 var domReady = function(callback) {
 	document.readyState === "interactive" || document.readyState === "complete" ? callback() : document.addEventListener("DOMContentLoaded", callback);
@@ -21,27 +21,25 @@ domReady(function() {
 	canvas = document.getElementById("mainCanvas");
 	canvas.style.background = '#FDFDFD';
 	ctx = canvas.getContext("2d");
-	var angleInDegrees=0;
+	var angleInDegrees = 0;
 
-	// toiletWidth = inchToCm(20);
-	// toiletDepth = inchToCm(30);
-
-	toiletWidth = inchToCm(25); // for toilet_top
 	toiletDepth = inchToCm(35);
+	toiletWidth = inchToCm(25);
 	
 	image     = document.createElement("img");
-	image.src ="img/toilet_top_1.png";
+	image.src = "img/toilet_top_vert.png";
 	
 	image.onload = function(){
 		drawRoom();
 		drawDoor();
 		
-		ctx.drawImage(image, 0, 0, toiletDepth, toiletWidth);
+		ctx.drawImage(image, 0, 0, toiletWidth, toiletDepth);
+		// ctx.drawImage(image, ftToCm(ROOM.topRight.x) - toiletWidth, ftToCm(ROOM.topLeft.y), toiletWidth, toiletDepth);
 
-		// drawRotated(0);
-		// drawRotated(90);
-		// drawRotated(180);
-		// drawRotated(270);
+		drawRotated(0);
+		drawRotated(90);
+		drawRotated(180);
+		drawRotated(270);
 
 	};
 	return;
@@ -59,21 +57,21 @@ function drawRotated(degrees) {
   }
   if (degrees === 90) {
 		x = ( -canvas.width/ 2 ) ;
-		y = ( canvas.height/2 ) - toiletWidth;
+		y = ( canvas.height/2 ) - toiletDepth;
 		ctx.translate(x, y);
   }
   if (degrees === 180) {
-		x = ( canvas.width/ 2 ) - toiletDepth;
-		y = ( canvas.height/2 ) - toiletWidth;
+		x = ( canvas.width/ 2 ) - toiletWidth;
+		y = ( canvas.height/2 ) - toiletDepth;
 		ctx.translate(x, y);
   }
   if (degrees === 270) {
-		x = ( canvas.width/ 2 ) - toiletDepth;
+		x = ( canvas.width/ 2 ) - toiletWidth;
 		y = ( -canvas.height/2 );
 		ctx.translate(x, y);
   }
-  ctx.drawImage(image, 0, 0, toiletDepth, toiletWidth);
-  ctx.restore();
+  ctx.drawImage(image, 0, 0, toiletWidth, toiletDepth);
+	ctx.restore();
   return;
 }
 
@@ -81,7 +79,7 @@ function drawRoom() {
 	ctx.beginPath();
 
 	ctx.rect( ftToCm(ROOM.topLeft.x), ftToCm(ROOM.topLeft.y),
-		ftToCm(ROOM.bottomRight.x), ftToCm(ROOM.bottomRight.y) );
+	ftToCm(ROOM.bottomRight.x), ftToCm(ROOM.bottomRight.y) );
 	
 	ctx.lineWidth = inchToCm(2);
 	ctx.fillStyle = '#F5F5F5';
