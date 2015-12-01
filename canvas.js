@@ -54,28 +54,31 @@ domReady(function() {
 	Rotates a fixture and places it on the coordinate
 */
 function drawRotated (params) {
-	var _x, _y; // for rotating the canvas and the reseting the origin
+	var _x, _y; // for rotating the canvas and reseting the origin
 	var rotation = params.rotation;
 
   ctx.save();
   ctx.translate(canvas.width/2,canvas.height/2);
   ctx.rotate(rotation * Math.PI/180);
+
+  var halfHeight = canvas.height / 2;
+  var halfWidth  = canvas.width / 2;
 	
 	if ( rotation === 0 || rotation === 360 ) {
-		_x = -canvas.width/2;
-		_y = -canvas.height/2;
+		_x = - halfWidth;
+		_y = - halfHeight;
   }
   if ( rotation === 90 ) {
-		_x = ( -canvas.width/ 2 ) ;
-		_y = ( canvas.height/2 ) - toiletDepth;
+		_x = - halfWidth;
+		_y =   halfHeight - toiletDepth;
   }
   if ( rotation === 180 ) {
-		_x = ( canvas.width/ 2 ) - toiletWidth;
-		_y = ( canvas.height/2 ) - toiletDepth;
+		_x =   halfWidth  - toiletWidth;
+		_y =   halfHeight - toiletDepth;
   }
   if ( rotation === 270 ) {
-		_x = ( canvas.width/ 2 ) - toiletWidth;
-		_y = ( -canvas.height/2 );
+		_x =   halfWidth - toiletWidth;
+		_y = - halfHeight;
   }
 	
 	ctx.translate(_x, _y); // Moves the origin back to the top left
@@ -86,7 +89,7 @@ function drawRotated (params) {
 		'y': params.y
 	});
 
-	ctx.drawImage(  image, ftToCm(fixtureCoord.x), ftToCm(fixtureCoord.y), toiletWidth, toiletDepth );
+	ctx.drawImage( image, ftToCm(fixtureCoord.x), ftToCm(fixtureCoord.y), toiletWidth, toiletDepth );
 	
 	ctx.restore();
   return;
@@ -115,7 +118,7 @@ function findEquivalentCoordinate (params) {
 		y = _y;
 	}
 	if ( rotation === 90 ) {
-		x = _y - fixtureCenterPoint; // draws on center
+		x =   _y - fixtureCenterPoint; // draws on center
 		y = - _x + fixtureDepth;
 	}
 	if ( rotation === 180 ) {
@@ -139,8 +142,8 @@ function drawRoom () {
 	ctx.rect( ftToCm(ROOM.topLeft.x), ftToCm(ROOM.topLeft.y),
 	ftToCm(ROOM.bottomRight.x), ftToCm(ROOM.bottomRight.y) );
 	
-	ctx.lineWidth = inchToCm(2);
-	ctx.fillStyle = '#F5F5F5';
+	ctx.lineWidth   = inchToCm(2);
+	ctx.fillStyle   = '#F5F5F5';
 	ctx.fill();
 	ctx.strokeStyle = '#5A5A5A';
 	ctx.stroke();
@@ -157,7 +160,7 @@ function drawDoor() {
 	
 	ctx.moveTo( ftToCm(ROOM.door.pos1.x), ftToCm(ROOM.door.pos1.y) );
 	ctx.lineTo( ftToCm(ROOM.door.pos2.x), ftToCm(ROOM.door.pos2.y) );
-	ctx.lineWidth = inchToCm(2);
+	ctx.lineWidth   = inchToCm(2);
 	ctx.strokeStyle = "white";
 	ctx.stroke();
 	
