@@ -7,17 +7,19 @@ var domReady = function(callback) {
 };
 
 ROOM = {
-	// topLeft    : { x: 2, y: 2 },
-	// topRight   : { x: 12, y: 2 },
-	// bottomLeft : { x: 2, y: 12 },
-	// bottomRight: { x: 12, y: 12 }, // These are max values
-	topLeft    : { x: 0, y: 0 },
-	topRight   : { x: ftToCm(10), y: 0 },
-	bottomLeft : { x: 0, y: ftToCm(10) },
-	bottomRight: { x: ftToCm(10), y: ftToCm(10) }, // These are max values
+	// topLeft    : { x: ftToCm(2), y: ftToCm(2) },
+	// topRight   : { x: ftToCm(12), y: ftToCm(2) },
+	// bottomLeft : { x: ftToCm(2), y: ftToCm(12) },
+	// bottomRight: { x: ftToCm(12), y: ftToCm(12) }, // These are max values
+	width      : ftToCm(10),
+	height     : ftToCm(10),
+	topLeft    : { x: 0 + canvasOffset, y: 0 + canvasOffset},
+	topRight   : { x: ftToCm(10) + canvasOffset, y: 0 + canvasOffset },
+	bottomLeft : { x: 0 + canvasOffset, y: ftToCm(10) + canvasOffset },
+	bottomRight: { x: ftToCm(10) + canvasOffset, y: ftToCm(10) + canvasOffset }, // These are max values
 	door       : {
-		pos1: { x: ftToCm(0.4), y: 0 },
-		pos2: { x: ftToCm(3.1), y: 0 }
+		pos1: { x: ftToCm(0.4) + canvasOffset, y: 0 + canvasOffset },
+		pos2: { x: ftToCm(3.1) + canvasOffset, y: 0 + canvasOffset }
 	}
 };
 
@@ -85,20 +87,20 @@ function drawRotated (params) {
   var halfWidth  = canvas.width / 2;
 	
 	if ( rotation === 0 || rotation === 360 ) {
-		_x = - halfWidth;
-		_y = - halfHeight;
+		_x = - halfWidth + canvasOffset;
+		_y = - halfHeight + canvasOffset;
   }
   if ( rotation === 90 ) {
-		_x = - halfWidth;
-		_y =   halfHeight - toiletDepth;
+		_x = - halfWidth + canvasOffset;
+		_y =   halfHeight - toiletDepth - canvasOffset;
   }
   if ( rotation === 180 ) {
-		_x =   halfWidth  - toiletWidth;
-		_y =   halfHeight - toiletDepth;
+		_x =   halfWidth  - toiletWidth - canvasOffset;
+		_y =   halfHeight - toiletDepth - canvasOffset;
   }
   if ( rotation === 270 ) {
-		_x =   halfWidth - toiletWidth;
-		_y = - halfHeight;
+		_x =   halfWidth - toiletWidth - canvasOffset;
+		_y = - halfHeight + canvasOffset;
   }
 	
 	ctx.translate(_x, _y); // Moves the origin back to the top left
@@ -113,7 +115,7 @@ function drawRotated (params) {
 	
 	ctx.restore();
 	
-	drawText( { txt: 'toilet', x: params.x, y: params.y } );
+	drawText( { txt: 'toilet', x: params.x + canvasOffset, y: params.y + canvasOffset } );
   return;
 }
 
@@ -175,8 +177,10 @@ function findEquivalentCoordinate (params) {
 function drawRoom () {
 	ctx.beginPath();
 
-	ctx.rect( ROOM.topLeft.x, ROOM.topLeft.y,
-		ROOM.bottomRight.x, ROOM.bottomRight.y );
+	ctx.rect( canvasOffset, canvasOffset,
+		ROOM.width, ROOM.height );
+	// ctx.rect(0,0,300, 300)
+	// ctx.rect(30,30,300, 300)
 	ctx.lineWidth   = inchToCm(2);
 	ctx.fillStyle   = '#F5F5F5';
 	ctx.strokeStyle = '#5A5A5A';
