@@ -24,9 +24,11 @@ toiletWidth = inchToCm(23);
 
 domReady(function() {
 	
-	canvas = document.getElementById("mainCanvas");
-	canvas.style.background = '#FDFDFD';
-	ctx = canvas.getContext("2d");
+	buildCanvas({
+		id: 'firstCanvas',
+		width: 1000,
+		height: 1000,
+	});
 
 	image     = document.createElement("img");
 	image.src = "img/toilet_top_vert.png";
@@ -46,6 +48,24 @@ domReady(function() {
 	};
 	return;
 });
+
+/*
+	Adds a new Canvas to the DOM
+*/
+function buildCanvas(params) {
+	var container = document.getElementById('canvasContainer');
+	
+	canvas    = document.createElement('canvas');
+	canvas.id = params.id;
+	canvas.width  = params.width;
+	canvas.height = params.height;
+	canvas.style.background = '#FDFDFD';
+	
+	ctx = canvas.getContext("2d");
+
+	container.appendChild(canvas);
+	return;
+}
 
 /*
 	Given a degree of rotation and coordinate
