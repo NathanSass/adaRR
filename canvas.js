@@ -2,13 +2,15 @@ var domReady = function(callback) {
 	document.readyState === "interactive" || document.readyState === "complete" ? callback() : document.addEventListener("DOMContentLoaded", callback);
 };
 
+/////////// CONSTANTS AND GLOBALS ///////////
+
 var ctx, canvas, image, toiletWidth, toiletDepth, ROOM, canvasOffset;
 
 canvasOffset = ftToCm(2);
 toiletDepth  = inchToCm(28);
 toiletWidth  = inchToCm(23);
 
-/////////// CONSTANTS AND GLOBALS ///////////
+///////////////////////////////////////////
 
 /*
 	ignition function to build out the room
@@ -85,19 +87,19 @@ function drawRotated (params) {
 	if ( rotation === 0 || rotation === 360 ) {
 		_x = - halfWidth  + canvasOffset;
 		_y = - halfHeight + canvasOffset;
-  }
-  if ( rotation === 90 ) {
+	}
+	if ( rotation === 90 ) {
 		_x = - halfWidth  + canvasOffset;
 		_y =   halfHeight - toiletDepth - canvasOffset;
-  }
-  if ( rotation === 180 ) {
+	}
+	if ( rotation === 180 ) {
 		_x =   halfWidth  - toiletWidth - canvasOffset;
 		_y =   halfHeight - toiletDepth - canvasOffset;
-  }
-  if ( rotation === 270 ) {
+	}
+	if ( rotation === 270 ) {
 		_x =   halfWidth  - toiletWidth - canvasOffset;
 		_y = - halfHeight + canvasOffset;
-  }
+	}
 	
 	ctx.translate(_x, _y); // Moves the origin back to the top left
 
@@ -112,7 +114,7 @@ function drawRotated (params) {
 	ctx.restore();
 	
 	drawText( { txt: 'toilet', x: params.x + canvasOffset, y: params.y + canvasOffset } );
-  return;
+	return;
 }
 
 /*
