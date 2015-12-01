@@ -29,13 +29,9 @@ function modelRoom (params) {
 	drawRoom();
 	drawDoor();
 
-		// place fixture on all surface
-	drawRotated({ rotation: 0,   x: ftToCm(5),  y: ftToCm(0)  });
-	drawRotated({ rotation: 90,  x: ftToCm(10), y: ftToCm(5)  });
-	drawRotated({ rotation: 180, x: ftToCm(5),  y: ftToCm(10) });
-	drawRotated({ rotation: 270, x: ftToCm(0),  y: ftToCm(5)  });
+	placeFixtureOnCenterOfAllSurfaces();
 
-	// };
+	return;
 }
 
 /*
@@ -209,6 +205,17 @@ function createDomResources() {
 }
 
 //////////////////////////
+//////// Testing Functions
+//////////////////////////
+
+function placeFixtureOnCenterOfAllSurfaces() {
+	drawRotated({ rotation: 0,   x: ROOM.width/2,  y: 0              });
+	drawRotated({ rotation: 90,  x: ROOM.width,    y: ROOM.height/2  });
+	drawRotated({ rotation: 180, x: ROOM.width/2,  y: ROOM.height    });
+	drawRotated({ rotation: 270, x: 0,             y: ROOM.height/2  });
+}
+
+//////////////////////////
 //////// Helper Functions
 //////////////////////////
 
@@ -248,6 +255,26 @@ domReady(function() {
 			id: 'secondCanvas',
 			maxX: 11,
 			maxY: 11,
+			door: {
+				pos1: { x: 0.4, y: 0 },
+				pos2: { x: 3.1, y: 0 }
+			}
+		});
+
+		modelRoom({
+			id: 'thirdCanvas',
+			maxX: 3,
+			maxY: 11,
+			door: {
+				pos1: { x: 0.4, y: 0 },
+				pos2: { x: 3.1, y: 0 }
+			}
+		});
+
+		modelRoom({
+			id: 'fourthCanvas',
+			maxX: 11,
+			maxY: 3,
 			door: {
 				pos1: { x: 0.4, y: 0 },
 				pos2: { x: 3.1, y: 0 }
