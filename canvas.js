@@ -1,21 +1,23 @@
-var ctx, canvas, image, toiletWidth, toiletDepth;
+var ctx, canvas, image, toiletWidth, toiletDepth, ROOM, canvasOffset;
+
+canvasOffset = ftToCm(2);
 
 var domReady = function(callback) {
 	document.readyState === "interactive" || document.readyState === "complete" ? callback() : document.addEventListener("DOMContentLoaded", callback);
 };
 
-var ROOM = {
-	// topLeft    : { x: 0.1, y: 0.1 },
-	// topRight   : { x: 10.1, y: 0.1 },
-	// bottomLeft : { x: 0.1, y: 10.1 },
-	// bottomRight: { x: 10.1, y: 10.1 }, // These are max values
+ROOM = {
+	// topLeft    : { x: 2, y: 2 },
+	// topRight   : { x: 12, y: 2 },
+	// bottomLeft : { x: 2, y: 12 },
+	// bottomRight: { x: 12, y: 12 }, // These are max values
 	topLeft    : { x: 0, y: 0 },
-	topRight   : { x: 10, y: 0 },
-	bottomLeft : { x: 0, y: 10 },
-	bottomRight: { x: 10, y: 10 }, // These are max values
+	topRight   : { x: ftToCm(10), y: 0 },
+	bottomLeft : { x: 0, y: ftToCm(10) },
+	bottomRight: { x: ftToCm(10), y: ftToCm(10) }, // These are max values
 	door       : {
-		pos1: { x: 0.6, y: 0.1 },
-		pos2: { x: 3.6, y: 0.1 }
+		pos1: { x: ftToCm(0.4), y: 0 },
+		pos2: { x: ftToCm(3.1), y: 0 }
 	}
 };
 
@@ -40,10 +42,10 @@ domReady(function() {
 		drawDoor();
 
 		// place fixture on all surface
-		drawRotated({ rotation: 0, x: 5, y: 0 });
-		drawRotated({ rotation: 90, x: 10, y: 5 });
-		drawRotated({ rotation: 180, x: 5, y: 10 });
-		drawRotated({ rotation: 270, x: 0, y: 5 });
+		drawRotated({ rotation: 0, x: ftToCm(5), y: 0 });
+		drawRotated({ rotation: 90, x: ftToCm(10), y: ftToCm(5) });
+		drawRotated({ rotation: 180, x: ftToCm(5), y: ftToCm(10) });
+		drawRotated({ rotation: 270, x: 0, y: ftToCm(5) });
 
 	};
 	return;
@@ -101,7 +103,7 @@ function drawRotated (params) {
 	
 	ctx.translate(_x, _y); // Moves the origin back to the top left
 	
-	var fixtureCoord = findEquivalentCoordinate_ftToCm({
+	var fixtureCoord = findEquivalentCoordinate({
 		rotation: rotation,
 		'x': params.x,
 		'y': params.y
@@ -111,7 +113,7 @@ function drawRotated (params) {
 	
 	ctx.restore();
 	
-	drawText( { txt: 'toilet', x: ftToCm(params.x), y: ftToCm(params.y) } );
+	drawText( { txt: 'toilet', x: params.x, y: params.y } );
   return;
 }
 
@@ -142,8 +144,8 @@ function findEquivalentCoordinate (params) {
 	var _x = params.x, // these are the disired coordinates
 			_y = params.y;
 
-	var fixtureDepth       = cmToFt(toiletDepth);
-	var fixtureCenterPoint = cmToFt(toiletWidth) / 2;
+	var fixtureDepth       = toiletDepth;
+	var fixtureCenterPoint = toiletWidth / 2;
 	
 	var x, y; // these are the adjusted coordinates
 
@@ -167,19 +169,14 @@ function findEquivalentCoordinate (params) {
 	return { 'x': x, 'y': y };
 }
 
-function findEquivalentCoordinate_ftToCm (params) {
-	var coords = findEquivalentCoordinate(params);
-	return { 'x': ftToCm(coords.x), 'y': ftToCm(coords.y) };
-}
-
 /*
 	Draws a room in the form of a rectangle
 */
 function drawRoom () {
 	ctx.beginPath();
 
-	ctx.rect( ftToCm(ROOM.topLeft.x), ftToCm(ROOM.topLeft.y),
-		ftToCm(ROOM.bottomRight.x), ftToCm(ROOM.bottomRight.y) );
+	ctx.rect( ROOM.topLeft.x, ROOM.topLeft.y,
+		ROOM.bottomRight.x, ROOM.bottomRight.y );
 	ctx.lineWidth   = inchToCm(2);
 	ctx.fillStyle   = '#F5F5F5';
 	ctx.strokeStyle = '#5A5A5A';
@@ -194,10 +191,12 @@ function drawRoom () {
 function drawDoor() {
 	ctx.beginPath();
 	
-	ctx.moveTo( ftToCm(ROOM.door.pos1.x), ftToCm(ROOM.door.pos1.y) );
-	ctx.lineTo( ftToCm(ROOM.door.pos2.x), ftToCm(ROOM.door.pos2.y) );
+	ctx.moveTo( ROOM.door.pos1.x, ROOM.door.pos1.y );
+	ctx.lineTo( ROOM.door.pos2.x, ROOM.door.pos2.y );
 	ctx.lineWidth   = inchToCm(2);
 	ctx.strokeStyle = "white";
+	// ctx.strokeStyle = "red";
+
 	ctx.stroke();
 	
 	ctx.closePath();
