@@ -27,35 +27,32 @@ domReady(function() {
 	ctx = canvas.getContext("2d");
 	var angleInDegrees = 0;
 
-	// toiletDepth = inchToCm(35);
-	// toiletWidth = inchToCm(25);
+	toiletDepth = inchToCm(28);
+	toiletWidth = inchToCm(23);
 
-	toiletDepth = inchToCm(10);
-	toiletWidth = inchToCm(10);
-	
 	image     = document.createElement("img");
 	image.src = "img/toilet_top_vert.png";
 
 	
-	image.onload = function(){
+	image.onload = function() {
+		
 		drawRoom();
 		drawDoor();
 		
-		// findEquivalentCoordinate({ rotation: 270, x: 7, y: 1 });
-		// ctx.drawImage(image, ftToCm(7), ftToCm(2), toiletWidth, toiletDepth);
-		// ctx.drawImage(image, ftToCm(ROOM.topRight.x) - toiletWidth, ftToCm(ROOM.topLeft.y), toiletWidth, toiletDepth);
-
-
-		drawRotated({ rotation: 0, x: 10, y: 0 }); 
-		// drawRotated({ rotation: 90, x: 10, y: 10 });
-		// drawRotated({ rotation: 180, x: 10, y: 10 });
-		// drawRotated({ rotation: 360, x: 0, y: 0 });
+		// place fixture on all surface
+		drawRotated({ rotation: 0, x: 5, y: 0 });
+		drawRotated({ rotation: 90, x: 10, y: 5 });
+		drawRotated({ rotation: 180, x: 5, y: 10 });
+		drawRotated({ rotation: 270, x: 0, y: 5 });
 
 	};
-	// ctx.fillRect(100,100,50,50);
 	return;
 });
 
+/*
+	Given a degree of rotation and coordinate
+	Rotates a fixture and places it on the coordinate
+*/
 function drawRotated (params) {
 	var _x, _y; // for rotating the canvas and the reseting the origin
 	var rotation = params.rotation;
@@ -81,7 +78,7 @@ function drawRotated (params) {
 		_y = ( -canvas.height/2 );
   }
 	
-	ctx.translate(_x, _y); // Moves the drawing spot back to a new crafted origin [0,0]
+	ctx.translate(_x, _y); // Moves the origin back to the top left
 	
 	var fixtureCoord = findEquivalentCoordinate({
 		rotation: rotation,
@@ -89,9 +86,8 @@ function drawRotated (params) {
 		'y': params.y
 	});
 
-	// ctx.drawImage( image, 30, -190, toiletWidth, toiletDepth );
 	ctx.drawImage(  image, ftToCm(fixtureCoord.x), ftToCm(fixtureCoord.y), toiletWidth, toiletDepth );
-	// ctx.fillRect(100,100, 50, 10);
+	
 	ctx.restore();
   return;
 }
@@ -99,39 +95,44 @@ function drawRotated (params) {
 /*
 	Given a degree of rotation
 	Finds the equivalent x,y coordinate pair in Ft
-	* must be inside the room
 */
-	
 function findEquivalentCoordinate (params) {
 	var rotation = params.rotation;
 
 	var maxX = ROOM.bottomRight.x;
 	var maxY = ROOM.bottomRight.y;
+	
 	var _x = params.x, // these are the disired coordinates
 			_y = params.y;
+
+	var fixtureDepth       = cmToFt(toiletDepth);
+	var fixtureCenterPoint = cmToFt(toiletWidth) / 2;
 	
 	var x, y; // these are the adjusted coordinates
 
-	if ( rotation === 0 || rotation === 360 ) { 
-		x = _x - cmToFt(toiletWidth) / 2;
+	if ( rotation === 0 || rotation === 360 ) {
+		x = _x - fixtureCenterPoint;
 		y = _y;
 	}
 	if ( rotation === 90 ) {
-		x = _y - cmToFt(toiletWidth) / 2; // draws on center
-		y = - _x + cmToFt(toiletDepth);
+		x = _y - fixtureCenterPoint; // draws on center
+		y = - _x + fixtureDepth;
 	}
 	if ( rotation === 180 ) {
-		x = -_x + (cmToFt(toiletWidth) / 2);
-		y = -_y + cmToFt(toiletDepth);
+		x = -_x + fixtureCenterPoint;
+		y = -_y + fixtureDepth;
 	}
 	if ( rotation === 270 ) {
-		x = -_y + cmToFt(toiletWidth) / 2;
+		x = -_y + fixtureCenterPoint;
 		y = _x;
 	}
 
 	return { 'x': x, 'y': y };
 }
 
+/*
+	Draws a room in the form of a rectangle
+*/
 function drawRoom () {
 	ctx.beginPath();
 
@@ -148,6 +149,9 @@ function drawRoom () {
 	return;
 }
 
+/*
+	Draws a door
+*/
 function drawDoor() {
 	ctx.beginPath();
 	
@@ -160,6 +164,10 @@ function drawDoor() {
 	ctx.closePath();
 	return;
 }
+
+//////////////////////////
+//////// Helper Functions
+//////////////////////////
 
 function inchToCm(inches) {
 	return inches * 2.54;
