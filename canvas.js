@@ -27,8 +27,11 @@ domReady(function() {
 	ctx = canvas.getContext("2d");
 	var angleInDegrees = 0;
 
-	toiletDepth = inchToCm(35);
-	toiletWidth = inchToCm(25);
+	// toiletDepth = inchToCm(35);
+	// toiletWidth = inchToCm(25);
+
+	toiletDepth = inchToCm(10);
+	toiletWidth = inchToCm(10);
 	
 	image     = document.createElement("img");
 	image.src = "img/toilet_top_vert.png";
@@ -39,15 +42,17 @@ domReady(function() {
 		drawDoor();
 		
 		// findEquivalentCoordinate({ rotation: 270, x: 7, y: 1 });
-		ctx.drawImage(image, ftToCm(7), ftToCm(1), toiletWidth, toiletDepth);
+		// ctx.drawImage(image, ftToCm(7), ftToCm(2), toiletWidth, toiletDepth);
 		// ctx.drawImage(image, ftToCm(ROOM.topRight.x) - toiletWidth, ftToCm(ROOM.topLeft.y), toiletWidth, toiletDepth);
 
-		// drawRotated({ rotation: 0, x: 7, y: 1 }); 
-		drawRotated({ rotation: 90, x: 7, y: 1 });
-		// drawRotated({ rotation: 180, x: 7, y: 1 });
-		// drawRotated({ rotation: 270, x: 7, y: 1 });
+
+		drawRotated({ rotation: 0, x: 10, y: 0 }); 
+		// drawRotated({ rotation: 90, x: 10, y: 10 });
+		// drawRotated({ rotation: 180, x: 10, y: 10 });
+		// drawRotated({ rotation: 360, x: 0, y: 0 });
 
 	};
+	// ctx.fillRect(100,100,50,50);
 	return;
 });
 
@@ -84,7 +89,9 @@ function drawRotated (params) {
 		'y': params.y
 	});
 
-	ctx.drawImage( image, 30, -190, toiletWidth, toiletDepth );
+	// ctx.drawImage( image, 30, -190, toiletWidth, toiletDepth );
+	ctx.drawImage(  image, ftToCm(fixtureCoord.x), ftToCm(fixtureCoord.y), toiletWidth, toiletDepth );
+	// ctx.fillRect(100,100, 50, 10);
 	ctx.restore();
   return;
 }
@@ -105,17 +112,20 @@ function findEquivalentCoordinate (params) {
 	
 	var x, y; // these are the adjusted coordinates
 
-	if ( rotation === 0 || rotation === 360 ) { x = _x; y = _y; }
+	if ( rotation === 0 || rotation === 360 ) { 
+		x = _x - cmToFt(toiletWidth) / 2;
+		y = _y;
+	}
 	if ( rotation === 90 ) {
-		x = maxX - ( maxX - _y );
-		y = maxY - _x;
+		x = _y - cmToFt(toiletWidth) / 2; // draws on center
+		y = - _x + cmToFt(toiletDepth);
 	}
 	if ( rotation === 180 ) {
-		x = _y;
-		y = maxY - _y;
+		x = -_x + (cmToFt(toiletWidth) / 2);
+		y = -_y + cmToFt(toiletDepth);
 	}
 	if ( rotation === 270 ) {
-		x = maxX - _y;
+		x = -_y + cmToFt(toiletWidth) / 2;
 		y = _x;
 	}
 
