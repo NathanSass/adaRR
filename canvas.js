@@ -1,42 +1,33 @@
-var ctx, canvas, image, toiletWidth, toiletDepth, ROOM, canvasOffset;
-
-canvasOffset = ftToCm(2);
-
 var domReady = function(callback) {
 	document.readyState === "interactive" || document.readyState === "complete" ? callback() : document.addEventListener("DOMContentLoaded", callback);
 };
 
-ROOM = {
-	// topLeft    : { x: ftToCm(2), y: ftToCm(2) },
-	// topRight   : { x: ftToCm(12), y: ftToCm(2) },
-	// bottomLeft : { x: ftToCm(2), y: ftToCm(12) },
-	// bottomRight: { x: ftToCm(12), y: ftToCm(12) }, // These are max values
-	width      : ftToCm(10),
-	height     : ftToCm(10),
-	topLeft    : { x: 0 + canvasOffset, y: 0 + canvasOffset},
-	topRight   : { x: ftToCm(10) + canvasOffset, y: 0 + canvasOffset },
-	bottomLeft : { x: 0 + canvasOffset, y: ftToCm(10) + canvasOffset },
-	bottomRight: { x: ftToCm(10) + canvasOffset, y: ftToCm(10) + canvasOffset }, // These are max values
-	door       : {
-		pos1: { x: ftToCm(0.4) + canvasOffset, y: 0 + canvasOffset },
-		pos2: { x: ftToCm(3.1) + canvasOffset, y: 0 + canvasOffset }
-	}
-};
+var ctx, canvas, image, toiletWidth, toiletDepth, ROOM, canvasOffset;
 
-toiletDepth = inchToCm(28);
-toiletWidth = inchToCm(23);
+canvasOffset = ftToCm(2);
+toiletDepth  = inchToCm(28);
+toiletWidth  = inchToCm(23);
 
-domReady(function() {
-	
+/////////// CONSTANTS AND GLOBALS ///////////
+
+/*
+	ignition function to build out the room
+*/
+function modelRoom (params) {
+	populateRoomVariable(params);
+
+	var canvasSize;
+	ROOM.height >= ROOM.width ? canvasSize = ROOM.height : canvasSize = ROOM.width; // Must be square
+	canvasSize  += canvasOffset * 2;
+
 	buildCanvas({
-		id: 'firstCanvas',
-		width: 1000,
-		height: 1000,
+		id: params.id,
+		width:  canvasSize,
+		height: canvasSize,
 	});
 
 	image     = document.createElement("img");
 	image.src = "img/toilet_top_vert.png";
-
 	
 	image.onload = function() {
 		
@@ -50,8 +41,22 @@ domReady(function() {
 		drawRotated({ rotation: 270, x: 0, y: ftToCm(5) });
 
 	};
-	return;
-});
+}
+
+/*
+	Called when the room is being made.
+	This variable is used through out the process to dimension out the space.
+*/
+function populateRoomVariable (params) {
+	ROOM = {
+		width      : ftToCm(params.maxX),
+		height     : ftToCm(params.maxY),
+		door       : {
+			pos1: { x: ftToCm(params.door.pos1.x) + canvasOffset, y: ftToCm(params.door.pos1.y) + canvasOffset },
+			pos2: { x: ftToCm(params.door.pos2.x) + canvasOffset, y: ftToCm(params.door.pos2.y) + canvasOffset }
+		}
+	};
+}
 
 /*
 	Adds a new Canvas to the DOM
@@ -140,9 +145,6 @@ function drawText(params) {
 function findEquivalentCoordinate (params) {
 	var rotation = params.rotation;
 
-	var maxX = ROOM.bottomRight.x;
-	var maxY = ROOM.bottomRight.y;
-	
 	var _x = params.x, // these are the disired coordinates
 			_y = params.y;
 
@@ -222,3 +224,22 @@ function cmToFt(cm) {
 function ftToCm(foot) {
 	return foot * 30.48;
 }
+
+//////////////////////////
+//////// VIEW ENTRY POINT
+//////////////////////////
+
+domReady(function() {
+	
+	modelRoom({
+		id: 'firstCanvas',
+		maxX: 10,
+		maxY: 10,
+		door: {
+			pos1: { x: 0.4, y: 0 },
+			pos2: { x: 3.1, y: 0 }
+		}
+	})
+
+	return;
+});
