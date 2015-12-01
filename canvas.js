@@ -17,7 +17,7 @@ function modelRoom (params) {
 	populateRoomVariable(params);
 
 	var canvasSize;
-	ROOM.height >= ROOM.width ? canvasSize = ROOM.height : canvasSize = ROOM.width; // Must be square
+	ROOM.height >= ROOM.width ? canvasSize = ROOM.height : canvasSize = ROOM.width; // Ensures the canvas is square and large enough
 	canvasSize  += canvasOffset * 2;
 
 	buildCanvas({
@@ -35,10 +35,10 @@ function modelRoom (params) {
 		drawDoor();
 
 		// place fixture on all surface
-		drawRotated({ rotation: 0, x: ftToCm(5), y: 0 });
-		drawRotated({ rotation: 90, x: ftToCm(10), y: ftToCm(5) });
-		drawRotated({ rotation: 180, x: ftToCm(5), y: ftToCm(10) });
-		drawRotated({ rotation: 270, x: 0, y: ftToCm(5) });
+		drawRotated({ rotation: 0,   x: ftToCm(5),  y: ftToCm(0)  });
+		drawRotated({ rotation: 90,  x: ftToCm(10), y: ftToCm(5)  });
+		drawRotated({ rotation: 180, x: ftToCm(5),  y: ftToCm(10) });
+		drawRotated({ rotation: 270, x: ftToCm(0),  y: ftToCm(5)  });
 
 	};
 }
@@ -64,8 +64,8 @@ function populateRoomVariable (params) {
 function buildCanvas(params) {
 	var container = document.getElementById('canvasContainer');
 	
-	canvas    = document.createElement('canvas');
-	canvas.id = params.id;
+	canvas        = document.createElement('canvas');
+	canvas.id     = params.id;
 	canvas.width  = params.width;
 	canvas.height = params.height;
 	canvas.style.background = '#FDFDFD';
@@ -82,15 +82,14 @@ function buildCanvas(params) {
 */
 function drawRotated (params) {
 	var _x, _y; // for rotating the canvas and reseting the origin
-	var rotation = params.rotation;
+	var rotation   = params.rotation;
+  var halfHeight = canvas.height / 2;
+  var halfWidth  = canvas.width / 2;
 
   ctx.save();
   ctx.translate(canvas.width/2,canvas.height/2);
   ctx.rotate(rotation * Math.PI/180);
 
-  var halfHeight = canvas.height / 2;
-  var halfWidth  = canvas.width / 2;
-	
 	if ( rotation === 0 || rotation === 360 ) {
 		_x = - halfWidth  + canvasOffset;
 		_y = - halfHeight + canvasOffset;
@@ -181,8 +180,6 @@ function drawRoom () {
 
 	ctx.rect( canvasOffset, canvasOffset,
 		ROOM.width, ROOM.height );
-	// ctx.rect(0,0,300, 300)
-	// ctx.rect(30,30,300, 300)
 	ctx.lineWidth   = inchToCm(2);
 	ctx.fillStyle   = '#F5F5F5';
 	ctx.strokeStyle = '#5A5A5A';
@@ -201,7 +198,6 @@ function drawDoor() {
 	ctx.lineTo( ROOM.door.pos2.x, ROOM.door.pos2.y );
 	ctx.lineWidth   = inchToCm(2);
 	ctx.strokeStyle = "white";
-	// ctx.strokeStyle = "red";
 
 	ctx.stroke();
 	
@@ -226,7 +222,7 @@ function ftToCm(foot) {
 }
 
 //////////////////////////
-//////// VIEW ENTRY POINT
+//////// ENTRY POINT
 //////////////////////////
 
 domReady(function() {
@@ -239,7 +235,6 @@ domReady(function() {
 			pos1: { x: 0.4, y: 0 },
 			pos2: { x: 3.1, y: 0 }
 		}
-	})
-
+	});
 	return;
 });
