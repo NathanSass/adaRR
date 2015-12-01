@@ -87,11 +87,11 @@ function drawRotated (params) {
   var halfWidth  = canvas.width / 2;
 	
 	if ( rotation === 0 || rotation === 360 ) {
-		_x = - halfWidth + canvasOffset;
+		_x = - halfWidth  + canvasOffset;
 		_y = - halfHeight + canvasOffset;
   }
   if ( rotation === 90 ) {
-		_x = - halfWidth + canvasOffset;
+		_x = - halfWidth  + canvasOffset;
 		_y =   halfHeight - toiletDepth - canvasOffset;
   }
   if ( rotation === 180 ) {
@@ -99,12 +99,12 @@ function drawRotated (params) {
 		_y =   halfHeight - toiletDepth - canvasOffset;
   }
   if ( rotation === 270 ) {
-		_x =   halfWidth - toiletWidth - canvasOffset;
+		_x =   halfWidth  - toiletWidth - canvasOffset;
 		_y = - halfHeight + canvasOffset;
   }
 	
 	ctx.translate(_x, _y); // Moves the origin back to the top left
-	
+
 	var fixtureCoord = findEquivalentCoordinate({
 		rotation: rotation,
 		'x': params.x,
