@@ -26,21 +26,16 @@ function modelRoom (params) {
 		height: canvasSize,
 	});
 
-	image     = document.createElement("img");
-	image.src = "img/toilet_top_vert.png";
-	
-	image.onload = function() {
-		
-		drawRoom();
-		drawDoor();
+	drawRoom();
+	drawDoor();
 
 		// place fixture on all surface
-		drawRotated({ rotation: 0,   x: ftToCm(5),  y: ftToCm(0)  });
-		drawRotated({ rotation: 90,  x: ftToCm(10), y: ftToCm(5)  });
-		drawRotated({ rotation: 180, x: ftToCm(5),  y: ftToCm(10) });
-		drawRotated({ rotation: 270, x: ftToCm(0),  y: ftToCm(5)  });
+	drawRotated({ rotation: 0,   x: ftToCm(5),  y: ftToCm(0)  });
+	drawRotated({ rotation: 90,  x: ftToCm(10), y: ftToCm(5)  });
+	drawRotated({ rotation: 180, x: ftToCm(5),  y: ftToCm(10) });
+	drawRotated({ rotation: 270, x: ftToCm(0),  y: ftToCm(5)  });
 
-	};
+	// };
 }
 
 /*
@@ -49,6 +44,7 @@ function modelRoom (params) {
 */
 function populateRoomVariable (params) {
 	ROOM = {
+		id         : params.id,
 		width      : ftToCm(params.maxX),
 		height     : ftToCm(params.maxY),
 		door       : {
@@ -204,6 +200,13 @@ function drawDoor() {
 	ctx.closePath();
 	return;
 }
+/*
+	creates the necessary resources that will be maniuplated on the dom
+*/
+function createDomResources() {
+	image     = document.createElement("img");
+	image.src = "img/toilet_top_vert.png";
+}
 
 //////////////////////////
 //////// Helper Functions
@@ -227,14 +230,31 @@ function ftToCm(foot) {
 
 domReady(function() {
 	
-	modelRoom({
-		id: 'firstCanvas',
-		maxX: 10,
-		maxY: 10,
-		door: {
-			pos1: { x: 0.4, y: 0 },
-			pos2: { x: 3.1, y: 0 }
-		}
-	});
+	createDomResources();
+	
+	image.onload = function() {
+		
+		modelRoom({
+			id: 'firstCanvas',
+			maxX: 10,
+			maxY: 10,
+			door: {
+				pos1: { x: 0.4, y: 0 },
+				pos2: { x: 3.1, y: 0 }
+			}
+		});
+
+		modelRoom({
+			id: 'secondCanvas',
+			maxX: 11,
+			maxY: 11,
+			door: {
+				pos1: { x: 0.4, y: 0 },
+				pos2: { x: 3.1, y: 0 }
+			}
+		});
+	
+	};
+	
 	return;
 });
