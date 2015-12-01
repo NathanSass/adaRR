@@ -4,7 +4,6 @@ var domReady = function(callback) {
 	document.readyState === "interactive" || document.readyState === "complete" ? callback() : document.addEventListener("DOMContentLoaded", callback);
 };
 
-
 var ROOM = {
 	// topLeft    : { x: 0.1, y: 0.1 },
 	// topRight   : { x: 10.1, y: 0.1 },
@@ -20,15 +19,14 @@ var ROOM = {
 	}
 };
 
+toiletDepth = inchToCm(28);
+toiletWidth = inchToCm(23);
+
 domReady(function() {
 	
 	canvas = document.getElementById("mainCanvas");
 	canvas.style.background = '#FDFDFD';
 	ctx = canvas.getContext("2d");
-	var angleInDegrees = 0;
-
-	toiletDepth = inchToCm(28);
-	toiletWidth = inchToCm(23);
 
 	image     = document.createElement("img");
 	image.src = "img/toilet_top_vert.png";
@@ -38,7 +36,7 @@ domReady(function() {
 		
 		drawRoom();
 		drawDoor();
-		
+
 		// place fixture on all surface
 		drawRotated({ rotation: 0, x: 5, y: 0 });
 		drawRotated({ rotation: 90, x: 10, y: 5 });
@@ -83,16 +81,32 @@ function drawRotated (params) {
 	
 	ctx.translate(_x, _y); // Moves the origin back to the top left
 	
-	var fixtureCoord = findEquivalentCoordinate({
+	var fixtureCoord = findEquivalentCoordinate_ftToCm({
 		rotation: rotation,
 		'x': params.x,
 		'y': params.y
 	});
 
-	ctx.drawImage( image, ftToCm(fixtureCoord.x), ftToCm(fixtureCoord.y), toiletWidth, toiletDepth );
+	ctx.drawImage( image, fixtureCoord.x, fixtureCoord.y, toiletWidth, toiletDepth );
 	
 	ctx.restore();
+	
+	drawText( { txt: 'toilet', x: ftToCm(params.x), y: ftToCm(params.y) } );
   return;
+}
+
+/*
+	Given a word and coordinate
+	Draws text
+*/
+function drawText(params) {
+	ctx.beginPath();
+	ctx.fillStyle    = 'black';
+	ctx.font         = '10pt sans-serif';
+	ctx.textAlign    = 'center';
+	ctx.textBaseline = 'middle';
+	ctx.fillText( params.txt, params.x, params.y );
+	ctx.closePath();
 }
 
 /*
@@ -133,6 +147,11 @@ function findEquivalentCoordinate (params) {
 	return { 'x': x, 'y': y };
 }
 
+function findEquivalentCoordinate_ftToCm (params) {
+	var coords = findEquivalentCoordinate(params);
+	return { 'x': ftToCm(coords.x), 'y': ftToCm(coords.y) };
+}
+
 /*
 	Draws a room in the form of a rectangle
 */
@@ -140,14 +159,11 @@ function drawRoom () {
 	ctx.beginPath();
 
 	ctx.rect( ftToCm(ROOM.topLeft.x), ftToCm(ROOM.topLeft.y),
-	ftToCm(ROOM.bottomRight.x), ftToCm(ROOM.bottomRight.y) );
-	
+		ftToCm(ROOM.bottomRight.x), ftToCm(ROOM.bottomRight.y) );
 	ctx.lineWidth   = inchToCm(2);
 	ctx.fillStyle   = '#F5F5F5';
-	ctx.fill();
 	ctx.strokeStyle = '#5A5A5A';
 	ctx.stroke();
-	
 	ctx.closePath();
 	return;
 }
