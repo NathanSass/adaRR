@@ -10,9 +10,9 @@ var TOILET = {
 
 var roomCorners = [];
 
-/**
-** returns true if point is inside or on perimeter of room
-**/
+/*
+	returns true if point is inside or on perimeter of room
+*/
 function isPointPerimeterOrInsideRoom(pt) { //Currently not being used
 	return pt.y <= ROOM.y && pt.x <= ROOM.x;
 	// pt.y >= bounding.min_y && pt.y <= bounding.max_y && pt.x <= bounding.max_x && pt.x >= bounding.min_x // checks if on perimter
@@ -22,9 +22,10 @@ function _intSortMinToMax (a, b) {
 	return a > b ? 1 : a < b ? -1 : 0;
 }
 
-/** Tests a point if it is inside a given bounding fixture.
-*** returns true if point is inside or on perimeter of room
-**/
+/* 
+	Tests a point if it is inside a given bounding fixture.
+	returns true if point is inside or on perimeter of room
+*/
 function isPointPerimetorInsideRectangle(pt, fixture) {
 	var max_x, min_x, max_y, min_y;
 	var allX = [];
@@ -48,10 +49,11 @@ function isPointPerimetorInsideRectangle(pt, fixture) {
 	return pt.y >= boundingMin_y && pt.y <= boundingMax_y && pt.x <= boundingMax_x && pt.x >= boundingMin_x; // checks if on perimeter
 }
 
-/*** calculates for objects on: // [10,0], [0, 0]
-** returns a toilet coord location
-** automatically builds justified right second point builds right (origin) (clockwise)
-***/
+/*
+	calculates for objects on: // [10,0], [0, 0]
+	returns a toilet coord location
+	automatically builds justified right second point builds right (origin) (clockwise)
+*/
 function fixtureFirstHorizontal(fixture, startPoint) { // returns toilet coord location,
 	var sPoint;
 	if (startPoint) {
@@ -99,10 +101,11 @@ function fixtureFirstHorizontal(fixture, startPoint) { // returns toilet coord l
 	return newFixture;
 }
 
-/*** calculates for objects on: // [0,0], [0, 10]
-** returns a toilet coord location
-** automatically builds justified bottom, second point builds top (clockwise)
-***/
+/*
+	calculates for objects on: // [0,0], [0, 10]
+ 	returns a toilet coord location
+ 	automatically builds justified bottom, second point builds top (clockwise)
+*/
 function fixtureSecondVertical(fixture, startPoint) { // returns toilet coord location
 	var sPoint;
 	if (startPoint) {
@@ -150,10 +153,11 @@ function fixtureSecondVertical(fixture, startPoint) { // returns toilet coord lo
 	return newFixture;
 }
 
-/*** calculates for objects on: // [10,10], [10, 0]
-** returns a toilet coord location
-** automatically builds justified bottom, second point builds top (clockwise)
-***/
+/*
+	calculates for objects on: // [10,10], [10, 0]
+	returns a toilet coord location
+	automatically builds justified bottom, second point builds top (clockwise)
+*/
 function fixtureFirstVertical(fixture, startPoint) { // returns toilet coord location
 	var sPoint;
 	if (startPoint) {
@@ -201,10 +205,11 @@ function fixtureFirstVertical(fixture, startPoint) { // returns toilet coord loc
 	return newFixture;
 }
 
-/*** calculates for objects on: // [0,10], [10, 10]
-** returns a toilet coord location
-** automatically builds justified left, second point builds right (clockwise)
-***/
+/*
+	calculates for objects on: // [0,10], [10, 10]
+	returns a toilet coord location
+	automatically builds justified left, second point builds right (clockwise)
+*/
 function fixtureSecondHorizontal(fixture, startPoint) { // returns toilet coord location
 	var sPoint;
 	if (startPoint) {
@@ -253,10 +258,11 @@ function fixtureSecondHorizontal(fixture, startPoint) { // returns toilet coord 
 	return newFixture;
 }
 
-/*** Finds corners of the room
-** Bases rr construction off of corners
-** should advance array after using each on
-***/
+/*
+	Finds corners of the room
+	Bases rr construction off of corners
+	should advance array after using each on
+*/
 function findRoomCorners() {
 	roomCorners.push(startingCoordinate);
 	roomCorners.push({x: ROOM.x, y: 0});
@@ -264,9 +270,10 @@ function findRoomCorners() {
 	roomCorners.push({x: 0, y: ROOM.y});
 }
 
-/*** Advances the coordinate being worked with
-** Used in loops, returns false when all coordinates used.
-***/
+/*
+	Advances the coordinate being worked with
+	Used in loops, returns false when all coordinates used.
+*/
 function advanceStartingCoordinate() {
 	var currentCoordI = roomCorners.indexOf(startingCoordinate);
 	currentCoordI += 1;
@@ -280,10 +287,11 @@ function advanceStartingCoordinate() {
 	}
 }
 
-/*** Uses startingCoordinate to determine which vertex to begin bulding a toilet from
-** returns two toilets, one on each side of the line segment
-** should get run in a loop that increments the startingCoordinate
-***/
+/*
+	Uses startingCoordinate to determine which vertex to begin bulding a toilet from
+	returns two toilets, one on each side of the line segment
+	should get run in a loop that increments the startingCoordinate
+*/
 function buildToilet() {
 	var newToilets = [];
 	
@@ -315,10 +323,11 @@ function buildToilet() {
 	return newToilets;
 }
 
-/** Goes around the room and builds all possible fixtures
-** increments startingCoordinate
-*** Currently only implemented for toilets
-***/
+/*
+	Goes around the room and builds all possible fixtures
+	increments startingCoordinate
+	Currently only implemented for toilets
+*/
 function buildFixtureAroundRoom(fixtureBuilderFunc) {
 	var allPossibleFixtures = [];
 	do {
