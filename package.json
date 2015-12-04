@@ -1,0 +1,19 @@
+{
+  "name": "adaRR",
+  "version": "1.0.0",
+  "description": "find your dream accessible restroom configuration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NathanSass/adaRR.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NathanSass/adaRR/issues"
+  },
+  "homepage": "https://github.com/NathanSass/adaRR"
+}
