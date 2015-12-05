@@ -203,7 +203,7 @@ function drawDoor() {
 */
 function createDomResources() {
 	image     = document.createElement("img");
-	image.src = "img/toilet_top_vert.png";
+	image.src = "public/img/toilet_top_vert.png";
 }
 
 //////////////////////////

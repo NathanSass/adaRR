@@ -362,7 +362,7 @@ function findAcccesible (roomObj) {
 }
 
 
-// var sampleBathRoom = {
+// var sampleBathroom = {
 // 	x: 8,
 // 	y: 5,
 	
@@ -372,7 +372,7 @@ function findAcccesible (roomObj) {
 // 	}
 // };
 
-var sampleBathRoom = {
+var sampleBathroom = {
 	x: 8,
 	y: 5,
 	
@@ -382,5 +382,6 @@ var sampleBathRoom = {
 	}
 };
 
-findAcccesible(sampleBathRoom);
+
+findAcccesible(sampleBathroom);
 
