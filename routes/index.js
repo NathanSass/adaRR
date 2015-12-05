@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 
 
 /* GET rectangular room builder page*/
-router.get('/rect/:roomParams', function(req, res, next) { // x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5'
+router.get('/:roomParams', function(req, res, next) { // x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5'
 	// console.log()
   // var roomParams = querystring.stringify(req.params.roomParams);
 	var roomParams = req.params.roomParams;
