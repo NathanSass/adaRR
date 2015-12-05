@@ -22,7 +22,7 @@ router.get('/:roomParams', function(req, res, next) { // x=8&y=5&doorpos1=5.75&d
 
   console.log('Room Params ', roomParams);
   // res.send('asdasdda');
-  res.render('index');
+  res.render('index', { 'roomParams': roomParams });
 
 });
 module.exports = router;

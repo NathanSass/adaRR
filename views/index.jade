@@ -2,5 +2,7 @@
 extends layout
 
 block content
-  h1(style='text-align:center') adaRR
-  #canvasContainer.container
+	h1(style='text-align:center') adaRR 
+	if roomParams
+		h3(style='text-align:center') RoomParams: #{roomParams}
+	#canvasContainer.container
