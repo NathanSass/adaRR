@@ -5,7 +5,7 @@
 
 	var ROOM;
 
-	exports.buildRoom = function(urlString) {
+	exports.newRoom = function(urlString) {
 		var cleanParams = sanitizeParams(urlString);
 		if (cleanParams) {
 			return get();
