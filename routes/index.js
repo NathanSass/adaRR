@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+var express      = require('express');
+var router       = express.Router();
 var rrController = require('../js/controller');
 
 /* GET home page. */
@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 router.get('/:roomParams', function(req, res, next) { // x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5'
 	var roomParams = req.params.roomParams;
   
-  rrController.build(roomParams);
+  var restrooms = rrController.getRestrooms(roomParams);
   
   res.render('index', { 'roomParams': roomParams });
 });
