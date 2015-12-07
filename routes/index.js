@@ -13,11 +13,11 @@ router.get('/', function(req, res, next) {
 
 /* GET rectangular room builder page*/
 router.get('/:roomParams', function(req, res, next) { // x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5'
-	var roomParams = req.params.roomParams;
+	var dirtyRoomString = req.params.roomParams;
   
-  var restrooms = rrController.getRestrooms(roomParams);
+  var restrooms = rrController.getRestrooms(dirtyRoomString);
   
-  res.render('index', { 'roomParams': roomParams });
+  res.render('index', { 'roomParams': dirtyRoomString });
 });
 
 module.exports = router;

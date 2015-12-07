@@ -8,6 +8,7 @@ var rr      = require('./room');
 */
 exports.getRestrooms = function (roomParams) {
 	console.log("roomParams in Controller: ", roomParams);
-	rr.helloWorld();
+	rr.Room('x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5');
 	// var newRoom = new Room(params);
+
 };
