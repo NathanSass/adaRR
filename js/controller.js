@@ -10,12 +10,14 @@ var rrFinder = require('./rrFinder');
 exports.getRestrooms = function (roomParams) {
 	var url = 'x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5';
 	var newRoom = room.buildRoom(url);
-	console.log(newRoom);
+	
 	if (newRoom) {
-		rrFinder.findAccessible(newRoom);
-		return true; // later will return the array of RR
+		
+		return rrFinder.findAccessible(newRoom);
+
 	} else {
-		console.log("Not a valid room");
+		
 		return false;
+	
 	}
 };

@@ -17,8 +17,10 @@ router.get('/:roomParams', function(req, res, next) { // x=8&y=5&doorpos1=5.75&d
 	var dirtyRoomString = req.params.roomParams;
   
   var restroomsToDisplay = rrController.getRestrooms(dirtyRoomString);
-  
+
   if (restroomsToDisplay) {
+		// SEND DATA TO DOM
+		console.log('restrooms to display: ', restroomsToDisplay);
 		messageOnDOM = dirtyRoomString;
   } else {
 		messageOnDOM = "INVALID RESTROOM";
