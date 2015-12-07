@@ -5,10 +5,10 @@
 
 	var ROOM;
 
-	exports.Room = function(urlString) {
+	exports.buildRoom = function(urlString) {
 		var cleanParams = sanitizeParams(urlString);
 		if (cleanParams) {
-			console.log(ROOM);
+			return get();
 		} else {
 			console.log("malformed url string");
 			// TODO: Handle a malformed url
@@ -16,11 +16,15 @@
 		
 	};
 
-	exports.helloWorld = function() {
-		console.log("helloWorld from room.js");
+	exports.get = function(){
+		return get();
 	};
 
 	/////////////////
+	function get() {
+		return ROOM;
+	}
+
 
 	function sanitizeParams (urlString) {
 		var dirtyRR = querystring.parse(urlString);
