@@ -1,7 +1,9 @@
 var React      = require('react');
-var HelloWorld = require('./HelloWorld.jsx');
+var ReactDOM = require('react-dom');
 
-React.render(
-    <HelloWorld />,
-    document.getElementById('example')
+var Room = require('./Room.jsx');
+
+ReactDOM.render(
+    <Room />,
+    document.getElementById('canvasContainer')
 );
