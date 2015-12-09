@@ -1,10 +1,16 @@
-var React  = require('react');
+var React = require('react');
 
 module.exports = React.createClass({
 	
 	getInitialState: function(){
 		var formattedData = this.populateRoomVariable(this.props.data);
 		return { data: formattedData };
+	},
+
+	componentDidMount: function() {
+		var canvas = React.findDOMNode(this);
+		var ctx    = canvas.getContext("2d");
+		// update the data model with this and cause the creation of other components
 	},
 	
 	populateRoomVariable: function (data) {
@@ -24,7 +30,6 @@ module.exports = React.createClass({
 			}
 		};
 	},
-	
 	
 	ftToCm: function(foot) {
 		return foot * 30.48;
