@@ -12,8 +12,12 @@ module.exports = React.createClass({
 	componentDidMount: function() {
 		var canvas = React.findDOMNode(this);
 		var ctx    = canvas.getContext("2d");
-		// update the data model with this and cause the creation of other components
-		Draw.draw(); // Pass in data model and ctx
+		
+		this.state.data.ctx = ctx;
+		this.setState({data: this.state.data}); //BUGBUG: Not best Practice
+		
+		var roomAndCanvasData = this.state.data;
+		Draw.draw(roomAndCanvasData); //Routes to a new file to handle drawing things
 	},
 	
 	populateRoomVariable: function (data) {
