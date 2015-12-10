@@ -1,5 +1,7 @@
 var React = require('react');
 
+var Draw  = require('./Draw.jsx');
+
 module.exports = React.createClass({
 	
 	getInitialState: function(){
@@ -11,6 +13,7 @@ module.exports = React.createClass({
 		var canvas = React.findDOMNode(this);
 		var ctx    = canvas.getContext("2d");
 		// update the data model with this and cause the creation of other components
+		Draw.draw(); // Pass in data model and ctx
 	},
 	
 	populateRoomVariable: function (data) {
