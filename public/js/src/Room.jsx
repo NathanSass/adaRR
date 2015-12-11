@@ -17,7 +17,11 @@ module.exports = React.createClass({
 		this.setState({data: this.state.data}); //BUGBUG: Not best Practice
 		
 		var roomAndCanvasData = this.state.data;
-		Draw.draw(roomAndCanvasData); //Routes to a new file to handle drawing things
+		
+		////////////////////////////
+		//// ENTRY POINT FOR DRAWING
+		Draw.draw(roomAndCanvasData);
+		/////////////////////////////
 	},
 	
 	populateRoomVariable: function (data) {
