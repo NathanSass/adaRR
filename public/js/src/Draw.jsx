@@ -1,32 +1,16 @@
 (function() {
-	var domReady = function(callback) {
-		document.readyState === "interactive" || document.readyState === "complete" ? callback() : document.addEventListener("DOMContentLoaded", callback);
-	};
 	
 	var exports = module.exports;
-	//////////////////////////
-	//////// Helper Functions
-	//////////////////////////
 
-	function inchToCm(inches) {
-		return inches * 2.54;
-	}
-
-	function cmToFt(cm) {
-		return cm / 30.48;
-	}
-
-	function ftToCm(foot) {
-		return foot * 30.48;
-	}
+	var Util = require('./DrawingUtil.jsx');
 	
 	/////////// CONSTANTS AND GLOBALS ///////////
 
 	var ctx, canvas, image, toiletWidth, toiletDepth, ROOM, canvasOffset, canvasSize;
 
-	canvasOffset = ftToCm(2);
-	toiletDepth  = inchToCm(28);
-	toiletWidth  = inchToCm(23);
+	canvasOffset = Util.ftToCm(2);
+	toiletDepth  = Util.inchToCm(28);
+	toiletWidth  = Util.inchToCm(23);
 
 	///////////////////////////////////////////
 	
@@ -47,7 +31,7 @@
 
 		ctx = data.ctx;
 		canvasOffset = data.canvasOffset;
-		canvasSize = data.canvasSize;
+		canvasSize   = data.canvasSize;
 		
 		ROOM        = {};
 		ROOM.id     = data.id;
@@ -66,7 +50,7 @@
 
 		ctx.rect( canvasOffset, canvasOffset,
 		ROOM.width, ROOM.height );
-		ctx.lineWidth   = inchToCm(2);
+		ctx.lineWidth   = Util.inchToCm(2);
 		ctx.fillStyle   = '#F5F5F5';
 		ctx.strokeStyle = '#5A5A5A';
 		ctx.stroke();
@@ -82,7 +66,7 @@
 
 		ctx.moveTo( ROOM.door.pos1.x, ROOM.door.pos1.y );
 		ctx.lineTo( ROOM.door.pos2.x, ROOM.door.pos2.y );
-		ctx.lineWidth   = inchToCm(2);
+		ctx.lineWidth   = Util.inchToCm(2);
 		ctx.strokeStyle = "white";
 
 		ctx.stroke();
@@ -99,7 +83,6 @@
 		image.src = "public/img/toilet_top_vert.png";
 	},
 
-
 	/*
 		Given a degree of rotation and coordinate
 		Rotates a fixture and places it on the coordinate
@@ -107,36 +90,36 @@
 	drawRotated  = function (params) {
 		var _x, _y; // for rotating the canvas and reseting the origin
 		var rotation   = params.rotation;
-		var halfHeight = canvasSize / 2;
-		var halfWidth  = canvasSize / 2;
+		var halfCanvas = canvasSize / 2;
 
 		ctx.save();
-		ctx.translate(canvasSize/2, canvasSize/2);
+		ctx.translate(halfCanvas, halfCanvas);
 		ctx.rotate(rotation * Math.PI/180);
 
 		if ( rotation === 0 || rotation === 360 ) {
-			_x = - halfWidth  + canvasOffset;
-			_y = - halfHeight + canvasOffset;
+			_x = _y = - halfCanvas + canvasOffset;
 		}
 		if ( rotation === 90 ) {
-			_x = - halfWidth  + canvasOffset;
-			_y =   halfHeight - toiletDepth - canvasOffset;
+			_x = - halfCanvas + canvasOffset;
+			_y =   halfCanvas - toiletDepth - canvasOffset;
 		}
 		if ( rotation === 180 ) {
-			_x =   halfWidth  - toiletWidth - canvasOffset;
-			_y =   halfHeight - toiletDepth - canvasOffset;
+			_x =   halfCanvas - toiletWidth - canvasOffset;
+			_y =   halfCanvas - toiletDepth - canvasOffset;
 		}
 		if ( rotation === 270 ) {
-			_x =   halfWidth  - toiletWidth - canvasOffset;
-			_y = - halfHeight + canvasOffset;
+			_x =   halfCanvas - toiletWidth - canvasOffset;
+			_y = - halfCanvas + canvasOffset;
 		}
 
 		ctx.translate(_x, _y); // Moves the origin back to the top left
 
-		var fixtureCoord = findEquivalentCoordinate({
+		var fixtureCoord = Util.findEquivalentCoordinate({
 			rotation: rotation,
 			'x': params.x,
-			'y': params.y
+			'y': params.y,
+			fixtureDepth: toiletDepth,
+			fixtureWidth: toiletWidth
 		});
 
 		ctx.drawImage( image, fixtureCoord.x, fixtureCoord.y, toiletWidth, toiletDepth );
@@ -159,41 +142,6 @@
 		ctx.textBaseline = 'middle';
 		ctx.fillText( params.txt, params.x, params.y );
 		ctx.closePath();
-	},
-
-	/*
-		Given a degree of rotation
-		Finds the equivalent x,y coordinate pair in Ft
-	*/
-	findEquivalentCoordinate = function (params) {
-		var rotation = params.rotation;
-
-		var _x = params.x, // these are the disired coordinates
-				_y = params.y;
-
-		var fixtureDepth       = toiletDepth;
-		var fixtureCenterPoint = toiletWidth / 2;
-		
-		var x, y; // these are the adjusted coordinates
-
-		if ( rotation === 0 || rotation === 360 ) {
-			x = _x - fixtureCenterPoint;
-			y = _y;
-		}
-		if ( rotation === 90 ) {
-			x =   _y - fixtureCenterPoint; // draws on center
-			y = - _x + fixtureDepth;
-		}
-		if ( rotation === 180 ) {
-			x = -_x + fixtureCenterPoint;
-			y = -_y + fixtureDepth;
-		}
-		if ( rotation === 270 ) {
-			x = -_y + fixtureCenterPoint;
-			y = _x;
-		}
-
-		return { 'x': x, 'y': y };
 	},
 
 	//////////////////////////
