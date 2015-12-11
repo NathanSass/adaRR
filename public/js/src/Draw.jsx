@@ -4,7 +4,7 @@
 
 	var Util = require('./DrawingUtil.jsx');
 	
-	/////////// CONSTANTS AND GLOBALS ///////////
+	/////////// CONSTANTS AND GLOBALS /////////
 
 	var ctx, toiletImg, TOILET, ROOM, CANVAS;
 
@@ -21,13 +21,13 @@
 
 			placeFixtureOnCenterOfAllSurfaces();
 		}
-	},
+	};
 
-	init = function(data) {
+	function init(data) {
 
 		ctx = data.ctx;
 		
-		ROOM        = {};
+		ROOM = {};
 		ROOM.id     = data.id;
 		ROOM.width  = data.width;
 		ROOM.height = data.height;
@@ -35,17 +35,17 @@
 
 		CANVAS = {};
 		CANVAS.offset = data.canvasOffset;
-		CANVAS.size = data.canvasSize;
+		CANVAS.size   = data.canvasSize;
 
 		TOILET = {};
 		TOILET.depth = Util.inchToCm(28);
 		TOILET.width =  Util.inchToCm(23);
-	},
+	};
 
 	/*
 		Draws a room in the form of a rectangle
 	*/
-	drawRoom = function() {
+	function drawRoom() {
 		ctx.beginPath();
 
 		ctx.rect( CANVAS.offset, CANVAS.offset,
@@ -56,12 +56,12 @@
 		ctx.stroke();
 		ctx.closePath();
 		return;
-	},
+	};
 	
 	/*
 		Draws a door
 	*/
-	drawDoor = function() {
+	function drawDoor() {
 		ctx.beginPath();
 
 		ctx.moveTo( ROOM.door.pos1.x, ROOM.door.pos1.y );
@@ -73,29 +73,28 @@
 
 		ctx.closePath();
 		return;
-	},
+	};
 
 	/*
 		creates the necessary resources that will be maniuplated on the dom
 	*/
-	createDomResources = function () {
+	function createDomResources() {
 		toiletImg     = document.createElement("img");
 		toiletImg.src = "public/img/toilet_top_vert.png";
-	},
+	};
 
 	//////////////////////////
 	//////// Testing Functions
 	//////////////////////////
 
-	placeFixtureOnCenterOfAllSurfaces = function() {
+	function placeFixtureOnCenterOfAllSurfaces() {
 		var fixtureData = TOILET;
 		
-		Util.drawRotated({ rotation: 0,   x: ROOM.width/2, y: 0,             fixture: fixtureData, canvas: CANVAS, ctx: ctx, image: toiletImg, txt: 'toilet'});
-		Util.drawRotated({ rotation: 90,  x: ROOM.width,   y: ROOM.height/2, fixture: fixtureData, canvas: CANVAS, ctx: ctx, image: toiletImg, txt: 'toilet'});
+		Util.drawRotated({ rotation: 0,   x: ROOM.width/2, y: 0,             fixture: fixtureData, canvas: CANVAS, ctx: ctx, image: toiletImg });
+		Util.drawRotated({ rotation: 90,  x: ROOM.width,   y: ROOM.height/2, fixture: fixtureData, canvas: CANVAS, ctx: ctx, image: toiletImg, txt: 'XXXXX xxxxxxxx'});
 		Util.drawRotated({ rotation: 180, x: ROOM.width/2, y: ROOM.height,   fixture: fixtureData, canvas: CANVAS, ctx: ctx, image: toiletImg, txt: 'toilet'});
 		Util.drawRotated({ rotation: 270, x: 0,            y: ROOM.height/2, fixture: fixtureData, canvas: CANVAS, ctx: ctx, image: toiletImg, txt: 'toilet'});
-		Util.drawRotated({ rotation: 90,  x: ROOM.width,   y: ROOM.height/2, fixture: fixtureData, canvas: CANVAS, ctx: ctx, image: toiletImg, txt: 'toilet'});
 
-	}
+	};
 	
 }());
