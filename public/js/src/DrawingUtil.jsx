@@ -56,7 +56,7 @@
 
 		ctx.translate(_x, _y); // Moves the origin back to the top left
 
-		var fixtureCoord = this.findEquivalentCoordinate({
+		var fixtureCoord = findEquivalentCoordinate({
 			rotation: rotation,
 			'x': params.x,
 			'y': params.y,
@@ -69,7 +69,7 @@
 		ctx.restore();
 
 		if ( params.hasOwnProperty('txt') ) {
-			this.drawText( { txt: params.txt, x: params.x + canvas.offset, y: params.y + canvas.offset, ctx: ctx } );
+			drawText( { txt: params.txt, x: params.x + canvas.offset, y: params.y + canvas.offset, ctx: ctx } );
 		}
 		return;
 	};
@@ -78,7 +78,7 @@
 		Given a degree of rotation
 		Finds the equivalent x,y coordinate pair in Ft
 	*/
-	exports.findEquivalentCoordinate = function (params) {
+	findEquivalentCoordinate = function (params) {
 		var rotation = params.rotation;
 
 		var _x = params.x, // these are the disired coordinates
@@ -113,7 +113,7 @@
 		Given a word and coordinate
 		Draws text
 	*/
-	exports.drawText = function(params) {
+	drawText = function(params) {
 		var ctx = params.ctx;
 		ctx.beginPath();
 		ctx.fillStyle    = 'black';
