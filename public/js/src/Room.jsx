@@ -67,6 +67,7 @@ module.exports = React.createClass({
 			background: '#FDFDFD'
 		};
 	    return (
+	    	// Add a div around this and then make the button that will send ajax request
 		    <canvas id={data.id} width={data.canvasSize} height={data.canvasSize} style={canvasStyle} />
 	    )    
 	}
