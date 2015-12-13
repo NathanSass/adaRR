@@ -10,7 +10,20 @@ module.exports = React.createClass({
 	},
 
 	componentDidMount: function() {
-		var canvas = React.findDOMNode(this);
+		this.buildCanvasAndDrawRooms();
+	},
+
+	componentWillReceiveProps: function(nextProps) {
+		var formattedData = this.populateRoomVariable(nextProps.data);
+		
+		this.setState({ data: formattedData });
+
+		this.buildCanvasAndDrawRooms();
+	},
+
+	buildCanvasAndDrawRooms: function() {
+		// var canvas = React.findDOMNode(this);
+		var canvas = document.getElementById(this.state.data.id);
 		var ctx    = canvas.getContext("2d");
 		
 		this.state.data.ctx = ctx;
@@ -23,13 +36,14 @@ module.exports = React.createClass({
 		Draw.draw(roomAndCanvasData);
 		/////////////////////////////
 	},
-	
+
 	populateRoomVariable: function (data) {
 		var ftToCm       = this.ftToCm;
 		var canvasOffset = this.canvasOffset();
 		var canvasSize   = this.getCanvasSize(data);
 		
 		return {
+			changeMe	 : data.changeMe,
 			id           : data.id + 'XXXX',
 			width        : ftToCm(data.maxX),
 			height       : ftToCm(data.maxY),
@@ -67,8 +81,10 @@ module.exports = React.createClass({
 			background: '#FDFDFD'
 		};
 	    return (
-	    	// Add a div around this and then make the button that will send ajax request
-		    <canvas id={data.id} width={data.canvasSize} height={data.canvasSize} style={canvasStyle} />
+	    	<div>
+	    		<h1> This should change {data.changeMe}</h1>
+			    <canvas id={data.id} width={data.canvasSize} height={data.canvasSize} style={canvasStyle} />
+	    	</div>
 	    )    
 	}
 
