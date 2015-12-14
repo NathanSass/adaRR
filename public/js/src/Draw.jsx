@@ -20,7 +20,7 @@
 			drawDoor();
 
 			placeFixtureOnCenterOfAllSurfaces();
-		}
+		};
 	};
 
 	function init(data) {
@@ -29,8 +29,8 @@
 		
 		ROOM = {};
 		ROOM.id     = data.id;
-		ROOM.width  = data.width;
-		ROOM.height = data.height;
+		ROOM.width  = data.maxX;
+		ROOM.height = data.maxY;
 		ROOM.door   = data.door;
 
 		CANVAS = {};
@@ -40,7 +40,7 @@
 		TOILET = {};
 		TOILET.depth = Util.inchToCm(28);
 		TOILET.width =  Util.inchToCm(23);
-	};
+	}
 
 	/*
 		Draws a room in the form of a rectangle
@@ -56,7 +56,7 @@
 		ctx.stroke();
 		ctx.closePath();
 		return;
-	};
+	}
 	
 	/*
 		Draws a door
@@ -73,7 +73,7 @@
 
 		ctx.closePath();
 		return;
-	};
+	}
 
 	/*
 		creates the necessary resources that will be maniuplated on the dom
@@ -81,7 +81,7 @@
 	function createDomResources() {
 		toiletImg     = document.createElement("img");
 		toiletImg.src = "public/img/toilet_top_vert.png";
-	};
+	}
 
 	//////////////////////////
 	//////// Testing Functions
@@ -95,6 +95,6 @@
 		Util.drawRotated({ rotation: 180, x: ROOM.width/2, y: ROOM.height,   fixture: fixtureData, canvas: CANVAS, ctx: ctx, image: toiletImg, txt: 'toilet'});
 		Util.drawRotated({ rotation: 270, x: 0,            y: ROOM.height/2, fixture: fixtureData, canvas: CANVAS, ctx: ctx, image: toiletImg, txt: 'toilet'});
 
-	};
+	}
 	
 }());

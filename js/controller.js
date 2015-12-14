@@ -12,7 +12,7 @@ exports.getRestrooms = function (roomParams) {
 	var newRoom = room.newRoom(url);
 	
 	if (newRoom) {
-		
+
 		return rrFinder.findAccessible(newRoom);
 
 	} else {

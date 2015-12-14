@@ -1,4 +1,7 @@
 (function() {
+	var exports = module.exports;
+	var util = require('./utilRR.js');
+	
 	var ROOM;
 
 	var startingCoordinate = { x: 0, y: 0 };
@@ -9,12 +12,10 @@
 		loc: 1.5
 	};
 
-
 	/////////////////
 
 	var roomCorners = [];
 	
-	var exports = module.exports;
 	
 	/*
 		Takes a valid room and door location
@@ -23,12 +24,45 @@
 	exports.findAccessible = function(roomModel) {
 		ROOM = roomModel;
 		findRoomCorners();
-		var usefulToilets = findPossibleToiletLocations();
-		return usefulToilets;
+		var usefulToilets       = findPossibleToiletLocations();
+		var restroomsForDisplay = formatDataForPackaging(usefulToilets);
+		return restroomsForDisplay;
 	};
 	
 	/////////////////
 
+	/*
+		takes an array of valid toilets and formats them for the frontEnd
+		adds on the door location
+	*/
+	function formatDataForPackaging(validToiletArr) {
+		var doorLocation = ROOM.door;
+		var formattedRestrooms = [];
+		
+		var canvasOffset = util.ftToCm(2);
+
+		validToiletArr.forEach(function(validRR, i) {
+			var idx = i + 1 + 'NEWY';
+			var newRoom = {
+				id: 'canvas' + idx,
+				maxX: util.ftToCm(ROOM.x),
+				maxY: util.ftToCm(ROOM.y),
+				canvasOffset: canvasOffset,
+				door: {
+					pos1: { x: util.ftToCm(doorLocation.pos1.x) + canvasOffset, y: util.ftToCm(doorLocation.pos1.y) + canvasOffset },
+					pos2: { x: util.ftToCm(doorLocation.pos2.x) + canvasOffset, y: util.ftToCm(doorLocation.pos2.y) + canvasOffset }
+				},
+				note: validRR.note
+			};
+
+			var canvasSize     = getCanvasSize(newRoom);
+			newRoom.canvasSize = canvasSize;
+
+			formattedRestrooms.push(newRoom);
+		});
+
+		return formattedRestrooms;
+	}
 
 	/*
 		returns true if point is inside or on perimeter of room
@@ -36,6 +70,17 @@
 	function isPointPerimeterOrInsideRoom(pt) { //Currently not being used
 		return pt.y <= ROOM.y && pt.x <= ROOM.x;
 		// pt.y >= bounding.min_y && pt.y <= bounding.max_y && pt.x <= bounding.max_x && pt.x >= bounding.min_x // checks if on perimter
+	}
+
+	function getCanvasSize(roomData) {
+		var canvasSize;
+		var canvasOffset = roomData.canvasOffset;
+		var height       = roomData.maxY;
+		var width        = roomData.maxX;
+		
+		height >= width ? canvasSize = height : canvasSize = width; // Ensures the canvas is square and large enough
+		canvasSize  += canvasOffset * 2;
+		return canvasSize;
 	}
 
 	function _intSortMinToMax (a, b) {

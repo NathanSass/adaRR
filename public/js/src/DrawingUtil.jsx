@@ -5,6 +5,7 @@
 		document.readyState === "interactive" || document.readyState === "complete" ? callback() : document.addEventListener("DOMContentLoaded", callback);
 	};
 
+	// TODO: should remove these - maybe
 	exports.inchToCm = function(inches) {
 		return inches * 2.54;
 	};
