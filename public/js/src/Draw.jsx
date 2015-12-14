@@ -17,9 +17,10 @@
 			init(data);
 
 			drawRoom();
+			
 			drawDoor();
 
-			placeFixtureOnCenterOfAllSurfaces();
+			drawToilet();
 		};
 	};
 
@@ -28,18 +29,20 @@
 		ctx = data.ctx;
 		
 		ROOM = {};
-		ROOM.id     = data.id;
-		ROOM.width  = data.maxX;
-		ROOM.height = data.maxY;
-		ROOM.door   = data.door;
+		ROOM.id       = data.id;
+		ROOM.width    = data.maxX;
+		ROOM.height   = data.maxY;
+		ROOM.door     = data.door;
+		ROOM.rotation = data.rotation;
 
 		CANVAS = {};
 		CANVAS.offset = data.canvasOffset;
 		CANVAS.size   = data.canvasSize;
 
 		TOILET = {};
-		TOILET.depth = Util.inchToCm(28);
-		TOILET.width =  Util.inchToCm(23);
+		TOILET.depth  = data.toilet.depth;
+		TOILET.width  = data.toilet.width;
+		TOILET.loc    = data.toilet.loc;
 	}
 
 	/*
@@ -73,6 +76,15 @@
 
 		ctx.closePath();
 		return;
+	}
+
+	/*
+		Draws a toilet
+	*/
+	function drawToilet() {
+		var fixtureData = TOILET;
+		
+		Util.drawRotated({ rotation: ROOM.rotation,  x: TOILET.loc.x,   y: TOILET.loc.y, fixture: fixtureData, canvas: CANVAS, ctx: ctx, image: toiletImg, txt: 'toilet'});
 	}
 
 	/*

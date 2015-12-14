@@ -42,7 +42,7 @@
 		var canvasOffset = util.ftToCm(2);
 
 		validToiletArr.forEach(function(validRR, i) {
-			var idx = i + 1 + 'NEWY';
+			var idx = i + 1;
 			var newRoom = {
 				id: 'canvas' + idx,
 				maxX: util.ftToCm(ROOM.x),
@@ -51,6 +51,15 @@
 				door: {
 					pos1: { x: util.ftToCm(doorLocation.pos1.x) + canvasOffset, y: util.ftToCm(doorLocation.pos1.y) + canvasOffset },
 					pos2: { x: util.ftToCm(doorLocation.pos2.x) + canvasOffset, y: util.ftToCm(doorLocation.pos2.y) + canvasOffset }
+				},
+				rotation: validRR.rotation,
+				toilet: {
+					depth: util.inchToCm(28),
+					width: util.inchToCm(23),
+					loc: {
+						x:  util.ftToCm(validRR.loc.x),
+						y:  util.ftToCm(validRR.loc.y)
+					}
 				},
 				note: validRR.note
 			};
@@ -97,7 +106,7 @@
 		var allY = [];
 		
 		for ( var coord in fixture) {
-			if ( fixture.hasOwnProperty(coord) && coord != "note" ) {
+			if ( fixture.hasOwnProperty(coord) && coord != "note" && coord != 'rotation') {
 				allX.push( fixture[coord].x );
 				allY.push( fixture[coord].y );
 			}
@@ -132,6 +141,7 @@
 
 		var newFixture = {
 			w1: sPoint,
+			rotation: 0
 		};
 		
 		newFixture.w2 = {
@@ -184,6 +194,7 @@
 
 		var newFixture = {
 			w1: sPoint,
+			rotation: 270
 		};
 		
 		newFixture.w2 = {
@@ -236,6 +247,7 @@
 
 		var newFixture = {
 			w1: sPoint,
+			rotation: 90
 		};
 		
 		newFixture.w2 = {
@@ -288,6 +300,7 @@
 
 		var newFixture = {
 			w1: sPoint,
+			rotation: 180
 		};
 		
 		newFixture.w2 = {
@@ -365,7 +378,7 @@
 			// console.log("first horizontal");
 			newToilets.push( fixtureFirstHorizontal(TOILET) );
 			newToilets.push( fixtureFirstHorizontal(TOILET, {x: ROOM.x, y: 0 }) );
-		}1
+		}
 		// Catches [10, 0]
 		if ( (startingCoordinate.x === ROOM.x) && (startingCoordinate.y === 0) ) { //  [10, 0], [10, 10]
 			// console.log("first vertical");
