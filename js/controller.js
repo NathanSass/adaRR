@@ -8,8 +8,7 @@ var rrFinder = require('./rrFinder');
 	returns all possible restroom configurations
 */
 exports.getRestrooms = function (roomParams) {
-	var url = 'x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5';
-	var newRoom = room.newRoom(url);
+	var newRoom = room.newRoom(roomParams);
 	
 	if (newRoom) {
 
