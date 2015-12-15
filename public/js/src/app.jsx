@@ -37,7 +37,6 @@ var FormAndCanvas = React.createClass({
 		var data = this.state.data;
 		return (
 			<div>
-				<h2> App.jsx {this.state.data.changeMe}</h2>
 				{this.state.data.map(function(validRoom, idx){
 					return <Room key={idx} data={validRoom} />
 				})}
