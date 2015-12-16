@@ -4,7 +4,6 @@ var rrController = require('../js/controller');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	console.log('In the index route');
 	res.render('index');
 });
 

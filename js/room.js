@@ -31,8 +31,8 @@
 		try {
 			
 			ROOM = {
-				x: dirtyRR.x,
-				y: dirtyRR.y,
+				x: parseFloat(dirtyRR.x),
+				y: parseFloat(dirtyRR.y),
 				door: {
 					pos1: { x: parseFloat(dirtyRR.doorpos1[0]), y: parseFloat(dirtyRR.doorpos1[1]) },
 					pos2: { x: parseFloat(dirtyRR.doorpos2[0]), y: parseFloat(dirtyRR.doorpos2[1]) },
