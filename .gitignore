@@ -4,3 +4,4 @@ node_modules
 *.gz
 lib
 public/js/build
+bower_components

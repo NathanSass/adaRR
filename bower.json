@@ -1,0 +1,22 @@
+{
+  "name": "adaRR",
+  "description": "find your dream accessible restroom configuration",
+  "main": "app.js",
+  "authors": [
+    "Nathan Sass <nsass711@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/NathanSass/adaRR",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}

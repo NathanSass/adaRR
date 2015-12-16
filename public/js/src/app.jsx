@@ -19,7 +19,8 @@ var FormAndCanvas = React.createClass({
 	sendDataToServer: function() {
 		var Success = false;
 		$.ajax({
-			url: '/x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5',
+			// url: 'x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5',
+			url: 'x=10&y=10&doorpos1=0.5&doorpos1=0&doorpos2=2.25&doorpos2=0',
 			crossDomain: true,
 			type: 'POST',
 			success: function(data) { this.handleServerData(data) }.bind(this),
