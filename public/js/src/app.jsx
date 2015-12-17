@@ -1,8 +1,8 @@
 var React      = require('react');
 var ReactDOM   = require('react-dom');
 
-var Room = require('./Room.jsx');
 var Header = require('./Header.jsx');
+var Room   = require('./Room.jsx');
 
 
 var FormAndCanvas = React.createClass({
