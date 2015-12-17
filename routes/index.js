@@ -7,9 +7,6 @@ router.get('/*', function(req, res, next) {
 	res.render('index');
 });
 
-
-
-
 /* GET rectangular room builder page*/
 router.post('/:roomParams', function(req, res, next) { // x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5'
 	

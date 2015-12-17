@@ -2,6 +2,7 @@
 node_modules
 *.log
 *.gz
+*.css
 lib
 public/js/build
 bower_components

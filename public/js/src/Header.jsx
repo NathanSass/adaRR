@@ -6,7 +6,8 @@
 
 			return (
 				<div>
-					The header will go here
+					<span>Icon</span><span>Latrine Machine</span>
+					<div>Welcome! Today we are going to design an accessible bathroom</div>
 				</div>
 			)
 		}
