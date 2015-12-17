@@ -1,7 +1,7 @@
 @mixin contentArea(){
 	margin: 0 auto;
 	max-width: 1000px;
-	width: 70%;
+	width: 60%;
 }
 
 $black: #111111;
@@ -21,8 +21,10 @@ html, body {
 }
 
 header {
-	background: $gray;
+	background-image: url("/public/img/shattered.png");
+	background-repeat: repeat;
 	padding: 0.25em 0 1em 0;
+	border-bottom: 1px solid $dk-gray;
 	.logo {
 		display: inline-block;
 		border-bottom: 1px solid $dk-gray;
@@ -37,8 +39,41 @@ header {
 	}
 
 }
-canvas {
-  /*border: solid 1px #000;*/
+
+.contentArea1 {
+	text-align: center;
+	padding: 2em 0;
+	position: relative;
+	.miniHeading {
+		font-size: 0.75rem;
+		margin-bottom: 2em;
+	}
+	&:after {
+		content: "";
+		position: absolute;
+		display: block;
+		bottom: -48px;
+		border: 24px solid transparent;
+		left: 50%;
+		margin-left: -24px;
+		z-index: 1;
+		border-top-color: white;
+	}
+}
+
+.contentArea2 {
+	background: $gray;
+	text-align: center;
+	padding: 2em 0;
+	.actionableQuestion {
+		font-size: 1.5rem;
+	}
+}
+
+footer {
+	border-top: 1px solid $silver;
+	background: $dk-gray;
+	text-align: center;
 }
 
 .contentArea {

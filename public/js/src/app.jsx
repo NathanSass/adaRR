@@ -1,8 +1,11 @@
 var React      = require('react');
 var ReactDOM   = require('react-dom');
 
-var Header = require('./Header.jsx');
-var Room   = require('./Room.jsx');
+var Header       = require('./Header.jsx');
+var ContentArea1 = require('./ContentArea1.jsx');
+var ContentArea2 = require('./ContentArea2.jsx');
+var Footer       = require('./Footer.jsx');
+var Room         = require('./Room.jsx');
 
 
 var FormAndCanvas = React.createClass({
@@ -37,10 +40,9 @@ var FormAndCanvas = React.createClass({
 		return (
 			<div>
 				<Header />
-				<button type="button" onClick={this.sendDataToServer}>NEW BUTTON</button>
-				{this.state.data.map(function(validRoom, idx){
-					return <Room key={idx} data={validRoom} />
-				})}
+				<ContentArea1 />
+				<ContentArea2 />
+				<Footer />
 			</div>
 		)
 	}

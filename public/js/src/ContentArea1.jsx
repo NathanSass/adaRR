@@ -5,14 +5,15 @@
 		render: function() {
 
 			return (
-				<header>
+				<section className="contentArea1">
 					<div className="contentArea">
-						<div className="logo">
-							<img src="/public/img/logo.svg" alt="logo"/><span className="logo-text">LatrineMachine</span>
+						<div className="miniHeading">
+							What is an accessible bathroom? <br/>
+							Click <a href="http://www.bobrick.com/documents/planningguide.pdf">here</a> to find out and see the full guidelines.
 						</div>
 						<div className="greeter">Welcome! Today we are going to design an accessible bathroom</div>
 					</div>
-				</header>
+				</section>
 			)
 		}
 	});
