@@ -5,10 +5,14 @@
 		render: function() {
 
 			return (
-				<div>
-					<span>Icon</span><span>Latrine Machine</span>
-					<div>Welcome! Today we are going to design an accessible bathroom</div>
-				</div>
+				<header>
+					<div className="contentArea">
+						<div className="logo">
+							<img src="/public/img/logo.svg" alt="logo"/><span className="logo-text">LatrineMachine</span>
+						</div>
+						<div className="greeter">Welcome! Today we are going to design an accessible bathroom</div>
+					</div>
+				</header>
 			)
 		}
 

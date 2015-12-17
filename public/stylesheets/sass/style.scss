@@ -1,12 +1,46 @@
-html, body {
-	background: white;
+@mixin contentArea(){
+	margin: 0 auto;
+	max-width: 1000px;
+	width: 70%;
 }
 
+$black: #111111;
+$lime: #01FF70;
+$gray: #D8D8D8;
+$dk-gray: #B1B1B1;
+$silver: #DDDDDD;
+$teal: #39CCCC;
+$olive: #3D9970;
+$purple: #B10DC9;
+$blue: #0074D9;
+
+html, body {
+	background: white;
+	color: #4A4A4A;
+	font-family: 'Noto Sans', sans-serif;
+}
+
+header {
+	background: $gray;
+	padding: 0.25em 0 1em 0;
+	.logo {
+		display: inline-block;
+		border-bottom: 1px solid $dk-gray;
+	}
+	.logo-text {
+		font-size: 1.25rem;
+	}
+
+	.greeter {
+		text-align: center;
+		padding-top: 1em;
+	}
+
+}
 canvas {
   /*border: solid 1px #000;*/
 }
 
-.container {
-	width: 70%;
-	margin: 0 auto;
+.contentArea {
+	@include contentArea();
 }
