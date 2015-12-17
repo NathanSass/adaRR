@@ -1,4 +1,4 @@
-# adaRR
+# latrineMachine
 
 A quest to automate the life of a junior architect - forever laying out restrooms.
 

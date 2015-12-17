@@ -1,8 +1,4 @@
 extends layout
 
 block content
-	h1(style='text-align:center') adaRR 
-	if roomParams
-		h3(style='text-align:center') RoomParams: #{roomParams}
-		script(id="myScript" name='#{roomParams}') var name='#{roomParams}';
-	#canvasContainer.container
+	#app.container
