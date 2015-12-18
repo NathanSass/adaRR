@@ -4,75 +4,77 @@
 	width: 60%;
 }
 
-$black: #111111;
-$lime: #01FF70;
-$gray: #D8D8D8;
+$black:   #111111;
+$lime:    #01FF70;
+$gray:    #D8D8D8;
 $dk-gray: #B1B1B1;
-$silver: #DDDDDD;
-$teal: #39CCCC;
-$olive: #3D9970;
-$purple: #B10DC9;
-$blue: #0074D9;
+$silver:  #DDDDDD;
+$teal:    #39CCCC;
+$olive:   #3D9970;
+$purple:  #B10DC9;
+$blue:    #0074D9;
 
-html, body {
+body {
 	background: white;
 	color: #4A4A4A;
 	font-family: 'Noto Sans', sans-serif;
+	height: 100%;
 }
 
 header {
 	background-image: url("/public/img/shattered.png");
 	background-repeat: repeat;
-	padding: 0.25em 0 1em 0;
 	border-bottom: 1px solid $dk-gray;
+	padding: 0.25em 0 1em 0;
+	width: 100vw;
 	.logo {
-		display: inline-block;
 		border-bottom: 1px solid $dk-gray;
+		display: inline-block;
 	}
 	.logo-text {
 		font-size: 1.25rem;
 	}
 
 	.greeter {
-		text-align: center;
 		padding-top: 1em;
+		text-align: center;
 	}
 
 }
 
 .contentArea1 {
-	text-align: center;
 	padding: 2em 0;
 	position: relative;
+	text-align: center;
 	.miniHeading {
 		font-size: 0.75rem;
 		margin-bottom: 2em;
 	}
 	&:after {
-		content: "";
-		position: absolute;
-		display: block;
 		bottom: -48px;
 		border: 24px solid transparent;
+		border-top-color: white;
+		content: "";
+		display: block;
 		left: 50%;
 		margin-left: -24px;
+		position: absolute;
 		z-index: 1;
-		border-top-color: white;
 	}
 }
 
 .contentArea2 {
 	background: $gray;
-	text-align: center;
 	padding: 2em 0;
+	text-align: center;
 	.actionableQuestion {
 		font-size: 1.5rem;
 	}
 }
 
 footer {
-	border-top: 1px solid $silver;
 	background: $dk-gray;
+	border-top: 1px solid $silver;
 	text-align: center;
 }
 
