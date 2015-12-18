@@ -1,8 +1,10 @@
-var gulp       = require('gulp');
-var sass       = require('gulp-sass');
-var source     = require('vinyl-source-stream');
-var reactify   = require('reactify');
-var browserify = require('browserify');
+var gulp         = require('gulp');
+var sass         = require('gulp-sass');
+var source       = require('vinyl-source-stream');
+var reactify     = require('reactify');
+var browserify   = require('browserify');
+var autoprefixer = require('gulp-autoprefixer');
+
 
 gulp.task('buildReact', function(){
 	browserify('./public/js/src/app.jsx')
@@ -18,6 +20,7 @@ gulp.task('watchReact', function() {
 gulp.task('buildSass', function() {
     gulp.src('./public/stylesheets/sass/**/*.scss')
 	    .pipe(sass().on('error', sass.logError))
+	    .pipe(autoprefixer())
 	    .pipe(gulp.dest('./public/stylesheets/css/'));
 });
 gulp.task('watchSass',function() {
