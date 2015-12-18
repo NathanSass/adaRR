@@ -1,6 +1,7 @@
 @mixin contentArea(){
 	margin: 0 auto;
 	max-width: 1000px;
+	position: relative;
 	width: 60%;
 }
 
@@ -82,11 +83,42 @@ footer {
 	@include contentArea();
 }
 .roomCardContainer {
-	padding: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+	padding: 20px 0 30px 0;
 }
+
 .roomCard {
-	display: inline-block;
-	padding: 20px;
 	border: 1px solid white;
 	border-radius: 3px;
+	display: inline-block;
+	margin: 10px 0px;
+	padding: 20px;
+	text-decoration: none;
+	color: #4A4A4A;
+	&:hover {
+		background: #D2D2D2;
+	}
+	&:active {
+		background: #B5B5B5;
+	}
+}
+
+.nextButton {
+    bottom: 0;
+	background: transparent;
+	border: 1px solid white;
+	border-radius: 2px;
+	color: $teal;
+	padding: 2px 12px;
+    position: absolute;
+    right: 0;
+    transform: translateX(-50%);
+    &:hover {
+		background: #D2D2D2;
+	}
+	&:active {
+		background: #B5B5B5;
+	}
 }
