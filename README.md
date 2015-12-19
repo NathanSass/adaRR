@@ -16,5 +16,5 @@ npm start
 
 Start developing
 ```
-gulp watch
+gulp default
 ```

@@ -46,7 +46,7 @@ header {
 .contentArea1 {
 	padding: 2em 0;
 	position: relative;
-	text-align: center;
+	text-align: left;
 	.miniHeading {
 		font-size: 0.75rem;
 		margin-bottom: 2em;
@@ -100,7 +100,7 @@ footer {
 	&:hover {
 		background: #D2D2D2;
 	}
-	&:active {
+	&:active, &.active {
 		background: #B5B5B5;
 	}
 }

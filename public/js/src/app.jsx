@@ -11,7 +11,7 @@ var Room         = require('./Room.jsx');
 var FormAndCanvas = React.createClass({
 	
 	getInitialState: function() {
-	    return { data: [] };
+	    return { data: 'booom', newHttp: this.newHttp };
 	},
 
 	handleServerData: function(data) {
@@ -34,6 +34,10 @@ var FormAndCanvas = React.createClass({
 		})
 
 	},
+
+	newHttp: function(dataToSend) {
+		console.log("PARENT FUNCTION CALLLED ~~~~~~~~~~~ YAY with this data: ", dataToSend);
+	},
 	
 	render: function () {
 		var data = this.state.data;
@@ -41,7 +45,7 @@ var FormAndCanvas = React.createClass({
 			<div>
 				<Header />
 				<ContentArea1 />
-				<ContentArea2 />
+				<ContentArea2 newHttp={this.newHttp} />
 				<Footer />
 			</div>
 		)
