@@ -21,6 +21,7 @@
     "express": "^4.13.3",
     "jade": "^1.11.0",
     "nodemon": "^1.8.1",
+    "page": "^1.6.4",
     "react-dom": "^0.14.3"
   },
   "devDependencies": {

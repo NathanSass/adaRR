@@ -1,60 +1,43 @@
-var React      = require('react');
-var ReactDOM   = require('react-dom');
+(function() {
 
-var Header       = require('./Header.jsx');
-var ContentArea1 = require('./ContentArea1.jsx');
-var ContentArea2 = require('./ContentArea2.jsx');
-var Footer       = require('./Footer.jsx');
-var Room         = require('./Room.jsx');
+	var React      = require('react');
+	var ReactDOM   = require('react-dom');
+	var page       = require('page');
+
+	var Layout = require('./Layout.jsx');
 
 
-var FormAndCanvas = React.createClass({
-	
-	getInitialState: function() {
-	    return { data: 'booom', newHttp: this.newHttp };
-	},
-
-	handleServerData: function(data) {
-		var rooms = JSON.parse(data);
+	var Router = React.createClass({
 		
-		this.setState( {data: rooms } );
-	},
+		getInitialState: function () {
+			return { component: <div />};
+		},
+		
+		componentDidMount: function () {
 
-	sendDataToServer: function() {
-		var Success = false;
-		$.ajax({
-			// url: 'x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5',
-			url: 'x=10&y=10&doorpos1=0.5&doorpos1=0&doorpos2=2.25&doorpos2=0',
-			crossDomain: true,
-			type: 'POST',
-			success: function(data) { this.handleServerData(data) }.bind(this),
-			error: function(er) {
-				console.log('got error')
-			}
-		})
+			var self = this;
 
-	},
+			page('/', function (ctx) {
+				// console.log("React Router: visited index");
+				self.setState({ component: <Layout /> });
+			});
 
-	newHttp: function(dataToSend) {
-		console.log("PARENT FUNCTION CALLLED ~~~~~~~~~~~ YAY with this data: ", dataToSend);
-	},
-	
-	render: function () {
-		var data = this.state.data;
-		return (
-			<div>
-				<Header />
-				<ContentArea1 />
-				<ContentArea2 newHttp={this.newHttp} />
-				<Footer />
-			</div>
-		)
-	}
-})
+			page('/users/:id', function (ctx) {
+				// console.log("React Router: visited users");
+			});
 
+			page('*', function (ctx) {
+				// console.log("React Router: visited random");
+			});
 
+			page.start();
 
-ReactDOM.render(
-    <FormAndCanvas/>,
-    document.getElementById('app')
-);
+		},
+
+		render: function () {
+			return this.state.component;
+		}
+	});
+
+	ReactDOM.render(<Router />, document.getElementById('app'));
+}());
