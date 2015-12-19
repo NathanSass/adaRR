@@ -13,7 +13,13 @@
 		
 		handleNextButton: function(event) {
 			var selectedRoom = this.state.selected;
-			this.props.newHttp(selectedRoom);
+			
+			var data = {
+				currentPage: 1,
+				selectedRoom: selectedRoom
+			};
+			
+			this.props.newHttp(data);
 		},
 
 		render: function() {

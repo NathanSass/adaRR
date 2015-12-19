@@ -22,8 +22,8 @@
 				self.setState({ component: <Layout /> });
 			});
 
-			page('/users/:id', function (ctx) {
-				// console.log("React Router: visited users");
+			page('/configureRoom', function (ctx) {
+				console.log("React Router: showConfigure room page");
 			});
 
 			page('*', function (ctx) {

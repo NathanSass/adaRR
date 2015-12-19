@@ -1,6 +1,7 @@
 (function() {
 
 	var React      = require('react');
+	var page       = require('page');
 
 	var Header       = require('./Header.jsx');
 	var ContentArea1 = require('./ContentArea1.jsx');
@@ -35,8 +36,12 @@
 
 		},
 
-		newHttp: function(dataToSend) {
-			console.log("PARENT FUNCTION CALLLED ~~~~~~~~~~~ YAY with this data: ", dataToSend);
+		newHttp: function(data) {
+
+			if (data.currentPage == 1) { // Currently no support for other room shapes so no point in http call
+				page('/configureRoom');
+			}
+			console.log("PARENT FUNCTION CALLLED ~~~~~~~~~~~ YAY with this data: ", data);
 		},
 		
 		render: function () {
