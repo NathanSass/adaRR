@@ -50,10 +50,19 @@
 			return (
 				<div>
 					<Header />
-					<ContentArea1 />
-					<ContentArea2 newHttp={this.newHttp}>
+					
+					<ContentArea1>
+						<div className="miniHeading">
+							What is an accessible bathroom? <br/>
+							Click <a href="http://www.bobrick.com/documents/planningguide.pdf">here</a> to find out and see the full guidelines.
+						</div>
+						<div className="greeter">Welcome! Today we are going to design an accessible bathroom</div>
+					</ContentArea1>
+					
+					<ContentArea2 newHttp={this.newHttp} actionableQuestion="What is the shape of your room?">
 						<RoomCards />
 					</ContentArea2>
+					
 					<Footer />
 				</div>
 			)

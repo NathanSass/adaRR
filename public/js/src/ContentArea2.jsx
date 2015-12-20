@@ -1,6 +1,5 @@
 (function() {
 	var React = require('react');
-	var RoomCards = require('./RoomCards.jsx');
 
 	module.exports = React.createClass({
 		/*
@@ -51,7 +50,7 @@
 				<section className="contentArea2">
 					<div className="contentArea">
 						<div className="actionableQuestion">
-							What is the shape of your room?
+							{this.props.actionableQuestion}
 						</div>
 						{this.renderChildren()}
 						<button className="nextButton" type="button" onClick={this.handleNextButton}>Next</button>
