@@ -4,7 +4,7 @@
 	var ReactDOM   = require('react-dom');
 	var page       = require('page');
 
-	var Layout = require('./Layout.jsx');
+	var Page1 = require('./Page1.jsx');
 
 
 	var Router = React.createClass({
@@ -19,7 +19,7 @@
 
 			page('/', function (ctx) {
 				// console.log("React Router: visited index");
-				self.setState({ component: <Layout /> });
+				self.setState({ component: <Page1 /> });
 			});
 
 			page('/configureRoom', function (ctx) {
