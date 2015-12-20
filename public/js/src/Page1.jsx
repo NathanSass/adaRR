@@ -7,6 +7,7 @@
 	var ContentArea1 = require('./ContentArea1.jsx');
 	var ContentArea2 = require('./ContentArea2.jsx');
 	var Footer       = require('./Footer.jsx')
+	var RoomCards = require('./RoomCards.jsx');
 
 
 	module.exports = React.createClass({

@@ -1,14 +1,24 @@
 (function() {
 	var React = require('react');
+	var RoomCards = require('./RoomCards.jsx');
 
 	module.exports = React.createClass({
+		/*
+			Add all possible values here for what will be passed to child component
+		*/
 		getInitialState: function() {
 		    return { selected: '' };
 		},
-
-		handleCardClicked: function(event) {
-			var selectedRoomShape = event.currentTarget.getAttribute('data');
-			this.setState({ 'selected': selectedRoomShape });
+		/*
+			Child component upates the model which will be sent when next button is clicked
+		*/
+		updateModelFromChildComponent: function(data) {
+			var obj   = {};
+			var key   = Object.keys(data)[0] //BUGBUG will only work with one value
+			var value = data[key];
+			obj[key]  = value;
+			
+			this.setState(obj);
 		},
 		
 		handleNextButton: function(event) {
@@ -19,6 +29,7 @@
 				selectedRoom: selectedRoom
 			};
 			
+			// Function call that sends an http request
 			this.props.newHttp(data);
 		},
 
@@ -30,32 +41,7 @@
 						<div className="actionableQuestion">
 							What is the shape of your room?
 						</div>
-						<div className="roomCardContainer">
-							<a href="javascript:void(0);" className={this.state.selected === 'rectangular' ? 'active roomCard' : 'roomCard'} onClick={this.handleCardClicked} data="rectangular">
-								<div className="roomShapeContainer">
-									<img src="/public/img/rectangular.svg" alt="logo"/>
-									<div>Rectangular</div>
-								</div>
-							</a>
-							<a href="javascript:void(0);" className={this.state.selected === 'indentTopRight' ? 'active roomCard' : 'roomCard'} onClick={this.handleCardClicked} data="indentTopRight">
-								<div className="roomShapeContainer">
-									<img src="/public/img/rectangular.svg" alt="logo"/>
-									<div>Indent top right</div>
-								</div>
-							</a>
-							<a href="javascript:void(0);" className={this.state.selected === 'indentTopLeft' ? 'active roomCard' : 'roomCard'} onClick={this.handleCardClicked} data="indentTopLeft">
-								<div className="roomShapeContainer">
-									<img src="/public/img/rectangular.svg" alt="logo"/>
-									<div>Indent top left</div>
-								</div>
-							</a>
-							<a href="javascript:void(0);" className={this.state.selected === 'indentBottomRight' ? 'active roomCard' : 'roomCard'} onClick={this.handleCardClicked} data="indentBottomRight">
-								<div className="roomShapeContainer">
-									<img src="/public/img/rectangular.svg" alt="logo"/>
-									<div>Indent bottom right</div>
-								</div>
-							</a>
-						</div>
+						<RoomCards updateModelFromChildComponent={this.updateModelFromChildComponent} selected={this.state.selected} />
 						<button className="nextButton" type="button" onClick={this.handleNextButton}>Next</button>
 					</div>
 				</section>
