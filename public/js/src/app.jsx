@@ -5,6 +5,7 @@
 	var page       = require('page');
 
 	var Page1 = require('./Page1.jsx');
+	var Page2 = require('./Page2.jsx');
 
 
 	var Router = React.createClass({
@@ -18,12 +19,15 @@
 			var self = this;
 
 			page('/', function (ctx) {
-				// console.log("React Router: visited index");
+				
 				self.setState({ component: <Page1 /> });
+			
 			});
 
 			page('/configureRoom', function (ctx) {
-				console.log("React Router: showConfigure room page");
+				
+				self.setState({ component: <Page2 /> });
+			
 			});
 
 			page('*', function (ctx) {
