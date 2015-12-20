@@ -51,7 +51,9 @@
 				<div>
 					<Header />
 					<ContentArea1 />
-					<ContentArea2 newHttp={this.newHttp} />
+					<ContentArea2 newHttp={this.newHttp}>
+						<RoomCards />
+					</ContentArea2>
 					<Footer />
 				</div>
 			)

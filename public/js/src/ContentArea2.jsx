@@ -32,6 +32,18 @@
 			// Function call that sends an http request
 			this.props.newHttp(data);
 		},
+		/*
+			This takes the elements that will be yielded and adds the necessary properties to them.
+			Add the props here that will be needed by child components
+		*/
+		renderChildren: function() {
+			return React.Children.map(this.props.children, function (child) {
+				return React.cloneElement(child, {
+					updateModelFromChildComponent: this.updateModelFromChildComponent,
+					selected: this.state.selected
+				})
+			}.bind(this))
+		},
 
 		render: function() {
 
@@ -41,7 +53,7 @@
 						<div className="actionableQuestion">
 							What is the shape of your room?
 						</div>
-						<RoomCards updateModelFromChildComponent={this.updateModelFromChildComponent} selected={this.state.selected} />
+						{this.renderChildren()}
 						<button className="nextButton" type="button" onClick={this.handleNextButton}>Next</button>
 					</div>
 				</section>
