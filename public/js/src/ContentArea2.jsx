@@ -13,7 +13,7 @@
 		*/
 		updateModelFromChildComponent: function(data) {
 			var obj   = {};
-			var key   = Object.keys(data)[0] //BUGBUG will only work with one value
+			var key   = Object.keys(data)[0]; //BUGBUG will only work with one value
 			var value = data[key];
 			obj[key]  = value;
 			
@@ -40,8 +40,8 @@
 				return React.cloneElement(child, {
 					updateModelFromChildComponent: this.updateModelFromChildComponent,
 					selected: this.state.selected
-				})
-			}.bind(this))
+				});
+			}.bind(this));
 		},
 
 		render: function() {

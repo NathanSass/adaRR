@@ -7,7 +7,7 @@
 	var Header       = require('./Header.jsx');
 	var ContentArea1 = require('./ContentArea1.jsx');
 	var ContentArea2 = require('./ContentArea2.jsx');
-	var Footer       = require('./Footer.jsx')
+	var Footer       = require('./Footer.jsx');
 
 
 	module.exports = React.createClass({
@@ -29,11 +29,11 @@
 				url: 'x=10&y=10&doorpos1=0.5&doorpos1=0&doorpos2=2.25&doorpos2=0',
 				crossDomain: true,
 				type: 'POST',
-				success: function(data) { this.handleServerData(data) }.bind(this),
+				success: function(data) { this.handleServerData(data); }.bind(this),
 				error: function(er) {
-					console.log('got error')
+					console.log('got error');
 				}
-			})
+			});
 
 		},
 
