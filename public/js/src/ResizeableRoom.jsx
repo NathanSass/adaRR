@@ -3,27 +3,17 @@
 	var DrawResizeableRoom = require('./DrawResizeableRoom.jsx');
 
 	module.exports = React.createClass({
-		getInitialState: function(){
-			return { 
-				ctx: '' 
-			};
-		},
 		
 		componentDidMount: function() {
 
-			DrawResizeableRoom.init('resizeableRoom');
+			DrawResizeableRoom.init();
 
 		},
 
 		render: function() {
-			var canvasStyle = {
-				background: '#FDFDFD'
-			};
 
 			return (
-				<div className="resizeableRoom">
-					<canvas id="resizeableRoom" width="300" height="400" style={canvasStyle} />
-				</div>
+				<div id="resizeableRoomContainer" className="resizeableRoom" />
 			)
 		}
 	});
