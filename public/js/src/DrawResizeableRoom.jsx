@@ -138,35 +138,19 @@
 
 	function drawTextForSegmentLengths() {
 		var firstHoriz = {
-			txt: cmToPresentation(rect.w) ,
+			txt: Util.cmToPresentation(rect.w) ,
 			x:   rect.startX + (rect.w / 2 ),
 			y:   rect.startY - 20
 		};
 
 		var firstVert = {
-			txt: cmToPresentation(rect.h ) ,
+			txt: Util.cmToPresentation(rect.h ) ,
 			x:   rect.startX + rect.w + 30,
 			y:  (rect.startY + rect.h) - (rect.h /2)
 		};
 
 		drawText( firstHoriz );
 		drawText( firstVert  );
-	}
-
-	function cmToPresentation(cm) {
-		var length = cmToFtIn(cm);
-		return length.ft + '\' ' + length.in + '\"';
-	}
-
-	function cmToFtIn(cm) {
-		var totalInches = cmToIn(cm);
-		var feet = Math.floor(totalInches / 12);
-		var inches =  Math.round(totalInches - ( feet * 12 ));
-		return { ft: feet, in: inches };
-	}
-
-	function cmToIn(cm){
-		return cm * 0.393701;
 	}
 
 	function drawText(params) {

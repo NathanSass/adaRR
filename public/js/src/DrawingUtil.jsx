@@ -10,6 +10,10 @@
 		return inches * 2.54;
 	};
 
+	exports.cmToIn = function(cm){
+		return cm * 0.393701;
+	};
+	
 	exports.cmToFt = function(cm) {
 		return cm / 30.48;
 	};
@@ -18,6 +22,17 @@
 		return foot * 30.48;
 	};
 
+	exports.cmToFtIn = function(cm){
+		var totalInches = this.cmToIn(cm);
+		var feet   = Math.floor(totalInches / 12);
+		var inches =  Math.round(totalInches - ( feet * 12 ));
+		return { ft: feet, in: inches };
+	};
+
+	exports.cmToPresentation = function(cm){
+		var length = this.cmToFtIn(cm);
+		return length.ft + '\' ' + length.in + '\"';
+	};
 
 	/*
 		Given a degree of rotation and coordinate
