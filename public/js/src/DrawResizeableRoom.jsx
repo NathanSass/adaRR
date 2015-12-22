@@ -27,11 +27,12 @@
 
 		rect = {
 			startX: 100,
-			startY: 200,
+			startY: 50,
 			w: 305,
-			h: 200
+			h: 244
 		};
 
+		// drawText();
 	};
 
 	function buildCanvas() {
@@ -43,7 +44,7 @@
 
 		canvas.id     = "resizeableRoom";
 		canvas.width  = 500;
-		canvas.height = 500;
+		canvas.height = 400;
 		canvas.style.background = '#FDFDFD';
 
 		container.appendChild(canvas);
@@ -136,12 +137,20 @@
 	}
 
 	function drawTextForSegmentLengths() {
-		var firstSide = {
-			txt: cmToPresentation((rect.startX + rect.w) - rect.startX) ,
-			x: rect.startX + (rect.w / 2 ),
-			y: rect.startY - closeEnough
+		var firstHoriz = {
+			txt: cmToPresentation(rect.w) ,
+			x:   rect.startX + (rect.w / 2 ),
+			y:   rect.startY - 20
 		};
-		drawText(firstSide);
+
+		var firstVert = {
+			txt: cmToPresentation(rect.h ) ,
+			x:   rect.startX + rect.w + 30,
+			y:  (rect.startY + rect.h) - (rect.h /2)
+		};
+
+		drawText( firstHoriz );
+		drawText( firstVert  );
 	}
 
 	function cmToPresentation(cm) {
@@ -162,8 +171,8 @@
 
 	function drawText(params) {
 		ctx.beginPath();
-		ctx.fillStyle    = 'black';
-		ctx.font         = '10pt sans-serif';
+		ctx.fillStyle    = '#4A4A4A';
+		ctx.font         = '12pt Noto Sans';
 		ctx.textAlign    = 'center';
 		ctx.textBaseline = 'middle';
 		ctx.fillText( params.txt, params.x, params.y );
