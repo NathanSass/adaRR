@@ -8,6 +8,8 @@
 	var ContentArea2 = require('./ContentArea2.jsx');
 	var Footer       = require('./Footer.jsx');
 
+	var ResizeableRoom = require('./ResizeableRoom.jsx');
+
 
 	module.exports = React.createClass({
 		
@@ -51,7 +53,7 @@
 					<Header />
 					
 					<ContentArea1>
-						<h1> Widget will go here that does all that dope stuff </h1>
+						<ResizeableRoom />
 					</ContentArea1>
 					
 					<ContentArea2 newHttp={this.newHttp} actionableQuestion="Adjust the walls until they match your room.">

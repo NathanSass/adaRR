@@ -40,7 +40,7 @@
 
 		render: function () {
 			return this.state.component;
-		};
+		}
 	});
 
 	ReactDOM.render(<Router />, document.getElementById('app'));
