@@ -28,7 +28,7 @@
 		rect = {
 			startX: 100,
 			startY: 200,
-			w: 300,
+			w: 305,
 			h: 200
 		};
 
@@ -130,6 +130,47 @@
 	}
 
 	function draw() {
+		drawRectangle();
+	    drawHandles();
+	    drawTextForSegmentLengths();
+	}
+
+	function drawTextForSegmentLengths() {
+		var firstSide = {
+			txt: cmToPresentation((rect.startX + rect.w) - rect.startX) ,
+			x: rect.startX + (rect.w / 2 ),
+			y: rect.startY - closeEnough
+		};
+		drawText(firstSide);
+	}
+
+	function cmToPresentation(cm) {
+		var length = cmToFtIn(cm);
+		return length.ft + '\' ' + length.in + '\"';
+	}
+
+	function cmToFtIn(cm) {
+		var totalInches = cmToIn(cm);
+		var feet = Math.floor(totalInches / 12);
+		var inches =  Math.round(totalInches - ( feet * 12 ));
+		return { ft: feet, in: inches };
+	}
+
+	function cmToIn(cm){
+		return cm * 0.393701;
+	}
+
+	function drawText(params) {
+		ctx.beginPath();
+		ctx.fillStyle    = 'black';
+		ctx.font         = '10pt sans-serif';
+		ctx.textAlign    = 'center';
+		ctx.textBaseline = 'middle';
+		ctx.fillText( params.txt, params.x, params.y );
+		ctx.closePath();
+	}
+
+	function drawRectangle() {
 		ctx.beginPath();
 		ctx.lineWidth   = 10;
 		ctx.fillStyle   = '#F5F5F5';
@@ -138,7 +179,6 @@
 	    ctx.fillRect(rect.startX, rect.startY, rect.w, rect.h);
 	    ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
 	    ctx.closePath();
-	    drawHandles();
 	}
 	   
 	function drawCircle(x, y, radius) {
