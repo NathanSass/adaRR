@@ -12,13 +12,14 @@
 		drag        = false,
 		mouseX,
 		mouseY,
+		setData,
 		closeEnough = 10,
 		dragTL = dragBL = dragTR = dragBR = false;
 
 	///////////////////////////////////////////
 	
-	exports.init = function(){
-
+	exports.init = function(params){
+		setData = params.setData;
 		buildCanvas();
 
 		canvas.addEventListener('mousedown', mouseDown, false);
@@ -101,6 +102,9 @@
     }
 
     function mouseUp() {
+    	if (dragTL || dragTR || dragBL || dragBR) {
+    		setData( {w: rect.w, h: rect.h} );
+    	}
         dragTL = dragTR = dragBL = dragBR = false;
     }
 

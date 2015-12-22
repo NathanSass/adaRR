@@ -13,6 +13,8 @@
 
 	module.exports = React.createClass({
 		
+		dataModel: '',
+		
 		getInitialState: function() {
 		    return { data: 'booom', newHttp: this.newHttp };
 		},
@@ -38,12 +40,24 @@
 
 		},
 
-		newHttp: function(data) {
+		setData: function(data) {
+			this.dataModel = data;
+			return this.dataModel;
+		},
 
-			if (data.currentPage == 1) { // Currently no support for other room shapes so no point in http call
-				page('/configureRoom');
+		getData: function() {
+			return this.dataModel;
+		},
+
+		newHttp: function() {
+			var data = this.getData();
+			
+			if (data.hasOwnProperty('directRoute')) { // Currently no support for other room shapes so no point in http call
+				page(data.directRoute);
+			} else {
+				var url = "finddoor/" + JSON.stringify(data);
 			}
-			console.log("PARENT FUNCTION CALLLED ~~~~~~~~~~~ YAY with this data: ", data);
+			console.log("Page2 PARENT FUNCTION CALLLED ~~~~~~~~~~~ YAY with this data: ", data);
 		},
 		
 		render: function () {
@@ -53,10 +67,10 @@
 					<Header />
 					
 					<ContentArea1>
-						<ResizeableRoom />
+						<ResizeableRoom setData={this.setData} />
 					</ContentArea1>
 					
-					<ContentArea2 newHttp={this.newHttp} actionableQuestion="Adjust the walls until they match your room.">
+					<ContentArea2 setData={this.setData} newHttp={this.newHttp} actionableQuestion="Adjust the walls until they match your room.">
 					</ContentArea2>
 					
 					<Footer />

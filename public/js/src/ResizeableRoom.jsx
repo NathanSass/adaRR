@@ -5,8 +5,11 @@
 	module.exports = React.createClass({
 		
 		componentDidMount: function() {
+			var params = {
+				setData: this.props.setData
+			};
 
-			DrawResizeableRoom.init();
+			DrawResizeableRoom.init(params);
 
 		},
 

@@ -17,19 +17,17 @@
 			var value = data[key];
 			obj[key]  = value;
 			
+			obj['directRoute'] = '/configureRoom'; //Temporary until other room shapes get added
+			
+			this.props.setData(obj); // For network call
 			this.setState(obj);
 		},
 		
 		handleNextButton: function(event) {
 			var selectedRoom = this.state.selected;
 			
-			var data = {
-				currentPage: 1,
-				selectedRoom: selectedRoom
-			};
-			
-			// Function call that sends an http request
-			this.props.newHttp(data);
+			// Function call that sends an http request, the data should already be there
+			this.props.newHttp();
 		},
 		/*
 			This takes the elements that will be yielded and adds the necessary properties to them.

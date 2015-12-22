@@ -6,11 +6,12 @@
 	var Header       = require('./Header.jsx');
 	var ContentArea1 = require('./ContentArea1.jsx');
 	var ContentArea2 = require('./ContentArea2.jsx');
-	var Footer       = require('./Footer.jsx')
+	var Footer       = require('./Footer.jsx');
 	var RoomCards = require('./RoomCards.jsx');
 
 
 	module.exports = React.createClass({
+		dataModel: '',
 		
 		getInitialState: function() {
 		    return { data: 'booom', newHttp: this.newHttp };
@@ -37,12 +38,24 @@
 
 		},
 
-		newHttp: function(data) {
+		setData: function(data) {
+			this.dataModel = data;
+			return this.dataModel;
+		},
 
-			if (data.currentPage == 1) { // Currently no support for other room shapes so no point in http call
-				page('/configureRoom');
+		getData: function() {
+			return this.dataModel;
+		},
+
+		newHttp: function() {
+			var data = this.getData();
+			
+			if (data.hasOwnProperty('directRoute')) { // Currently no support for other room shapes so no point in http call
+				page(data.directRoute);
+			} else {
+				var url = "finddoor/" + JSON.stringify(data);
 			}
-			console.log("PARENT FUNCTION CALLLED ~~~~~~~~~~~ YAY with this data: ", data);
+			console.log("Page2 PARENT FUNCTION CALLLED ~~~~~~~~~~~ YAY with this data: ", data);
 		},
 		
 		render: function () {
@@ -59,7 +72,7 @@
 						<div className="greeter">Welcome! Today we are going to design an accessible bathroom</div>
 					</ContentArea1>
 					
-					<ContentArea2 newHttp={this.newHttp} actionableQuestion="What is the shape of your room?">
+					<ContentArea2  setData={this.setData} newHttp={this.newHttp} actionableQuestion="What is the shape of your room?">
 						<RoomCards />
 					</ContentArea2>
 					
