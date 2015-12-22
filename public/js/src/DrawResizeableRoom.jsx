@@ -130,16 +130,24 @@
 	}
 
 	function draw() {
-	    ctx.fillStyle = "#222222";
+		ctx.beginPath();
+		ctx.lineWidth   = 10;
+		ctx.fillStyle   = '#F5F5F5';
+		ctx.strokeStyle = '#979797';
+		ctx.stroke();
 	    ctx.fillRect(rect.startX, rect.startY, rect.w, rect.h);
+	    ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
+	    ctx.closePath();
 	    drawHandles();
 	}
 	   
 	function drawCircle(x, y, radius) {
-	    ctx.fillStyle = "#FF0000";
+		ctx.beginPath();
+	    ctx.fillStyle = "#6F6F6F";
 	    ctx.beginPath();
 	    ctx.arc(x, y, radius, 0, 2 * Math.PI);
 	    ctx.fill();
+	    ctx.closePath();
 	}
 
 	function drawHandles() {
