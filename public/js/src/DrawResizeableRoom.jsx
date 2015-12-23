@@ -103,7 +103,7 @@
 
     function mouseUp() {
     	if (dragTL || dragTR || dragBL || dragBR) {
-    		setData( {w: rect.w, h: rect.h} );
+    		setData( { data: {w: rect.w, h: rect.h} } );
     	}
         dragTL = dragTR = dragBL = dragBR = false;
     }

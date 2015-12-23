@@ -7,9 +7,16 @@ router.get('/*', function(req, res, next) {
 	res.render('index');
 });
 
+router.post('/finddoor/:roomDimensions', function(req, res, next) {
+	var dirtyRoomDimenstions = req.params.roomDimensions;	
+	// Do something with dirty room string so that it returns a drawable shape and conveys to react to load a new view
+	// needs to return a data object of a single room to be plot
+	res.send("Hi");
+});
+
 /* GET rectangular room builder page*/
-router.post('/:roomParams', function(req, res, next) { // x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5'
-	
+router.post('/toiletOptions/:roomParams', function(req, res, next) { // toiletOptions/x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5'
+
 	var dirtyRoomString    = req.params.roomParams;
 
 	var restroomsToDisplay = rrController.getRestrooms(dirtyRoomString);

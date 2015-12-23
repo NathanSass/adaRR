@@ -23,29 +23,28 @@
 					 newHttp: this.newHttp,
 					 actionableQuestion: '',
 					 setData: this.setData
-					};
+					}
 		},
 		///////////////////
 		
-		handleServerData: function(data) {
+		handleServerData: function(data) { // CURRENTLY NOT USED, but will be needed again :P
 			var rooms = JSON.parse(data);
-			
 			this.setState( {data: rooms } );
 		},
 
-		sendDataToServer: function() {
-			var Success = false;
+		postRoute: function(url) {
+
+			var url  = this.state.nextUrl + JSON.stringify(this.getData().data);
+			
 			$.ajax({
-				// url: 'x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5',
-				url: 'x=10&y=10&doorpos1=0.5&doorpos1=0&doorpos2=2.25&doorpos2=0',
+				url: url,
 				crossDomain: true,
 				type: 'POST',
-				success: function(data) { this.handleServerData(data); }.bind(this),
+				success: function(data) { console.log("postRoute success: ", data) }.bind(this),
 				error: function(er) {
 					console.log('got error');
 				}
 			});
-
 		},
 
 		setData: function(data) {
@@ -65,7 +64,8 @@
 			} else {
 				var url = "finddoor/" + JSON.stringify(data);
 			}
-			console.log("newHttp called with this data: ", data);
+			
+			this.postRoute();
 		},
 
 		//////////////////////
@@ -94,15 +94,21 @@
 			page('/configureRoom', function (ctx) {
 
 				self.setState({ contentArea1: 
-								<ResizeableRoom setData={self.state.setData} />,
+									<ResizeableRoom setData={self.state.setData} />,
 								contentArea2: <div />,
-								actionableQuestion: "Adjust the walls until they match your room."
-							});
+								actionableQuestion: "Adjust the walls until they match your room.",
+								nextUrl: "finddoor/"
+								});
 		
 			});
 
 			page('*', function (ctx) {
-				// console.log("React Router: visited random");
+				
+				self.setState({ contentArea1: 
+									<h1> This page doesn't exist yet </h1>,
+								contentArea2: <div />,
+								actionableQuestion: ""
+								});
 			});
 
 			page.start();
@@ -110,7 +116,6 @@
 		},
 
 		render: function () {
-
 			return (
 				<div>
 					<Header />
