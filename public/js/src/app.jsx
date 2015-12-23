@@ -62,10 +62,9 @@
 			if (data.hasOwnProperty('directRoute')) { // Currently no support for other room shapes so no point in http call
 				page(data.directRoute);
 			} else {
-				var url = "finddoor/" + JSON.stringify(data);
+				this.postRoute();
 			}
 			
-			this.postRoute();
 		},
 
 		//////////////////////
