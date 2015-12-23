@@ -5,6 +5,13 @@
 
 	var ROOM;
 
+	exports.formatForFindDoor = function(room) {
+		return {
+			rect: room
+		};
+	};
+	///////////////////////////////////////////////////////////////
+
 	exports.newRoom = function(urlString) {
 		var cleanParams = sanitizeParams(urlString);
 		if (cleanParams) {

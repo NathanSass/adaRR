@@ -8,10 +8,11 @@ router.get('/*', function(req, res, next) {
 });
 
 router.post('/finddoor/:roomDimensions', function(req, res, next) {
-	var dirtyRoomDimensions = req.params.roomDimensions;	
-	// Do something with dirty room string so that it returns a drawable shape and conveys to react to load a new view
-	// needs to return a data object of a single room to be plot
-	res.send("Hi" + dirtyRoomDimensions);
+	var dirtyRoomDimensions = JSON.parse(req.params.roomDimensions);	
+	
+	var data = rrController.getRoomNoDoor(dirtyRoomDimensions);
+	
+	res.send(data);
 });
 
 /* GET rectangular room builder page*/

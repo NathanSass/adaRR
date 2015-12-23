@@ -20,3 +20,9 @@ exports.getRestrooms = function (roomParams) {
 	
 	}
 };
+
+exports.getRoomNoDoor = function(roomParams) {
+
+	return room.formatForFindDoor(roomParams);
+
+};
