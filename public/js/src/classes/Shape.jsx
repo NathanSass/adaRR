@@ -56,14 +56,13 @@ class Door extends Shape {
 			y: 50,
 			w: 70,
 			h: 12
-		}
-		super(doorParams)
+		};
+		super(doorParams);
 		this.fillStyle   = 'purple';
 		// this.lineWidth   = 0;
 		// this.strokeStyle = '#979797';
 		this.isDraggable = true;
 	}
 }
+
 export { Shape, Room, Door };
-
-
