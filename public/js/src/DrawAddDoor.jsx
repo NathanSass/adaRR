@@ -21,6 +21,14 @@
 		this.dragoffx  = 0;     // See mousedown and mousemove events for explanation
 		this.dragoffy  = 0;
 
+		// **** Options! ****
+  
+		this.selectionColor = '#CC0000';
+		this.selectionWidth = 2;  
+		this.interval = 30;
+		var that = this;
+		setInterval(function() { this.draw(); }.bind(this), this.interval);
+
 		//fixes a problem where double clicking causes text to get selected on the canvas
 		canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
 	}
@@ -86,6 +94,54 @@
 		}.bind(this), true);
 	};
 
+
+	CanvasState.prototype.addShape = function(shape) {
+		this.shapes.push(shape);
+		this.valid = false;
+	};
+
+	CanvasState.prototype.clear = function() {
+		this.ctx.clearRect(0, 0, this.width, this.height);
+	};
+
+	/*
+		While draw is called as often as the INTERVAL variable demands,
+		It only ever does something if the canvas gets invalidated by our code
+	*/ 
+	CanvasState.prototype.draw = function() {
+	  // if our state is invalid, redraw and validate!
+	  if (!this.valid) {
+	    var ctx = this.ctx;
+	    var shapes = this.shapes;
+	    this.clear();
+	    
+	    // ** Add stuff you want drawn in the background all the time here **
+	    
+	    // draw all shapes
+	    var l = shapes.length;
+	    for (var i = 0; i < l; i++) {
+	      var shape = shapes[i];
+	      // We can skip the drawing of elements that have moved off the screen:
+	      if (shape.x > this.width || shape.y > this.height ||
+	          shape.x + shape.w < 0 || shape.y + shape.h < 0) continue;
+	      shapes[i].draw(ctx);
+	    }
+	    
+	    // draw selection
+	    // right now this is just a stroke along the edge of the selected Shape
+	    if (this.selection != null) {
+	      ctx.strokeStyle = this.selectionColor;
+	      ctx.lineWidth = this.selectionWidth;
+	      var mySel = this.selection;
+	      ctx.strokeRect(mySel.x,mySel.y,mySel.w,mySel.h);
+	    }
+	    
+	    // ** Add stuff you want drawn on top all the time here **
+	    
+	    this.valid = true;
+	  }
+	};
+
 	/* 
 		Creates an object with x and y defined, set to the mouse position relative to the state's canvas
 		If you wanna be super-correct this can be tricky, we have to worry about padding and borders
@@ -106,6 +162,33 @@
 	  
 	  return {x: mx, y: my};
 	};
+
+	///////////////////////////////////////// SHAPE //////////////////////////////////////////////
+	function Shape(x, y, w, h, fill) {
+		// This is a very simple and unsafe constructor. All we're doing is checking if the values exist.
+		// "x || 0" just means "if there is a value for x, use that. Otherwise use 0."
+		// But we aren't checking anything else! We could put "Lalala" for the value of x 
+		this.x = x || 0;
+		this.y = y || 0;
+		this.w = w || 1;
+		this.h = h || 1;
+		this.fill = fill || '#AAAAAA';
+	}
+
+	// Draws this shape to a given context
+	Shape.prototype.draw = function(ctx) {
+		ctx.fillStyle = this.fill;
+		ctx.fillRect(this.x, this.y, this.w, this.h);
+	};
+
+	// Determine if a point is inside the shape's bounds
+	Shape.prototype.contains = function(mx, my) {
+		// All we have to do is make sure the Mouse X,Y fall in the area between
+		// the shape's X and (X + Width) and its Y and (Y + Height)
+		return  (this.x <= mx) && (this.x + this.w >= mx) &&
+		      (this.y <= my) && (this.y + this.h >= my);
+	};
+	//////////////////////////////////////////////////////////////////////////////////////////////
 
 	function addListeners() {
 		console.log("ListenersAdded");
@@ -135,6 +218,7 @@
 		C.mouseMoveListener();
 		C.mouseUpListener();
 		C.dblClickListener();
+		C.addShape(new Shape(60,140,40,60, 'lightskyblue'));
 	};
 
 }());
