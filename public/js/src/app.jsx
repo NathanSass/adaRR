@@ -111,7 +111,7 @@
 			page('/finddoor', function (ctx) {
 				
 				self.setState({ contentArea1: 
-									<AddDoor setData={self.state.setData} rect={self.getData()}/>,
+									<AddDoor setData={self.state.setData} rect={self.getData().rect}/>,
 								contentArea2: <div />,
 								actionableQuestion: "Click on the walls to add your door, then adjust until correct.",
 								nextUrl: "chooseToiletConfig",

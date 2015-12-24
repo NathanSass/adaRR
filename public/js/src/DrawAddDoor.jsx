@@ -25,8 +25,8 @@
   
 		this.selectionColor = '#CC0000';
 		this.selectionWidth = 2;  
-		this.interval = 30;
-		var that = this;
+		this.interval       = 30;
+
 		setInterval(function() { this.draw(); }.bind(this), this.interval);
 
 		//fixes a problem where double clicking causes text to get selected on the canvas
@@ -43,7 +43,7 @@
 			var l      = shapes.length;
 			
 			for (var i = l-1; i >= 0; i--) {
-				if (shapes[i].contains(mx, my)) {
+				if (shapes[i].contains(mx, my) && shapes[i].isDraggable) {
 					var mySel = shapes[i];
 					// Keep track of where in the object we clicked
 					// so we can move it smoothly (see mousemove)
@@ -129,7 +129,7 @@
 	    
 	    // draw selection
 	    // right now this is just a stroke along the edge of the selected Shape
-	    if (this.selection != null) {
+	    if (this.selection !== null) {
 	      ctx.strokeStyle = this.selectionColor;
 	      ctx.lineWidth = this.selectionWidth;
 	      var mySel = this.selection;
@@ -164,21 +164,36 @@
 	};
 
 	///////////////////////////////////////// SHAPE //////////////////////////////////////////////
-	function Shape(x, y, w, h, fill) {
+	function Shape(params) {
 		// This is a very simple and unsafe constructor. All we're doing is checking if the values exist.
 		// "x || 0" just means "if there is a value for x, use that. Otherwise use 0."
 		// But we aren't checking anything else! We could put "Lalala" for the value of x 
-		this.x = x || 0;
-		this.y = y || 0;
-		this.w = w || 1;
-		this.h = h || 1;
-		this.fill = fill || '#AAAAAA';
+		this.x    = params.x;
+		this.y    = params.y;
+		this.w    = params.w;
+		this.h    = params.h;
+		this.type = params.type;
+		
+		if (this.type === "room") {
+			this.fillStyle   = '#F5F5F5';
+			this.lineWidth   = 10;
+			this.strokeStyle = '#979797';
+			this.isDraggable = false;
+		}
 	}
 
 	// Draws this shape to a given context
 	Shape.prototype.draw = function(ctx) {
-		ctx.fillStyle = this.fill;
-		ctx.fillRect(this.x, this.y, this.w, this.h);
+		ctx.beginPath();
+
+		ctx.lineWidth   = this.lineWidth;
+		ctx.fillStyle   = this.fillStyle;
+		ctx.strokeStyle = this.strokeStyle;
+		ctx.stroke();
+	    ctx.fillRect(this.x, this.y, this.w, this.h);
+	    ctx.strokeRect(this.x, this.y, this.w, this.h);
+
+		ctx.closePath();
 	};
 
 	// Determine if a point is inside the shape's bounds
@@ -218,7 +233,15 @@
 		C.mouseMoveListener();
 		C.mouseUpListener();
 		C.dblClickListener();
-		C.addShape(new Shape(60,140,40,60, 'lightskyblue'));
+		var room = {
+			x: 100,
+			y: 50,
+			w: params.rect.w,
+			h: params.rect.h,
+			type: "room"
+		};
+		C.addShape(new Shape(room));
+		// C.addShape(new Shape(60,140,40,60, 'lightskyblue'));
 	};
 
 }());
