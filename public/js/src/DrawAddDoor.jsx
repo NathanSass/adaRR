@@ -1,5 +1,5 @@
 (function() {
-	
+	"use strict";
 	var exports = module.exports;
 	
 	var Util    = require('./DrawingUtil.jsx');
@@ -164,45 +164,53 @@
 	};
 
 	///////////////////////////////////////// SHAPE //////////////////////////////////////////////
-	function Shape(params) {
-		// This is a very simple and unsafe constructor. All we're doing is checking if the values exist.
-		// "x || 0" just means "if there is a value for x, use that. Otherwise use 0."
-		// But we aren't checking anything else! We could put "Lalala" for the value of x 
-		this.x    = params.x;
-		this.y    = params.y;
-		this.w    = params.w;
-		this.h    = params.h;
-		this.type = params.type;
+
+	class Shape {
 		
-		if (this.type === "room") {
+		constructor(params){
+			this.x           = params.x;
+			this.y           = params.y;
+			this.w           = params.w;
+			this.h           = params.h;
+			this.isDraggable = true;
+		}
+		
+		// Draws this shape to a given context
+		draw(ctx) {
+			ctx.beginPath();
+
+			ctx.lineWidth   = this.lineWidth;
+			ctx.fillStyle   = this.fillStyle;
+			ctx.strokeStyle = this.strokeStyle;
+			ctx.stroke();
+		    ctx.fillRect(this.x, this.y, this.w, this.h);
+		    ctx.strokeRect(this.x, this.y, this.w, this.h);
+
+			ctx.closePath();
+		}
+
+		// Determine if a point is inside the shape's bounds
+		contains(mx, my) {
+			// All we have to do is make sure the Mouse X,Y fall in the area between
+			// the shape's X and (X + Width) and its Y and (Y + Height)
+			return  (this.x <= mx) && (this.x + this.w >= mx) &&
+			      (this.y <= my) && (this.y + this.h >= my);
+			
+		}
+	}
+
+	class Room extends Shape {
+		constructor(params) {
+			super(params);
+			
 			this.fillStyle   = '#F5F5F5';
 			this.lineWidth   = 10;
 			this.strokeStyle = '#979797';
 			this.isDraggable = false;
 		}
+
 	}
-
-	// Draws this shape to a given context
-	Shape.prototype.draw = function(ctx) {
-		ctx.beginPath();
-
-		ctx.lineWidth   = this.lineWidth;
-		ctx.fillStyle   = this.fillStyle;
-		ctx.strokeStyle = this.strokeStyle;
-		ctx.stroke();
-	    ctx.fillRect(this.x, this.y, this.w, this.h);
-	    ctx.strokeRect(this.x, this.y, this.w, this.h);
-
-		ctx.closePath();
-	};
-
-	// Determine if a point is inside the shape's bounds
-	Shape.prototype.contains = function(mx, my) {
-		// All we have to do is make sure the Mouse X,Y fall in the area between
-		// the shape's X and (X + Width) and its Y and (Y + Height)
-		return  (this.x <= mx) && (this.x + this.w >= mx) &&
-		      (this.y <= my) && (this.y + this.h >= my);
-	};
+	
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
 	function addListeners() {
@@ -233,14 +241,14 @@
 		C.mouseMoveListener();
 		C.mouseUpListener();
 		C.dblClickListener();
-		var room = {
+		var roomParams = {
 			x: 100,
 			y: 50,
 			w: params.rect.w,
 			h: params.rect.h,
-			type: "room"
 		};
-		C.addShape(new Shape(room));
+		
+		C.addShape(new Room(roomParams));
 		// C.addShape(new Shape(60,140,40,60, 'lightskyblue'));
 	};
 
