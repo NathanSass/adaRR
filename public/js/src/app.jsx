@@ -5,16 +5,17 @@
 	var page       = require('page');
 
 
-	var Header       = require('./Header.jsx');
-	var ContentArea1 = require('./ContentArea1.jsx');
-	var ContentArea2 = require('./ContentArea2.jsx');
-	var Footer       = require('./Footer.jsx');
+	var Header         = require('./Header.jsx');
+	var ContentArea1   = require('./ContentArea1.jsx');
+	var ContentArea2   = require('./ContentArea2.jsx');
+	var Footer         = require('./Footer.jsx');
 	
 	var RoomCards      = require('./RoomCards.jsx');
 	var ResizeableRoom = require('./ResizeableRoom.jsx');
 
 
 	var Router = React.createClass({
+		
 		dataModel: '',
 		
 		getInitialState: function () {
@@ -23,24 +24,29 @@
 					 newHttp: this.newHttp,
 					 actionableQuestion: '',
 					 setData: this.setData
-					}
+					};
 		},
+		
 		///////////////////
 		
 		handleServerData: function(data) { // CURRENTLY NOT USED, but will be needed again :P
-			var rooms = JSON.parse(data);
-			this.setState( {data: rooms } );
+			console.log("data ", data);
+			if ( this.state.hasOwnProperty('nextUrl') ) {
+				this.setData(data);
+				page("/" + this.state.nextUrl);
+			}
+			// this.setState( {data: rooms } );
 		},
 
 		postRoute: function(url) {
 
-			var url  = this.state.nextUrl + JSON.stringify(this.getData().data);
+			var url  = this.state.nextUrl + '/' + JSON.stringify(this.getData().data);
 			
 			$.ajax({
 				url: url,
 				crossDomain: true,
 				type: 'POST',
-				success: function(data) { console.log("postRoute success: ", data) }.bind(this),
+				success: this.handleServerData,
 				error: function(er) {
 					console.log('got error');
 				}
@@ -96,7 +102,18 @@
 									<ResizeableRoom setData={self.state.setData} />,
 								contentArea2: <div />,
 								actionableQuestion: "Adjust the walls until they match your room.",
-								nextUrl: "finddoor/"
+								nextUrl: "finddoor"
+								});
+		
+			});
+
+			page('/finddoor', function (ctx) {
+				
+				self.setState({ contentArea1: 
+									<h1> Add door Widget Here</h1>,
+								contentArea2: <div />,
+								actionableQuestion: "Click on the walls to add your door, then adjust until correct.",
+								nextUrl: "chooseToiletConfig"
 								});
 		
 			});
