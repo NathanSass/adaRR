@@ -12,6 +12,7 @@
 	
 	var RoomCards      = require('./RoomCards.jsx');
 	var ResizeableRoom = require('./ResizeableRoom.jsx');
+	var AddDoor        = require('./AddDoor.jsx');
 
 
 	var Router = React.createClass({
@@ -110,10 +111,11 @@
 			page('/finddoor', function (ctx) {
 				
 				self.setState({ contentArea1: 
-									<h1> Add door Widget Here</h1>,
+									<AddDoor setData={self.state.setData} rect={self.getData()}/>,
 								contentArea2: <div />,
 								actionableQuestion: "Click on the walls to add your door, then adjust until correct.",
-								nextUrl: "chooseToiletConfig"
+								nextUrl: "chooseToiletConfig",
+								data: self.getData()
 								});
 		
 			});
