@@ -26,13 +26,12 @@
 	}
 
 	CanvasState.prototype.mouseDownListener = function() {
-		var myState = this;
 		this.canvas.addEventListener('mousedown', function(e) {
 			
-			var mouse  = myState.getMouse(e);
+			var mouse  = this.getMouse(e);
 			var mx     = mouse.x;
 			var my     = mouse.y;
-			var shapes = myState.shapes;
+			var shapes = this.shapes;
 			var l      = shapes.length;
 			
 			for (var i = l-1; i >= 0; i--) {
@@ -40,54 +39,51 @@
 					var mySel = shapes[i];
 					// Keep track of where in the object we clicked
 					// so we can move it smoothly (see mousemove)
-					myState.dragoffx = mx - mySel.x;
-					myState.dragoffy = my - mySel.y;
-					myState.dragging = true;
-					myState.selection = mySel;
-					myState.valid = false;
+					this.dragoffx = mx - mySel.x;
+					this.dragoffy = my - mySel.y;
+					this.dragging = true;
+					this.selection = mySel;
+					this.valid = false;
 					return;
 				}
 			}
 			// havent returned means we have failed to select anything.
 			// If there was an object selected, we deselect it
-			if (myState.selection) {
-				myState.selection = null;
-				myState.valid = false; // Need to clear the old selection border
+			if (this.selection) {
+				this.selection = null;
+				this.valid = false; // Need to clear the old selection border
 			}
-		}, true);
+		}.bind(this), true);
 	};
 
 	CanvasState.prototype.mouseMoveListener = function() {
-		var myState = this;
 		this.canvas.addEventListener('mousemove', function(e) {
-			if (myState.dragging){
-				var mouse = myState.getMouse(e);
+			if (this.dragging){
+				var mouse = this.getMouse(e);
 				// We don't want to drag the object by its top-left corner, we want to drag it
 				// from where we clicked. Thats why we saved the offset and use it here
-				myState.selection.x = mouse.x - myState.dragoffx;
-				myState.selection.y = mouse.y - myState.dragoffy;   
-				myState.valid = false; // Something's dragging so we must redraw
+				this.selection.x = mouse.x - this.dragoffx;
+				this.selection.y = mouse.y - this.dragoffy;   
+				this.valid = false; // Something's dragging so we must redraw
 			}
-		}, true);
+		}.bind(this), true);
 	};
 
 	CanvasState.prototype.mouseUpListener = function() {
-		var myState = this;
 		this.canvas.addEventListener('mouseup', function(e) {
-			myState.dragging = false;
-		}, true);
+			this.dragging = false;
+		}.bind(this), true);
 	};
 
 	/*
 		Adds a new shapes
 	*/
 	CanvasState.prototype.dblClickListener = function() {
-		var myState = this;
 		
 		this.canvas.addEventListener('dblclick', function(e) {
-			var mouse = myState.getMouse(e);
-			// myState.addShape(new Shape(mouse.x - 10, mouse.y - 10, 20, 20, 'rgba(0,255,0,.6)'));
-		}, true);
+			var mouse = this.getMouse(e);
+			// this.addShape(new Shape(mouse.x - 10, mouse.y - 10, 20, 20, 'rgba(0,255,0,.6)'));
+		}.bind(this), true);
 	};
 
 	/* 
