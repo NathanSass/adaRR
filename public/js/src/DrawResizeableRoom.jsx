@@ -14,7 +14,10 @@
 		mouseY,
 		setData,
 		closeEnough = 10,
-		dragTL = dragBL = dragTR = dragBR = false;
+		dragTL = false,
+		dragBL = false,
+		dragTR = false,
+		dragBR = false;
 
 	///////////////////////////////////////////
 	

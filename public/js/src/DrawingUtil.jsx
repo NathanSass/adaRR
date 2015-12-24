@@ -94,7 +94,7 @@
 		Given a degree of rotation
 		Finds the equivalent x,y coordinate pair in Ft
 	*/
-	findEquivalentCoordinate = function (params) {
+	exports.findEquivalentCoordinate = function (params) {
 		var rotation = params.rotation;
 
 		var _x = params.x, // these are the disired coordinates
@@ -129,7 +129,7 @@
 		Given a word and coordinate
 		Draws text
 	*/
-	drawText = function(params) {
+	exports.drawText = function(params) {
 		var ctx = params.ctx;
 		ctx.beginPath();
 		ctx.fillStyle    = 'black';

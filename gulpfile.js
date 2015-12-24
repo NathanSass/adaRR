@@ -1,14 +1,15 @@
 var gulp         = require('gulp');
 var sass         = require('gulp-sass');
 var source       = require('vinyl-source-stream');
-var reactify     = require('reactify');
+var babelify     = require("babelify");
 var browserify   = require('browserify');
 var autoprefixer = require('gulp-autoprefixer');
 
 
+
 gulp.task('buildReact', function(){
 	browserify('./public/js/src/app.jsx')
-		.transform(reactify)
+		.transform(babelify, {presets: ["es2015", "react"]})
 		.bundle()
 		.pipe(source('app.js'))
 		.pipe(gulp.dest('public/js/build/'));
