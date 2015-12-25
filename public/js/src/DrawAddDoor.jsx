@@ -78,24 +78,45 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 
 				var doorW = door.w;
 				var doorH = door.h;
+				var dragSpace = 30;
 
-				if ( xPosition > this.ROOM.min.x && 
-					 xPosition < this.ROOM.max.x - door.w ) { // First Horiz
+				var testShapeParams = {
+					x: xPosition,
+					y: yPosition,
+					w: 10,
+					h: 10
+				};
+
+				var z = new Shape(testShapeParams);
+					z.draw(this.ctx);
+				
+				var roomW = this.ROOM.max.x - this.ROOM.min.x;
+				var roomH = this.ROOM.max.y - this.ROOM.min.y;
+				
+				if (xPosition > this.ROOM.min.x && 
+					xPosition < this.ROOM.max.x - door.w && 
+					yPosition < this.ROOM.min.y + dragSpace &&
+					yPosition > this.ROOM.min.y - dragSpace) { // First Horiz
+					
 					door.makeHoriz();
-					console.log("First Horiz")
 					door.x = mouse.x - this.dragoffx;
-					door.y = this.ROOM.min.y - this.ROOM.border;   
+					door.y = this.ROOM.min.y - this.ROOM.border;  
+					console.log("First Horiz   X : Y", door.x, ' : ', door.y); 
 
 					// door.y = mouse.y - this.dragoffy;   
 					
 				}
 
-				if ( xPosition >= this.ROOM.max.x - door.w ) { // First Vert
-					console.log("First Vert")
-					door.makeVert();
-									// door.h = doorW;
-									// door.w = doorH;
-
+				if (xPosition > this.ROOM.max.x - door.h &&
+					yPosition > this.ROOM.min.y - door.h &&
+					yPosition < this.ROOM.max.y - door.h &&
+					xPosition > this.ROOM.max.x - dragSpace &&
+					xPosition < this.ROOM.max.x + dragSpace ) { // First Vert
+					 
+						door.makeVert();
+						door.x = this.ROOM.max.x - this.ROOM.border;
+						door.y = mouse.y - this.dragoffy; 
+						console.log("First Vert   X : Y", door.x, ' : ', door.y); 
 				}
 
 				

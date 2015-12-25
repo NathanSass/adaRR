@@ -7,6 +7,7 @@ class Shape extends null {
 		this.y           = params.y;
 		this.w           = params.w;
 		this.h           = params.h;
+		this.fillStyle   = "#4A4A4A";
 		this.isDraggable = true;
 	}
 	
@@ -58,18 +59,20 @@ class Door extends Shape {
 			h: 10
 		};
 		super(doorParams);
-		this.fillStyle   = 'purple';
+		this.fillStyle   = '#D8D8D8';
 		this.isDraggable = true;
+		this.isHoriz     = true;
 	}
 
 	makeHoriz() {
 		var side1 = this.w;
 		var side2 = this.h;
-		
 		if (side1 < side2) {
 			this.w = side2;
 			this.h = side1;
 		}
+		
+		this.isHoriz = true;
 	}
 
 	makeVert() {
@@ -80,6 +83,8 @@ class Door extends Shape {
 			this.w = side2;
 			this.h = side1;
 		}
+
+		this.isHoriz = false;
 	}
 }
 
