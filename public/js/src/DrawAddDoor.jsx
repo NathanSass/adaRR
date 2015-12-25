@@ -73,12 +73,11 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 			if ( this.dragging && objectClass == "Door" ){
 				var mouse = this.getMouse(e);
 				var door  = this.selection;
+				
 				var xPosition = mouse.x - this.dragoffx;
 				var yPosition = mouse.y - this.dragoffy;
-
-				var doorW = door.w;
-				var doorH = door.h;
-				var dragSpace = 30;
+				
+				var dragStrip = 30;
 
 				var testShapeParams = {
 					x: xPosition,
@@ -87,42 +86,63 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 					h: 10
 				};
 
-				var z = new Shape(testShapeParams);
-					z.draw(this.ctx);
+				var cursor = new Shape(testShapeParams);
+					
 				
 				var roomW = this.ROOM.max.x - this.ROOM.min.x;
 				var roomH = this.ROOM.max.y - this.ROOM.min.y;
 				
 				if (xPosition > this.ROOM.min.x && 
 					xPosition < this.ROOM.max.x - door.w && 
-					yPosition < this.ROOM.min.y + dragSpace &&
-					yPosition > this.ROOM.min.y - dragSpace) { // First Horiz
+					
+					yPosition < this.ROOM.min.y + dragStrip &&
+					yPosition > this.ROOM.min.y - dragStrip) { // First Horiz
 					
 					door.makeHoriz();
 					door.x = mouse.x - this.dragoffx;
 					door.y = this.ROOM.min.y - this.ROOM.border;  
-					console.log("First Horiz   X : Y", door.x, ' : ', door.y); 
-
-					// door.y = mouse.y - this.dragoffy;   
-					
+					cursor.draw(this.ctx);
 				}
 
-				if (xPosition > this.ROOM.max.x - door.h &&
-					yPosition > this.ROOM.min.y - door.h &&
+				if (xPosition > this.ROOM.min.x && 
+					xPosition < this.ROOM.max.x - door.w && 
+					
+					yPosition < this.ROOM.max.y + dragStrip &&
+					yPosition > this.ROOM.max.y - dragStrip) { // Second Horiz
+					
+					door.makeHoriz();
+					door.x = mouse.x - this.dragoffx;
+					door.y = this.ROOM.max.y - this.ROOM.border;
+					cursor.draw(this.ctx);  
+				}
+
+				if (yPosition > this.ROOM.min.y - door.h &&
 					yPosition < this.ROOM.max.y - door.h &&
-					xPosition > this.ROOM.max.x - dragSpace &&
-					xPosition < this.ROOM.max.x + dragSpace ) { // First Vert
+					
+					xPosition > this.ROOM.max.x - door.h &&
+					xPosition > this.ROOM.max.x - dragStrip &&
+					xPosition < this.ROOM.max.x + dragStrip ) { // First Vert
 					 
 						door.makeVert();
 						door.x = this.ROOM.max.x - this.ROOM.border;
 						door.y = mouse.y - this.dragoffy; 
-						console.log("First Vert   X : Y", door.x, ' : ', door.y); 
+						cursor.draw(this.ctx);
+				}
+
+				if (yPosition > this.ROOM.min.y - door.h &&
+					yPosition < this.ROOM.max.y - door.h &&
+
+					xPosition > this.ROOM.min.x - door.h &&
+					xPosition < this.ROOM.min.x + dragStrip &&
+					xPosition > this.ROOM.min.x - dragStrip ) { // Second Vert
+					 
+						door.makeVert();
+						door.x = this.ROOM.min.x - this.ROOM.border;
+						door.y = mouse.y - this.dragoffy; 
+						cursor.draw(this.ctx);
 				}
 
 				
-				// this.selection.w = doorW;
-				// this.selection.h = doorH;
-			
 				// We don't want to drag the object by its top-left corner, we want to drag it
 				// from where we clicked. Thats why we saved the offset and use it here
 			
