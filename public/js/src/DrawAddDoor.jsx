@@ -68,16 +68,61 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 
 	CanvasState.prototype.mouseMoveListener = function() {
 		this.canvas.addEventListener('mousemove', function(e) {
-			if (this.dragging){
+			var objectClass;
+			if (this.selection) { objectClass = this.selection.constructor.name; }
+			if ( this.dragging && objectClass == "Door" ){
 				var mouse = this.getMouse(e);
+				var door  = this.selection;
+				var xPosition = mouse.x - this.dragoffx;
+				var yPosition = mouse.y - this.dragoffy;
+
+				var doorW = door.w;
+				var doorH = door.h;
+
+				if ( xPosition > this.ROOM.min.x && 
+					 xPosition < this.ROOM.max.x - door.w ) { // First Horiz
+					door.makeHoriz();
+					console.log("First Horiz")
+					door.x = mouse.x - this.dragoffx;
+					door.y = this.ROOM.min.y - this.ROOM.border;   
+
+					// door.y = mouse.y - this.dragoffy;   
+					
+				}
+
+				if ( xPosition >= this.ROOM.max.x - door.w ) { // First Vert
+					console.log("First Vert")
+					door.makeVert();
+									// door.h = doorW;
+									// door.w = doorH;
+
+				}
+
+				
+				// this.selection.w = doorW;
+				// this.selection.h = doorH;
+			
 				// We don't want to drag the object by its top-left corner, we want to drag it
 				// from where we clicked. Thats why we saved the offset and use it here
-				this.selection.x = mouse.x - this.dragoffx;
-				this.selection.y = mouse.y - this.dragoffy;   
+			
+				// console.log("selection x, y", this.selection.x, " : ", this.selection.y);
 				this.valid = false; // Something's dragging so we must redraw
 			}
 		}.bind(this), true);
 	};
+
+	// CanvasState.prototype.mouseMoveListener = function() {
+	// 	this.canvas.addEventListener('mousemove', function(e) {
+	// 		if (this.dragging){
+	// 			var mouse = this.getMouse(e);
+	// 			// We don't want to drag the object by its top-left corner, we want to drag it
+	// 			// from where we clicked. Thats why we saved the offset and use it here
+	// 			this.selection.x = mouse.x - this.dragoffx;
+	// 			this.selection.y = mouse.y - this.dragoffy;   
+	// 			this.valid = false; // Something's dragging so we must redraw
+	// 		}
+	// 	}.bind(this), true);
+	// };
 
 	CanvasState.prototype.mouseUpListener = function() {
 		this.canvas.addEventListener('mouseup', function(e) {
@@ -85,9 +130,6 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 		}.bind(this), true);
 	};
 
-	/*
-		Adds a new shapes
-	*/
 	CanvasState.prototype.dblClickListener = function() {
 		
 		this.canvas.addEventListener('dblclick', function(e) {
@@ -96,7 +138,41 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 		}.bind(this), true);
 	};
 
+	/*
+		Adds room and creates a room type variable
+	*/
+	CanvasState.prototype.addRoom = function(room) {
+		this.ROOM        = {};
+		
+		this.ROOM.border = room.lineWidth / 2; //Used to offset door onto roomWall
+		
+		this.ROOM.min    = {
+			x: room.x,
+			y: room.y
+		};
 
+		this.ROOM.max    = {
+			x: room.x + room.w,
+			y: room.y + room.h
+		};
+		this.addShape(room);
+	};
+
+	/* 
+		Adds door
+	*/
+	CanvasState.prototype.addDoor = function(door){
+		
+		door.x = this.ROOM.min.x + this.ROOM.border;
+		door.y = this.ROOM.min.y - this.ROOM.border;
+		
+		this.addShape(door);
+	};
+
+	
+	/*
+		Adds a new shapes
+	*/
 	CanvasState.prototype.addShape = function(shape) {
 		this.shapes.push(shape);
 		this.valid = false;
@@ -197,8 +273,8 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 			h: params.rect.h,
 		};
 		
-		C.addShape(new Room(roomParams));
-		C.addShape(new Door());
+		C.addRoom(new Room(roomParams));
+		C.addDoor(new Door());
 	};
 
 }());

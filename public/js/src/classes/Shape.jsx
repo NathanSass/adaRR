@@ -52,16 +52,34 @@ class Room extends Shape {
 class Door extends Shape {
 	constructor(params){
 		var doorParams = {
-			x: 50,
-			y: 50,
+			x: 250,
+			y: 250,
 			w: 70,
-			h: 12
+			h: 10
 		};
 		super(doorParams);
 		this.fillStyle   = 'purple';
-		// this.lineWidth   = 0;
-		// this.strokeStyle = '#979797';
 		this.isDraggable = true;
+	}
+
+	makeHoriz() {
+		var side1 = this.w;
+		var side2 = this.h;
+		
+		if (side1 < side2) {
+			this.w = side2;
+			this.h = side1;
+		}
+	}
+
+	makeVert() {
+		var side1 = this.w;
+		var side2 = this.h;
+		
+		if (side1 > side2) {
+			this.w = side2;
+			this.h = side1;
+		}
 	}
 }
 
