@@ -178,7 +178,7 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 				doorpos2: [ door.pos2.x, door.pos2.y ]	
 			};
 			
-			this.setData(data);
+			this.setData({ data: data });
 			
 			this.dragging = false;
 		

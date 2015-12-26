@@ -33,8 +33,8 @@
 	}
 
 
-	function sanitizeParams (urlString) {
-		var dirtyRR = querystring.parse(urlString);
+	function sanitizeParams (urlObject) {
+		var dirtyRR = urlObject;
 		try {
 			
 			ROOM = {

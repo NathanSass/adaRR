@@ -114,7 +114,19 @@
 									<AddDoor setData={self.state.setData} rect={self.getData().rect}/>,
 								contentArea2: <div />,
 								actionableQuestion: "Click on the walls to add your door, then adjust until correct.",
-								nextUrl: "chooseToiletConfig",
+								nextUrl: "chooseToiletLocation",
+								data: self.getData()
+								});
+		
+			});
+
+			page('/chooseToiletLocation', function (ctx) {
+				
+				self.setState({ contentArea1: 
+									<h1>All toilet configurations will go here for selection</h1>,
+								contentArea2: <div />,
+								actionableQuestion: "Choose a toilet location that most matches your room",
+								nextUrl: "placeOtherFixtures",
 								data: self.getData()
 								});
 		
