@@ -21,7 +21,7 @@
 		render: function() {
 
 			return (
-				<div id="addDoorContainer" className="addDoorContainer">Add door widget</div>
+				<div id="addDoorContainer" className="addDoorContainer" />
 			)
 		}
 	});

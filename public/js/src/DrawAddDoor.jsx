@@ -25,9 +25,12 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 
 		// **** Options! ****
   
-		this.selectionColor = '#CC0000';
-		this.selectionWidth = 2;  
+		this.selectionColor = '#417505';
+		this.selectionWidth = 1;  
 		this.interval       = 30;
+
+		// **** Functions to talk to React ****
+		this.setData;
 
 		setInterval(function() { this.draw(); }.bind(this), this.interval);
 
@@ -142,40 +145,53 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 						cursor.draw(this.ctx);
 				}
 
-				
-				// We don't want to drag the object by its top-left corner, we want to drag it
-				// from where we clicked. Thats why we saved the offset and use it here
-			
-				// console.log("selection x, y", this.selection.x, " : ", this.selection.y);
 				this.valid = false; // Something's dragging so we must redraw
 			}
 		}.bind(this), true);
 	};
 
-	// CanvasState.prototype.mouseMoveListener = function() {
-	// 	this.canvas.addEventListener('mousemove', function(e) {
-	// 		if (this.dragging){
-	// 			var mouse = this.getMouse(e);
-	// 			// We don't want to drag the object by its top-left corner, we want to drag it
-	// 			// from where we clicked. Thats why we saved the offset and use it here
-	// 			this.selection.x = mouse.x - this.dragoffx;
-	// 			this.selection.y = mouse.y - this.dragoffy;   
-	// 			this.valid = false; // Something's dragging so we must redraw
-	// 		}
-	// 	}.bind(this), true);
-	// };
-
 	CanvasState.prototype.mouseUpListener = function() {
 		this.canvas.addEventListener('mouseup', function(e) {
+			
+			var door = {
+				pos1: {},
+				pos2: {}
+			};
+
+			if ( this.door.isHoriz ) { // Could micro optimize this by switching all x's and y's and w's & h's 
+				door.pos1.x = this.door.x - this.ROOM.room.x;
+				door.pos1.y = door.pos2.y = this.door.y - this.ROOM.room.y + this.ROOM.border;
+
+				door.pos2.x = door.pos1.x + this.door.w;
+
+			} else {
+				door.pos1.y = this.door.y - this.ROOM.room.y; 
+				door.pos1.x = door.pos2.x = this.door.x - this.ROOM.room.x + this.ROOM.border;
+
+				door.pos2.y = door.pos1.y + this.door.h;
+			}
+
+			var data = {
+				x: this.ROOM.room.w,
+				y: this.ROOM.room.h,
+				doorpos1: [ door.pos1.x, door.pos1.y ],
+				doorpos2: [ door.pos2.x, door.pos2.y ]	
+			};
+			
+			this.setData(data);
+			
 			this.dragging = false;
+		
 		}.bind(this), true);
 	};
 
+	/*
+		Currently no double click implemented
+	*/
 	CanvasState.prototype.dblClickListener = function() {
 		
 		this.canvas.addEventListener('dblclick', function(e) {
 			var mouse = this.getMouse(e);
-			// this.addShape(new Shape(mouse.x - 10, mouse.y - 10, 20, 20, 'rgba(0,255,0,.6)'));
 		}.bind(this), true);
 	};
 
@@ -196,6 +212,9 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 			x: room.x + room.w,
 			y: room.y + room.h
 		};
+		
+		this.ROOM.room = room;
+
 		this.addShape(room);
 	};
 
@@ -204,8 +223,10 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 	*/
 	CanvasState.prototype.addDoor = function(door){
 		
-		door.x = this.ROOM.min.x + this.ROOM.border;
-		door.y = this.ROOM.min.y - this.ROOM.border;
+		door.x    = this.ROOM.min.x + this.ROOM.border;
+		door.y    = this.ROOM.min.y - this.ROOM.border;
+		
+		this.door = door;
 		
 		this.addShape(door);
 	};
@@ -313,6 +334,8 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 			w: params.rect.w,
 			h: params.rect.h,
 		};
+
+		C.setData = params.setData; // React function for sending data to frontend
 		
 		C.addRoom(new Room(roomParams));
 		C.addDoor(new Door());
