@@ -25,6 +25,8 @@ router.post('/finddoor/:roomDimensions', function(req, res, next) {
 */
 router.post('/chooseToiletLocation/:roomParams', function(req, res, next) { // toiletOptions/x=8&y=5&doorpos1=5.75&doorpos1=5&doorpos2=8&doorpos2=5'
 
+	
+	// NEED TO VCONVERT UNITS TO FEET
 	var dirtyRoomObj       = JSON.parse(req.params.roomParams);
 
 	var restroomsToDisplay = rrController.getRestrooms(dirtyRoomObj);
