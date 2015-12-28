@@ -1,3 +1,5 @@
+// Not currently used
+
 var React = require('react');
 
 var Draw  = require('./Draw.jsx');

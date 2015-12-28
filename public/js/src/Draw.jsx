@@ -13,8 +13,11 @@
 	exports.draw = function(data) {
 		createDomResources();
 
+
 		toiletImg.onload = function() {
-			init(data);
+			buildCanvas(data.room);
+			
+			init(data.room);
 
 			drawRoom();
 			
@@ -24,10 +27,22 @@
 		};
 	};
 
+	function buildCanvas(data) {
+		var container = document.getElementById('roomsWithToilets');
+		var canvas    = document.createElement('canvas');
+		
+		ctx    = canvas.getContext("2d");
+
+		canvas.id     = data.id;
+		canvas.width  = data.canvasSize;
+		canvas.height = data.canvasSize;
+		canvas.style.background = '#FDFDFD';
+
+		container.appendChild(canvas);
+	}
+
 	function init(data) {
 
-		ctx = data.ctx;
-		
 		ROOM = {};
 		ROOM.id       = data.id;
 		ROOM.width    = data.maxX;

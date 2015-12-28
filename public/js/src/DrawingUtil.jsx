@@ -72,7 +72,7 @@
 
 		ctx.translate(_x, _y); // Moves the origin back to the top left
 
-		var fixtureCoord = findEquivalentCoordinate({
+		var fixtureCoord = this.findEquivalentCoordinate({
 			rotation: rotation,
 			'x': params.x,
 			'y': params.y,

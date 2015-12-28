@@ -10,9 +10,10 @@
 	var ContentArea2   = require('./ContentArea2.jsx');
 	var Footer         = require('./Footer.jsx');
 	
-	var RoomCards      = require('./RoomCards.jsx');
-	var ResizeableRoom = require('./ResizeableRoom.jsx');
-	var AddDoor        = require('./AddDoor.jsx');
+	var RoomCards        = require('./RoomCards.jsx');
+	var ResizeableRoom   = require('./ResizeableRoom.jsx');
+	var AddDoor          = require('./AddDoor.jsx');
+	var RoomsWithToilets = require('./RoomsWithToilets.jsx');
 
 
 	var Router = React.createClass({
@@ -33,6 +34,7 @@
 		handleServerData: function(data) { // CURRENTLY NOT USED, but will be needed again :P
 			console.log("data ", data);
 			if ( this.state.hasOwnProperty('nextUrl') ) {
+				data = JSON.parse(data);
 				this.setData(data);
 				page("/" + this.state.nextUrl);
 			}
@@ -123,8 +125,12 @@
 			page('/chooseToiletLocation', function (ctx) {
 				
 				self.setState({ contentArea1: 
-									<h1>All toilet configurations will go here for selection</h1>,
-								contentArea2: <div />,
+								<div id="roomsWithToilets" className="roomsWithToilet">
+									{self.getData().map(function(validRoom, idx){
+										return <RoomsWithToilets key={idx} data={validRoom} />
+									})}
+								</div>,
+								contentArea2: <h1>All toilet configurations will go here for selection</h1>,
 								actionableQuestion: "Choose a toilet location that most matches your room",
 								nextUrl: "placeOtherFixtures",
 								data: self.getData()

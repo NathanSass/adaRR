@@ -2,6 +2,7 @@
 	
 	var exports     = module.exports;
 	var querystring = require('querystring');
+	var util        = require('./utilRR.js');
 
 	var ROOM;
 
@@ -37,12 +38,12 @@
 		var dirtyRR = urlObject;
 		try {
 			
-			ROOM = {
-				x: parseFloat(dirtyRR.x),
-				y: parseFloat(dirtyRR.y),
+			ROOM = { //write function here to round numbers as well
+				x: util.cmToFt( parseFloat(dirtyRR.x) ), 
+				y: util.cmToFt( parseFloat(dirtyRR.y) ),
 				door: {
-					pos1: { x: parseFloat(dirtyRR.doorpos1[0]), y: parseFloat(dirtyRR.doorpos1[1]) },
-					pos2: { x: parseFloat(dirtyRR.doorpos2[0]), y: parseFloat(dirtyRR.doorpos2[1]) },
+					pos1: { x: util.cmToFt( parseFloat(dirtyRR.doorpos1[0]) ), y: util.cmToFt( parseFloat(dirtyRR.doorpos1[1]) ) },
+					pos2: { x: util.cmToFt( parseFloat(dirtyRR.doorpos2[0]) ), y: util.cmToFt( parseFloat(dirtyRR.doorpos2[1]) ) },
 				}
 			};
 
