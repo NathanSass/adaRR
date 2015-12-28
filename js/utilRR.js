@@ -14,4 +14,9 @@
 		return foot * 30.48;
 	};
 
+	exports.ftToCmAndRound = function(ft) {
+		var cm = this.ftToCm(ft);
+		return Math.round(cm * 100) / 100;
+	};
+
 }());

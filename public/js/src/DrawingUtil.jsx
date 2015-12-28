@@ -85,7 +85,7 @@
 		ctx.restore();
 
 		if ( params.hasOwnProperty('txt') ) {
-			drawText( { txt: params.txt, x: params.x + canvas.offset, y: params.y + canvas.offset, ctx: ctx } );
+			this.drawText( { txt: params.txt, x: params.x + canvas.offset, y: params.y + canvas.offset, ctx: ctx } );
 		}
 		return;
 	};

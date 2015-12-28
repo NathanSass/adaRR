@@ -39,26 +39,26 @@
 		var doorLocation = ROOM.door;
 		var formattedRestrooms = [];
 		
-		var canvasOffset = util.ftToCm(2);
+		var canvasOffset = util.ftToCmAndRound(2);
 
 		validToiletArr.forEach(function(validRR, i) {
 			var idx = i + 1;
 			var newRoom = {
 				id: 'canvas' + idx,
-				maxX: util.ftToCm(ROOM.x),
-				maxY: util.ftToCm(ROOM.y),
+				maxX: util.ftToCmAndRound(ROOM.x),
+				maxY: util.ftToCmAndRound(ROOM.y),
 				canvasOffset: canvasOffset,
 				door: {
-					pos1: { x: util.ftToCm(doorLocation.pos1.x) + canvasOffset, y: util.ftToCm(doorLocation.pos1.y) + canvasOffset },
-					pos2: { x: util.ftToCm(doorLocation.pos2.x) + canvasOffset, y: util.ftToCm(doorLocation.pos2.y) + canvasOffset }
+					pos1: { x: util.ftToCmAndRound(doorLocation.pos1.x) + canvasOffset, y: util.ftToCmAndRound(doorLocation.pos1.y) + canvasOffset },
+					pos2: { x: util.ftToCmAndRound(doorLocation.pos2.x) + canvasOffset, y: util.ftToCmAndRound(doorLocation.pos2.y) + canvasOffset }
 				},
 				rotation: validRR.rotation,
 				toilet: {
 					depth: util.inchToCm(28),
 					width: util.inchToCm(23),
 					loc: {
-						x:  util.ftToCm(validRR.loc.x),
-						y:  util.ftToCm(validRR.loc.y)
+						x:  util.ftToCmAndRound(validRR.loc.x),
+						y:  util.ftToCmAndRound(validRR.loc.y)
 					}
 				},
 				note: validRR.note
