@@ -43,6 +43,12 @@ header {
 
 }
 
+.contentArea1 .contentArea,
+.contentArea2 .contentArea {
+	min-height: 40vh;
+	max-height: 50vh;
+	overflow: scroll;
+}
 .contentArea1 {
 	padding: 2em 0;
 	position: relative;
@@ -102,6 +108,20 @@ footer {
 	}
 	&:active, &.active {
 		background: #B5B5B5;
+	}
+}
+
+.roomsWithToilet {
+	.roomWithToilet-link {
+		display: inline-block;
+		width: 40%;
+		margin: 5%;
+		height: auto;
+
+	}
+	canvas {
+		// transform: scale(0.5, 0.5);
+		width: 100%;
 	}
 }
 

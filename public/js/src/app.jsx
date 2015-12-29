@@ -123,17 +123,24 @@
 			});
 
 			page('/chooseToiletLocation', function (ctx) {
+				var roomsData;
+				
+				if ( self.getData() == "" ) { //temporary for debugging
+					roomsData = [{"id":"canvas1","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":90,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":252,"y":150.28}},"note":"firstVert, 2nd","canvasSize":373.92},{"id":"canvas2","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":180,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":206.28,"y":196}},"note":"secondHorz, 1st","canvasSize":373.92},{"id":"canvas3","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":180,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":45.72,"y":196}},"note":"secondHorz, 2nd","canvasSize":373.92},{"id":"canvas4","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":270,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":0,"y":150.28}},"note":"secondVert, 1st","canvasSize":373.92}]
+				} else {
+					roomsData = self.getData();
+				}
 				
 				self.setState({ contentArea1: 
 								<div id="roomsWithToilets" className="roomsWithToilet">
-									{self.getData().map(function(validRoom, idx){
+									{roomsData.map(function(validRoom, idx){
 										return <RoomsWithToilets key={idx} data={validRoom} />
 									})}
 								</div>,
 								contentArea2: <h1>All toilet configurations will go here for selection</h1>,
 								actionableQuestion: "Choose a toilet location that most matches your room",
 								nextUrl: "placeOtherFixtures",
-								data: self.getData()
+								data: roomsData
 								});
 		
 			});

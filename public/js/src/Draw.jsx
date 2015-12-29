@@ -30,6 +30,10 @@
 	function buildCanvas(data) {
 		var container = document.getElementById('roomsWithToilets');
 		var canvas    = document.createElement('canvas');
+		var link      = document.createElement('a');
+
+		link.className = 'roomWithToilet-link';
+		link.href      = 'javascript:void(0);';
 		
 		ctx    = canvas.getContext("2d");
 
@@ -38,7 +42,8 @@
 		canvas.height = data.canvasSize;
 		canvas.style.background = '#FDFDFD';
 
-		container.appendChild(canvas);
+		link.appendChild(canvas);
+		container.appendChild(link);
 	}
 
 	function init(data) {

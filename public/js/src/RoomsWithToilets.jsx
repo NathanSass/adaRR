@@ -20,7 +20,7 @@
 
 		render: function() {
 			return (
-				<h1> Canvas {this.props.data.id} </h1>
+				<span> </span>
 			)
 		}
 	});
