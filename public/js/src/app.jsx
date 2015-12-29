@@ -137,8 +137,8 @@
 										return <RoomsWithToilets key={idx} data={validRoom} />
 									})}
 								</div>,
-								contentArea2: <h1>All toilet configurations will go here for selection</h1>,
-								actionableQuestion: "Choose a toilet location that most matches your room",
+								contentArea2: <span></span>,
+								actionableQuestion: "Choose the toilet configuration that you want.",
 								nextUrl: "placeOtherFixtures",
 								data: roomsData
 								});

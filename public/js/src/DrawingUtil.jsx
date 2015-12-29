@@ -132,8 +132,8 @@
 	exports.drawText = function(params) {
 		var ctx = params.ctx;
 		ctx.beginPath();
-		ctx.fillStyle    = 'black';
-		ctx.font         = '10pt sans-serif';
+		ctx.fillStyle    = '#585858';
+		ctx.font         = '15pt sans-serif';
 		ctx.textAlign    = 'center';
 		ctx.textBaseline = 'middle';
 		ctx.fillText( params.txt, params.x, params.y );

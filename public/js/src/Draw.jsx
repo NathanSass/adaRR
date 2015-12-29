@@ -40,7 +40,6 @@
 		canvas.id     = data.id;
 		canvas.width  = data.canvasSize;
 		canvas.height = data.canvasSize;
-		canvas.style.background = '#FDFDFD';
 
 		link.appendChild(canvas);
 		container.appendChild(link);
@@ -73,9 +72,10 @@
 
 		ctx.rect( CANVAS.offset, CANVAS.offset,
 		ROOM.width, ROOM.height );
-		ctx.lineWidth   = Util.inchToCm(2);
+		// ctx.lineWidth   = Util.inchToCm(2);
+		ctx.lineWidth   = 20;
 		ctx.fillStyle   = '#F5F5F5';
-		ctx.strokeStyle = '#5A5A5A';
+		ctx.strokeStyle = '#979797';
 		ctx.stroke();
 		ctx.closePath();
 		return;
@@ -89,8 +89,9 @@
 
 		ctx.moveTo( ROOM.door.pos1.x, ROOM.door.pos1.y );
 		ctx.lineTo( ROOM.door.pos2.x, ROOM.door.pos2.y );
-		ctx.lineWidth   = Util.inchToCm(2);
-		ctx.strokeStyle = "white";
+		// ctx.lineWidth   = Util.inchToCm(2);
+		ctx.lineWidth   = 20;
+		ctx.strokeStyle = "#D8D8D8";
 
 		ctx.stroke();
 
