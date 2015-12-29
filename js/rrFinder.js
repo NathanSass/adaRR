@@ -4,7 +4,7 @@
 	
 	var ROOM;
 
-	var startingCoordinate = { x: 0, y: 0 };
+	var startingCoordinate;
 
 	var TOILET = {
 		w: 5,
@@ -22,6 +22,8 @@
 		returns an array of rooms with the toilets placed in the proper location
 	*/
 	exports.findAccessible = function(roomModel) {
+		startingCoordinate = { x: 0, y: 0 };
+
 		ROOM = roomModel;
 		findRoomCorners();
 		var usefulToilets       = findPossibleToiletLocations();
