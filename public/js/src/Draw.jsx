@@ -73,7 +73,7 @@
 		ctx.rect( CANVAS.offset, CANVAS.offset,
 		ROOM.width, ROOM.height );
 		// ctx.lineWidth   = Util.inchToCm(2);
-		ctx.lineWidth   = 20;
+		ctx.lineWidth   = 12;
 		ctx.fillStyle   = '#F5F5F5';
 		ctx.strokeStyle = '#979797';
 		ctx.stroke();
@@ -90,7 +90,7 @@
 		ctx.moveTo( ROOM.door.pos1.x, ROOM.door.pos1.y );
 		ctx.lineTo( ROOM.door.pos2.x, ROOM.door.pos2.y );
 		// ctx.lineWidth   = Util.inchToCm(2);
-		ctx.lineWidth   = 20;
+		ctx.lineWidth   = 12;
 		ctx.strokeStyle = "#D8D8D8";
 
 		ctx.stroke();

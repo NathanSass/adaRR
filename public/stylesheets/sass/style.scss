@@ -120,14 +120,14 @@ footer {
 .roomsWithToilet {
 	.roomWithToilet-link {
 		display: inline-block;
-		width: 40%;
-		margin: 5%;
+		width: 20%;
+		margin: 1%;
 		height: auto;
 		
 		&:hover {
 			canvas {
 				background: #FDFDFD;
-				border: 4px solid #D2D2D2;
+				border: 1px solid #D2D2D2;
 				border-radius: 2px;
 			}
 		}
