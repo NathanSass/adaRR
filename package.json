@@ -1,6 +1,9 @@
 {
   "name": "adaRR",
   "version": "1.0.0",
+  "engines": {
+    "node": "4.2.3"
+  },
   "description": "find your dream accessible restroom configuration",
   "main": "app.js",
   "scripts": {
