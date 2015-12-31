@@ -1,11 +1,11 @@
 var express = require('express');
-var path = require('path');
+var favicon = require('serve-favicon');
+var path    = require('path');
 
 var routes = require('./routes/index');
 
 var app = express();
 
-var favicon = require('serve-favicon');
 
 app.use(favicon(__dirname + '/favicon.ico'));
 
