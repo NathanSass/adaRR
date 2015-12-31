@@ -1,5 +1,6 @@
 var express = require('express');
 var favicon = require('serve-favicon');
+var http    = require('http');
 var path    = require('path');
 
 var routes = require('./routes/index');
@@ -53,7 +54,7 @@ app.use(function(err, req, res, next) {
 
 
 ///////////////////////////////
-
+/////// Server //////////////
 
 
 /**
@@ -61,7 +62,6 @@ app.use(function(err, req, res, next) {
  */
 
 // var debug = require('debug')('swag:server');
-var http = require('http');
 
 /**
  * Get port from environment and store in Express.
@@ -155,8 +155,5 @@ function onListening() {
     : 'port ' + addr.port;
   // debug('Listening on ' + bind);
 }
-
-
-
 
 module.exports = app;
