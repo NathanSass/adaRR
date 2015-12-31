@@ -11,24 +11,31 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '5000');
+// var port = normalizePort(process.env.PORT || '5000');
 // var port = normalizePort(process.env.PORT || '3000');
 
-console.log("in WWWWWW process.env.PORT: ", process.env.PORT,  " port: ", port );
+console.log("in WWWWWW process.env.PORT: ", process.env.PORT, " process.env: ", process.env );
+// app.listen(app.get('port'), function() {
+//   console.log('Node app is running on port', app.get('port'));
+// });
+
+/////////
+app.set('port', (process.env.PORT || 5000));
 app.set('port', port);
+//////////
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+// var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
 // server.listen(port);
-server.listen(process.env.PORT || 5000);
+// server.listen(process.env.PORT || 5000);
 // server.on('error', onError);
 // server.on('listening', onListening);
 
