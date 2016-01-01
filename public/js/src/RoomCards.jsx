@@ -22,22 +22,10 @@
 							<div>Rectangular</div>
 						</div>
 					</a>
-					<a href="javascript:void(0);" className={this.props.selected === 'indentTopRight' ? 'active roomCard' : 'roomCard'} onClick={this.handleCardClicked} data="indentTopRight">
+					<a href="javascript:void(0);" className={this.props.selected === 'custom' ? 'active roomCard' : 'roomCard'} onClick={this.handleCardClicked} data="custom">
 						<div className="roomShapeContainer">
-							<img src="/public/img/rectangular.svg" alt="logo"/>
-							<div>Indent top right</div>
-						</div>
-					</a>
-					<a href="javascript:void(0);" className={this.props.selected === 'indentTopLeft' ? 'active roomCard' : 'roomCard'} onClick={this.handleCardClicked} data="indentTopLeft">
-						<div className="roomShapeContainer">
-							<img src="/public/img/rectangular.svg" alt="logo"/>
-							<div>Indent top left</div>
-						</div>
-					</a>
-					<a href="javascript:void(0);" className={this.props.selected === 'indentBottomRight' ? 'active roomCard' : 'roomCard'} onClick={this.handleCardClicked} data="indentBottomRight">
-						<div className="roomShapeContainer">
-							<img src="/public/img/rectangular.svg" alt="logo"/>
-							<div>Indent bottom right</div>
+							<img src="/public/img/custom.svg" alt="logo"/>
+							<div>Custom</div>
 						</div>
 					</a>
 				</div>

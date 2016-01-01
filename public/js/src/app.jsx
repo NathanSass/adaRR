@@ -25,7 +25,10 @@
 					 contentArea2: <div />,
 					 newHttp: this.newHttp,
 					 actionableQuestion: '',
-					 setData: this.setData
+					 setData: this.setData,
+					 data: {
+					 	headerGreet: 'You are going to design the greatest bathroom'
+					 }
 					};
 		},
 		
@@ -86,10 +89,6 @@
 				
 				self.setState({ contentArea1: 
 									<span>
-										<div className="miniHeading">
-											What is an accessible bathroom? <br/>
-											Click <a href="http://www.bobrick.com/documents/planningguide.pdf">here</a> to find out and see the full guidelines.
-										</div>
 										<div className="greeter">Welcome! Today we are going to design an accessible bathroom</div>
 									</span>,
 								contentArea2:
@@ -105,7 +104,8 @@
 									<ResizeableRoom setData={self.state.setData} />,
 								contentArea2: <div />,
 								actionableQuestion: "Adjust the walls until they match your room.",
-								nextUrl: "finddoor"
+								nextUrl: "finddoor",
+								data: {}
 								});
 		
 			});
@@ -161,7 +161,7 @@
 		render: function () {
 			return (
 				<div>
-					<Header />
+					<Header headerGreet={this.state.data.headerGreet}/>
 					
 					<ContentArea1 setData={this.state.setData}>
 						{this.state.contentArea1}
