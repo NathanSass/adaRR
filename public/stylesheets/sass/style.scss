@@ -122,6 +122,11 @@ footer {
 		margin: 0 auto;
 	}
 }
+
+.resizeableRoom, .addDoorContainer {
+	border: 1px solid #DEDEDE;
+}
+
 .roomsWithToilet {
 	.roomWithToilet-link {
 		display: inline-block;

@@ -36,7 +36,8 @@
 			h: 244
 		};
 
-		// drawText();
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+	    draw();
 	};
 
 	function buildCanvas() {
@@ -163,7 +164,7 @@
 	function drawText(params) {
 		ctx.beginPath();
 		ctx.fillStyle    = '#4A4A4A';
-		ctx.font         = '12pt Noto Sans';
+		ctx.font         = '12pt Noto Sans, Arial';
 		ctx.textAlign    = 'center';
 		ctx.textBaseline = 'middle';
 		ctx.fillText( params.txt, params.x, params.y );
