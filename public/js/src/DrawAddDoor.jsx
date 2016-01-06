@@ -96,65 +96,70 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 				var roomW = this.ROOM.max.x - this.ROOM.min.x;
 				var roomH = this.ROOM.max.y - this.ROOM.min.y;
 				
-				if (door.isHoriz && xPosition > this.ROOM.min.x && 
-					xPosition < this.ROOM.max.x - door.w && 
+				var room_minX = this.ROOM.min.x;
+				var room_MaxX = this.ROOM.max.x;
+				var room_MinY = this.ROOM.min.y;
+				var room_MaxY = this.ROOM.max.y;
+				
+				if (door.isHoriz && xPosition > room_minX && 
+					xPosition < room_MaxX - door.w && 
 					
-					yPosition < this.ROOM.min.y + dragStrip &&
-					yPosition > this.ROOM.min.y - dragStrip  ||
+					yPosition < room_MinY + dragStrip &&
+					yPosition > room_MinY - dragStrip  ||
 
-					!door.isHoriz && door.y < this.ROOM.min.y - help) { // First Horiz
+					!door.isHoriz && door.y < room_MinY - help) { // First Horiz
 
 					console.log("first horiz");
 					
 					door.makeHoriz();
 					door.x = mouse.x - this.dragoffx;
-					door.y = this.ROOM.min.y - this.ROOM.border;  
+					door.y = room_MinY - this.ROOM.border;  
 					cursor.draw(this.ctx);
 				}
 
-				else if (xPosition > this.ROOM.min.x && 
-					xPosition < this.ROOM.max.x - door.w && 
+				else if (xPosition > room_minX && 
+						 xPosition < room_MaxX - door.w && 
 					
-					yPosition < this.ROOM.max.y + dragStrip &&
-					yPosition > this.ROOM.max.y - dragStrip) { // Second Horiz
+					yPosition < room_MaxY + dragStrip &&
+					yPosition > room_MaxY - dragStrip) { // Second Horiz
 					
 					console.log("second horiz");
 					
 					door.makeHoriz();
 					door.x = mouse.x - this.dragoffx;
-					door.y = this.ROOM.max.y - this.ROOM.border;
+					door.y = room_MaxY - this.ROOM.border;
 					cursor.draw(this.ctx);  
 				}
 
-				else if (yPosition > this.ROOM.min.y - door.h &&
-					yPosition < this.ROOM.max.y - door.h &&
+				else if (yPosition > room_MinY - door.h &&
+						 yPosition < room_MaxY - door.h &&
 					
-					xPosition > this.ROOM.max.x - door.h &&
-					xPosition > this.ROOM.max.x - dragStrip &&
-					xPosition < this.ROOM.max.x + dragStrip ||
+					xPosition > room_MaxX - door.h &&
+					xPosition > room_MaxX - dragStrip &&
+					xPosition < room_MaxX + dragStrip ||
 
-					this.door.isHoriz && (this.door.x + this.door.w + help > this.ROOM.max.x) ) { // First Vert
+					this.door.isHoriz && (this.door.x + this.door.w + help > room_MaxX) ) { // First Vert
 
 					 
 						console.log("first Vert");
 
 						door.makeVert();
-						door.x = this.ROOM.max.x - this.ROOM.border;
+						door.x = room_MaxX - this.ROOM.border;
 						door.y = mouse.y - this.dragoffy; 
 						cursor.draw(this.ctx);
 				}
 
-				else if (yPosition > this.ROOM.min.y - door.h &&
-					yPosition < this.ROOM.max.y - door.h &&
+				else if (yPosition > room_MinY - door.h &&
+						 yPosition < room_MaxY - door.h &&
 
-					xPosition > this.ROOM.min.x - door.h &&
-					xPosition < this.ROOM.min.x + dragStrip &&
-					xPosition > this.ROOM.min.x - dragStrip ) { // Second Vert
+					xPosition > room_minX - door.h &&
+					xPosition < room_minX + dragStrip &&
+					xPosition > room_minX - dragStrip ) { // Second Vert
 					 
 						console.log("Second Vert");
 
 						door.makeVert();
-						door.x = this.ROOM.min.x - this.ROOM.border;
+						door.x = room_minX - this.ROOM.border;
 						door.y = mouse.y - this.dragoffy; 
 						cursor.draw(this.ctx);
 				}
