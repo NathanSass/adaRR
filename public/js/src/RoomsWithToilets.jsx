@@ -3,6 +3,10 @@
 	var Draw  = require('./Draw.jsx');
 
 	module.exports = React.createClass({
+
+		getInitialState: function() {
+			return { selectedIdx: '' };
+		},
 		
 		drawRoom: function(validRoom) {
 
@@ -14,17 +18,29 @@
 			Draw.draw(params);
 		},
 
+		handleRoomClicked: function(e) {
+			var selectedIdx = e.currentTarget.getAttribute('data-idx');
+			this.replaceState({selectedIdx: selectedIdx});
+		},
+
 		render: function() {
 			var self = this;
 			return (
 				<div id="roomsWithToilets" className="roomsWithToilet">
 					{this.props.data.map(function(validRoom, idx){
 						
+						var anchorClass = 'roomWithToilet-link ';
+						if ( idx === parseInt( self.state.selectedIdx )) {
+							anchorClass += 'active ';
+						}
+						
 						return (
 							<a
 								key       = {idx}
 								href      = "javascript:void(0);"
-								className = "roomWithToilet-link" >
+								data-idx  = {idx}
+								onClick   = {self.handleRoomClicked}
+								className = {anchorClass} >
 								
 								<canvas
 									id     = {validRoom.id}

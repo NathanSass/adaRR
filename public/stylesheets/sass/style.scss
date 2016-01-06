@@ -146,6 +146,14 @@ footer {
 				border-radius: 2px;
 			}
 		}
+
+		&.active {
+			canvas {
+				background: #FDFDFD;
+				border: 1px solid $teal;
+				border-radius: 2px;
+			}
+		}
 	}
 
 	canvas {
@@ -165,8 +173,6 @@ footer {
 	padding: 2px 12px;
     position: absolute;
     right: 0;
-    // transform: translateX(-100%);
-    // margin-left: 100%;
     &:hover {
 		background: #D2D2D2;
 	}
