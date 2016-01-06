@@ -4,7 +4,6 @@
 	var ReactDOM   = require('react-dom');
 	var page       = require('page');
 
-
 	var Header         = require('./Header.jsx');
 	var ContentArea1   = require('./ContentArea1.jsx');
 	var ContentArea2   = require('./ContentArea2.jsx');
@@ -28,14 +27,13 @@
 		
 		///////////////////
 		
-		handleServerData: function(data) { // CURRENTLY NOT USED, but will be needed again :P
+		handleServerData: function(data) {
 			console.log("data ", data);
 			if ( this.state.hasOwnProperty('nextUrl') ) {
 				data = JSON.parse(data);
 				this.setData(data);
 				page("/" + this.state.nextUrl);
 			}
-			// this.setState( {data: rooms } );
 		},
 
 		postRoute: function(url) {
@@ -98,7 +96,7 @@
 				self.replaceState({ contentArea1: 
 										<ResizeableRoom setData={self.setData} />,
 									contentArea2: <div />,
-									actionableQuestion: "Adjust the walls until they match your room.",
+									actionableQuestion: "Grab the room corners and drag them until they match your room.",
 									nextUrl: "finddoor",
 									data: {}
 									});
@@ -110,7 +108,7 @@
 				self.replaceState({ contentArea1: 
 										<AddDoor setData={self.setData} rect={self.getData().rect}/>,
 									contentArea2: <div />,
-									actionableQuestion: "Click on the walls to add your door, then adjust until correct.",
+									actionableQuestion: "Adjust the door until it is in the correct location.",
 									nextUrl: "chooseToiletLocation",
 									data: self.getData()
 									});
@@ -136,23 +134,14 @@
 			});
 
 			page('/addValidFixtures', function (ctx) {
-				var roomsData;
-				
-				// if ( self.getData() == "" ) { //temporary for debugging
-				// 	roomsData = [{"id":"canvas1","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":90,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":252,"y":150.28}},"note":"firstVert, 2nd","canvasSize":373.92},{"id":"canvas2","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":180,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":206.28,"y":196}},"note":"secondHorz, 1st","canvasSize":373.92},{"id":"canvas3","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":180,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":45.72,"y":196}},"note":"secondHorz, 2nd","canvasSize":373.92},{"id":"canvas4","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":270,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":0,"y":150.28}},"note":"secondVert, 1st","canvasSize":373.92}]
-				// } else {
-				// 	roomsData = self.getData();
-				// }
 				
 				self.replaceState({ contentArea1: 
-										<h1> Add valid addValidFixtures </h1>,
+										<h1> Add valid fixtures </h1>,
 									contentArea2: <span></span>,
-									actionableQuestion: "Choose the toilet configuration that you want."
+									actionableQuestion: "Add the fixtures you want for your bathroom and drag them into place."
 									});
 		
 			});
-
-			
 
 			page('*', function (ctx) {
 				
