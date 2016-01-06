@@ -359,6 +359,27 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 	  return {x: mx, y: my};
 	};
 	
+	CanvasState.prototype.updateModelWithInitialData = function() {
+
+		var door = {
+			pos1: {},
+			pos2: {}
+		};
+
+		door.pos1.x = this.door.x - this.ROOM.room.x;
+		door.pos1.y = door.pos2.y = this.door.y - this.ROOM.room.y + this.ROOM.border;
+		door.pos2.x = door.pos1.x + this.door.w;
+
+		var data = {
+			x: this.ROOM.room.w,
+			y: this.ROOM.room.h,
+			doorpos1: [ door.pos1.x, door.pos1.y ],
+			doorpos2: [ door.pos2.x, door.pos2.y ]	
+		};
+
+		this.setData({ data: data });
+	};
+	
 	function buildCanvas() {
 
 		var container = document.getElementById('addDoorContainer');
@@ -372,7 +393,6 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 
 		container.appendChild(canvas);
 	}
-
 
 	exports.init = function(params) {
 		
@@ -395,6 +415,8 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 		
 		C.addRoom(new Room(roomParams));
 		C.addDoor(new Door());
+
+		C.updateModelWithInitialData();
 	};
 
 }());
