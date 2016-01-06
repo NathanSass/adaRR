@@ -272,6 +272,8 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 	    var shapes = this.shapes;
 	    this.clear();
 	    
+	    // ** Add stuff you want drawn in the background all the time here **
+	    
 	    // draw all shapes
 	    var l = shapes.length;
 	    for (var i = 0; i < l; i++) {
@@ -282,7 +284,31 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 	      shapes[i].draw(ctx);
 	    }
 	    
-	    // ** Add stuff you want drawn in the background all the time here **
+	    
+	    // draw selection
+	    // right now this is just a stroke along the edge of the selected Shape
+	    if (this.selection !== null) {
+	      ctx.strokeStyle = this.selectionColor;
+	      ctx.lineWidth   = this.selectionWidth;
+	      var mySel       = this.selection;
+	      ctx.strokeRect(mySel.x,mySel.y,mySel.w,mySel.h);
+	    }
+	    
+	    // ** Add stuff you want drawn on top all the time here **
+	    this.drawTextForDoor();
+	    
+	    this.valid = true;
+	  }
+	};
+
+	/*
+		Draws the text for the door locations
+		Could be refactored but currently is more readable like this
+	*/
+	CanvasState.prototype.drawTextForDoor = function() {
+		var ctx = this.ctx;
+		var txt;
+
 	    ctx.beginPath();
 		ctx.fillStyle    = '#4A4A4A';
 		ctx.font         = '12pt Noto Sans, Arial';
@@ -290,37 +316,22 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 		ctx.textBaseline = 'middle';
 		
 		if (this.door.isHoriz) {
-	    	var txt = {
+	    	txt = {
 	    		first: this.door.x - this.ROOM.min.x,
 	    		second: this.ROOM.max.x - (this.door.x + this.door.w)
 	    	};
-			ctx.fillText( txt.first, this.door.x - 20, this.door.y - 10);
-			ctx.fillText( txt.second, this.door.x + this.door.w + 20, this.door.y + this.door.h - 20);
+			ctx.fillText( Util.cmToPresentation( txt.first ), this.door.x - 20, this.door.y - 10);
+			ctx.fillText( Util.cmToPresentation( txt.second ), this.door.x + this.door.w + 20, this.door.y + this.door.h - 20);
 		} else {
-	    	var txt = {
+	    	txt = {
 	    		first: this.door.y - this.ROOM.min.y,
 	    		second: this.ROOM.max.y - (this.door.y + this.door.h)
 	    	};
-			ctx.fillText( txt.first, this.door.x - 20, this.door.y - 20 );
-			ctx.fillText( txt.second, this.door.x - 20, this.door.y + this.door.h + 20);
-
+			ctx.fillText( Util.cmToPresentation( txt.first ), this.door.x - 20, this.door.y - 20 );
+			ctx.fillText( Util.cmToPresentation( txt.second ), this.door.x - 20, this.door.y + this.door.h + 20);
 		}
 		
 		ctx.closePath();
-	    
-	    // draw selection
-	    // right now this is just a stroke along the edge of the selected Shape
-	    if (this.selection !== null) {
-	      ctx.strokeStyle = this.selectionColor;
-	      ctx.lineWidth = this.selectionWidth;
-	      var mySel = this.selection;
-	      ctx.strokeRect(mySel.x,mySel.y,mySel.w,mySel.h);
-	    }
-	    
-	    // ** Add stuff you want drawn on top all the time here **
-	    
-	    this.valid = true;
-	  }
 	};
 
 	/* 
