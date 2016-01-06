@@ -52,7 +52,6 @@
 		canvas.id     = "resizeableRoom";
 		canvas.width  = 500;
 		canvas.height = 400;
-		canvas.style.background = '#FDFDFD';
 
 		container.appendChild(canvas);
 	}

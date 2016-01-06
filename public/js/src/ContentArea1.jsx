@@ -3,10 +3,15 @@
 
 	module.exports = React.createClass({
 		render: function() {
+			
+			var contentAreaClasses = 'contentArea ';
+			if (this.props.classesToPass) {
+				contentAreaClasses += this.props.classesToPass;
+			}
 
 			return (
 				<section className="contentArea1">
-					<div className="contentArea">
+					<div className={contentAreaClasses}>
 						{this.props.children}
 					</div>
 				</section>

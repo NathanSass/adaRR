@@ -82,11 +82,10 @@
 			page('/', function (ctx) {
 				
 				self.replaceState({ contentArea1: 
-										<span>
-											<div className="greeter">Welcome! Today we are going to design an accessible bathroom</div>
-										</span>,
+										<div className="greeter">Welcome! Today we are going to design an accessible bathroom</div>,
 									contentArea2:
 										<RoomCards />,
+									ca1Classes: 'flexwrapper ',
 									headerGreet: 'You are going to design the greatest bathroom',
 									actionableQuestion: "What is the shape of your room?",
 									directRoute: '/configureRoom'
@@ -172,9 +171,9 @@
 			return (
 
 				<div>
-					<Header headerGreet={this.state.headerGreet}/>
+					<Header headerGreet={this.state.headerGreet} />
 					
-					<ContentArea1>
+					<ContentArea1 classesToPass={this.state.ca1Classes}>
 						{this.state.contentArea1}
 					</ContentArea1>
 					

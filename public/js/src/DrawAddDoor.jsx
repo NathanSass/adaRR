@@ -389,7 +389,6 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 		canvas.id     = "addDoorCanvas";
 		canvas.width  = 500;
 		canvas.height = 400;
-		canvas.style.background = '#FDFDFD';
 
 		container.appendChild(canvas);
 	}
