@@ -86,6 +86,14 @@ class Door extends Shape {
 
 		this.isHoriz = false;
 	}
+
+	toggleOrientation() {
+		if (this.isHoriz) {
+			this.makeVert();
+		} else {
+			this.makeHoriz();
+		}
+	}
 }
 
 export { Shape, Room, Door };

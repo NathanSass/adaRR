@@ -81,6 +81,7 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 				var yPosition = mouse.y - this.dragoffy;
 				
 				var dragStrip = 30;
+				var help = 5;
 
 				var testShapeParams = {
 					x: xPosition,
@@ -95,11 +96,15 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 				var roomW = this.ROOM.max.x - this.ROOM.min.x;
 				var roomH = this.ROOM.max.y - this.ROOM.min.y;
 				
-				if (xPosition > this.ROOM.min.x && 
+				if (door.isHoriz && xPosition > this.ROOM.min.x && 
 					xPosition < this.ROOM.max.x - door.w && 
 					
 					yPosition < this.ROOM.min.y + dragStrip &&
-					yPosition > this.ROOM.min.y - dragStrip) { // First Horiz
+					yPosition > this.ROOM.min.y - dragStrip  ||
+
+					!door.isHoriz && door.y < this.ROOM.min.y - help) { // First Horiz
+
+					console.log("first horiz");
 					
 					door.makeHoriz();
 					door.x = mouse.x - this.dragoffx;
@@ -107,11 +112,13 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 					cursor.draw(this.ctx);
 				}
 
-				if (xPosition > this.ROOM.min.x && 
+				else if (xPosition > this.ROOM.min.x && 
 					xPosition < this.ROOM.max.x - door.w && 
 					
 					yPosition < this.ROOM.max.y + dragStrip &&
 					yPosition > this.ROOM.max.y - dragStrip) { // Second Horiz
+					
+					console.log("second horiz");
 					
 					door.makeHoriz();
 					door.x = mouse.x - this.dragoffx;
@@ -119,32 +126,42 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 					cursor.draw(this.ctx);  
 				}
 
-				if (yPosition > this.ROOM.min.y - door.h &&
+				else if (yPosition > this.ROOM.min.y - door.h &&
 					yPosition < this.ROOM.max.y - door.h &&
 					
 					xPosition > this.ROOM.max.x - door.h &&
 					xPosition > this.ROOM.max.x - dragStrip &&
-					xPosition < this.ROOM.max.x + dragStrip ) { // First Vert
+					xPosition < this.ROOM.max.x + dragStrip ||
+
+					this.door.isHoriz && (this.door.x + this.door.w + help > this.ROOM.max.x) ) { // First Vert
+
 					 
+						console.log("first Vert");
+
 						door.makeVert();
 						door.x = this.ROOM.max.x - this.ROOM.border;
 						door.y = mouse.y - this.dragoffy; 
 						cursor.draw(this.ctx);
 				}
 
-				if (yPosition > this.ROOM.min.y - door.h &&
+				else if (yPosition > this.ROOM.min.y - door.h &&
 					yPosition < this.ROOM.max.y - door.h &&
 
 					xPosition > this.ROOM.min.x - door.h &&
 					xPosition < this.ROOM.min.x + dragStrip &&
 					xPosition > this.ROOM.min.x - dragStrip ) { // Second Vert
 					 
+						console.log("Second Vert");
+
 						door.makeVert();
 						door.x = this.ROOM.min.x - this.ROOM.border;
 						door.y = mouse.y - this.dragoffy; 
 						cursor.draw(this.ctx);
 				}
-
+				else {
+					console.log('---- In Else -----')
+					// this.door.toggleOrientation();
+				}
 				this.valid = false; // Something's dragging so we must redraw
 			}
 		}.bind(this), true);
@@ -255,8 +272,6 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 	    var shapes = this.shapes;
 	    this.clear();
 	    
-	    // ** Add stuff you want drawn in the background all the time here **
-	    
 	    // draw all shapes
 	    var l = shapes.length;
 	    for (var i = 0; i < l; i++) {
@@ -266,6 +281,32 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 	          shape.x + shape.w < 0 || shape.y + shape.h < 0) continue;
 	      shapes[i].draw(ctx);
 	    }
+	    
+	    // ** Add stuff you want drawn in the background all the time here **
+	    ctx.beginPath();
+		ctx.fillStyle    = '#4A4A4A';
+		ctx.font         = '12pt Noto Sans, Arial';
+		ctx.textAlign    = 'center';
+		ctx.textBaseline = 'middle';
+		
+		if (this.door.isHoriz) {
+	    	var txt = {
+	    		first: this.door.x - this.ROOM.min.x,
+	    		second: this.ROOM.max.x - (this.door.x + this.door.w)
+	    	};
+			ctx.fillText( txt.first, this.door.x - 20, this.door.y - 10);
+			ctx.fillText( txt.second, this.door.x + this.door.w + 20, this.door.y + this.door.h - 20);
+		} else {
+	    	var txt = {
+	    		first: this.door.y - this.ROOM.min.y,
+	    		second: this.ROOM.max.y - (this.door.y + this.door.h)
+	    	};
+			ctx.fillText( txt.first, this.door.x - 20, this.door.y - 20 );
+			ctx.fillText( txt.second, this.door.x - 20, this.door.y + this.door.h + 20);
+
+		}
+		
+		ctx.closePath();
 	    
 	    // draw selection
 	    // right now this is just a stroke along the edge of the selected Shape
