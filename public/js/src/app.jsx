@@ -132,11 +132,7 @@
 				}
 				
 				self.setState({ contentArea1: 
-								<div id="roomsWithToilets" className="roomsWithToilet">
-									{roomsData.map(function(validRoom, idx){
-										return <RoomsWithToilets key={idx} data={validRoom} />
-									})}
-								</div>,
+									<RoomsWithToilets setData={self.state.setData} data={roomsData} />,
 								contentArea2: <span></span>,
 								actionableQuestion: "Choose the toilet configuration that you want.",
 								nextUrl: "placeOtherFixtures",

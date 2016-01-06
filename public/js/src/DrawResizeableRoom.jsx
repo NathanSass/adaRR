@@ -36,6 +36,8 @@
 			h: 244
 		};
 
+		setData( { data: {w: rect.w, h: rect.h} } ); // Sets in initial value
+
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 	    draw();
 	};

@@ -4,23 +4,24 @@
 
 	module.exports = React.createClass({
 		
-		componentDidMount: function() {
-			// var rect;
-			// this.props.rect ? rect = this.props.rect : rect = { h: 158, w: 235 }; //BUGBUG for development purposes
-			
+		drawRoom: function(validRoom) {
+
 			var params = {
 				setData: this.props.setData,
-				room: this.props.data
+				room: validRoom
 			};
 
-
 			Draw.draw(params);
-
 		},
 
 		render: function() {
+			var self = this;
 			return (
-				<span> </span>
+				<div id="roomsWithToilets" className="roomsWithToilet">
+					{this.props.data.map(function(validRoom, idx){
+						return <span key={idx} data={self.drawRoom(validRoom)} />
+					})}
+				</div>
 			)
 		}
 	});

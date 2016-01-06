@@ -105,7 +105,7 @@
 	function drawToilet() {
 		var fixtureData = TOILET;
 		
-		Util.drawRotated({ rotation: ROOM.rotation,  x: TOILET.loc.x,   y: TOILET.loc.y, fixture: fixtureData, canvas: CANVAS, ctx: ctx, image: toiletImg, txt: 'toilet'});
+		Util.drawRotated({ rotation: ROOM.rotation,  x: TOILET.loc.x,   y: TOILET.loc.y, fixture: fixtureData, canvas: CANVAS, ctx: ctx, image: toiletImg, txt: ''}); // text was toilet but decided that didn't need it
 	}
 
 	/*
