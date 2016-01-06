@@ -2,7 +2,7 @@
 	
 	var exports = module.exports;
 
-	var Util = require('./DrawingUtil.jsx');
+	var Util = require('./drawingUtil.js');
 	
 	/////////// CONSTANTS AND GLOBALS /////////
 

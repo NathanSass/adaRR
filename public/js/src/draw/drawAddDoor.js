@@ -1,11 +1,11 @@
-import {Shape, Room, Door} from "./classes/Shape.jsx";
+import {Shape, Room, Door} from "../classes/Shape.js";
 
 (function() {
 	"use strict";
 	
 	var exports = module.exports;
 	
-	var Util    = require('./DrawingUtil.jsx');
+	var Util    = require('./drawingUtil.js');
 
 	function CanvasState(canvas) {
 		

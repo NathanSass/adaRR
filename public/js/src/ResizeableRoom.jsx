@@ -1,6 +1,6 @@
 (function() {
 	var React = require('react');
-	var DrawResizeableRoom = require('./DrawResizeableRoom.jsx');
+	var DrawResizeableRoom = require('./draw/drawResizeableRoom.js');
 
 	module.exports = React.createClass({
 		
