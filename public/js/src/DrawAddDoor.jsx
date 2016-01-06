@@ -25,7 +25,7 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 
 		// **** Options! ****
   
-		this.selectionColor = '#417505';
+		this.selectionColor = '#39CCCC';
 		this.selectionWidth = 1;  
 		this.interval       = 30;
 
@@ -109,7 +109,7 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 
 					!door.isHoriz && door.y < room_MinY - help) { // First Horiz
 
-					console.log("first horiz");
+					// console.log("first horiz");
 					
 					door.makeHoriz();
 					door.x = mouse.x - this.dragoffx;
@@ -123,7 +123,7 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 					yPosition < room_MaxY + dragStrip &&
 					yPosition > room_MaxY - dragStrip) { // Second Horiz
 					
-					console.log("second horiz");
+					// console.log("second horiz");
 					
 					door.makeHoriz();
 					door.x = mouse.x - this.dragoffx;
@@ -141,7 +141,7 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 					this.door.isHoriz && (this.door.x + this.door.w + help > room_MaxX) ) { // First Vert
 
 					 
-						console.log("first Vert");
+						// console.log("first Vert");
 
 						door.makeVert();
 						door.x = room_MaxX - this.ROOM.border;
@@ -156,7 +156,7 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 					xPosition < room_minX + dragStrip &&
 					xPosition > room_minX - dragStrip ) { // Second Vert
 					 
-						console.log("Second Vert");
+						// console.log("Second Vert");
 
 						door.makeVert();
 						door.x = room_minX - this.ROOM.border;
@@ -164,8 +164,7 @@ import {Shape, Room, Door} from "./classes/Shape.jsx";
 						cursor.draw(this.ctx);
 				}
 				else {
-					console.log('---- In Else -----')
-					// this.door.toggleOrientation();
+					// console.log('---- In Else -----')
 				}
 				this.valid = false; // Something's dragging so we must redraw
 			}

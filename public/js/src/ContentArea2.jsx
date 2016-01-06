@@ -9,7 +9,9 @@
 		    return { selected: '' };
 		},
 		/*
-			Child component upates the model which will be sent when next button is clicked
+			Long winded way of managing the clicked state on the select room shape
+			*** This should be deprecated but it's not hurting anything so I'll leave it
+			***
 		*/
 		updateModelFromChildComponent: function(data) {
 			var obj   = {};
@@ -17,9 +19,6 @@
 			var value = data[key];
 			obj[key]  = value;
 			
-			obj['directRoute'] = '/configureRoom'; //Temporary until other room shapes get added
-			
-			this.props.setData(obj); // For network call
 			this.setState(obj);
 		},
 		
@@ -32,6 +31,7 @@
 		/*
 			This takes the elements that will be yielded and adds the necessary properties to them.
 			Add the props here that will be needed by child components
+			*** Should be removed but it's kind of cool so I'm keeping it. Un needed
 		*/
 		renderChildren: function() {
 			return React.Children.map(this.props.children, function (child) {

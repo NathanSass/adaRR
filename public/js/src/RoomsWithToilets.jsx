@@ -19,8 +19,11 @@
 		},
 
 		handleRoomClicked: function(e) {
-			var selectedIdx = e.currentTarget.getAttribute('data-idx');
-			this.replaceState({selectedIdx: selectedIdx});
+			var selectedIdx = parseInt( e.currentTarget.getAttribute('data-idx') );
+			this.replaceState({ selectedIdx: selectedIdx });
+			
+			var selectedRoom = this.props.data[selectedIdx];
+			this.props.setData({ data: selectedRoom });
 		},
 
 		render: function() {

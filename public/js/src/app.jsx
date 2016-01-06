@@ -23,12 +23,6 @@
 		getInitialState: function () {
 			return { contentArea1: <div />,
 					 contentArea2: <div />,
-					 newHttp: this.newHttp,
-					 actionableQuestion: '',
-					 setData: this.setData,
-					 data: {
-					 	headerGreet: 'You are going to design the greatest bathroom'
-					 }
 					};
 		},
 		
@@ -71,8 +65,8 @@
 		newHttp: function() {
 			var data = this.getData();
 			
-			if (data.hasOwnProperty('directRoute')) { // Currently no support for other room shapes so no point in http call
-				page(data.directRoute);
+			if (this.state.hasOwnProperty('directRoute')) { // Currently no support for other room shapes so no point in http call
+				page(this.state.directRoute);
 			} else {
 				this.postRoute();
 			}
@@ -87,39 +81,41 @@
 
 			page('/', function (ctx) {
 				
-				self.setState({ contentArea1: 
-									<span>
-										<div className="greeter">Welcome! Today we are going to design an accessible bathroom</div>
-									</span>,
-								contentArea2:
-									<RoomCards />,
-								actionableQuestion: "What is the shape of your room?"
-								});
+				self.replaceState({ contentArea1: 
+										<span>
+											<div className="greeter">Welcome! Today we are going to design an accessible bathroom</div>
+										</span>,
+									contentArea2:
+										<RoomCards />,
+									headerGreet: 'You are going to design the greatest bathroom',
+									actionableQuestion: "What is the shape of your room?",
+									directRoute: '/configureRoom'
+									});
 			
 			});
 
 			page('/configureRoom', function (ctx) {
 
-				self.setState({ contentArea1: 
-									<ResizeableRoom setData={self.state.setData} />,
-								contentArea2: <div />,
-								actionableQuestion: "Adjust the walls until they match your room.",
-								nextUrl: "finddoor",
-								data: {}
-								});
+				self.replaceState({ contentArea1: 
+										<ResizeableRoom setData={self.setData} />,
+									contentArea2: <div />,
+									actionableQuestion: "Adjust the walls until they match your room.",
+									nextUrl: "finddoor",
+									data: {}
+									});
 		
 			});
 
 			page('/finddoor', function (ctx) {
 				
-				self.setState({ contentArea1: 
-									<AddDoor setData={self.state.setData} rect={self.getData().rect}/>,
-								contentArea2: <div />,
-								actionableQuestion: "Click on the walls to add your door, then adjust until correct.",
-								nextUrl: "chooseToiletLocation",
-								data: self.getData()
-								});
-		
+				self.replaceState({ contentArea1: 
+										<AddDoor setData={self.setData} rect={self.getData().rect}/>,
+									contentArea2: <div />,
+									actionableQuestion: "Click on the walls to add your door, then adjust until correct.",
+									nextUrl: "chooseToiletLocation",
+									data: self.getData()
+									});
+			
 			});
 
 			page('/chooseToiletLocation', function (ctx) {
@@ -131,24 +127,42 @@
 					roomsData = self.getData();
 				}
 				
-				self.setState({ contentArea1: 
-									<RoomsWithToilets setData={self.state.setData} data={roomsData} />,
-								contentArea2: <span></span>,
-								actionableQuestion: "Choose the toilet configuration that you want.",
-								nextUrl: "placeOtherFixtures",
-								data: roomsData
-								});
+				self.replaceState({ contentArea1: 
+										<RoomsWithToilets setData={self.setData} data={roomsData} />,
+									contentArea2: <span></span>,
+									actionableQuestion: "Choose the toilet configuration that you want.",
+									directRoute: "/addValidFixtures"
+									});
 		
 			});
 
+			page('/addValidFixtures', function (ctx) {
+				var roomsData;
+				
+				// if ( self.getData() == "" ) { //temporary for debugging
+				// 	roomsData = [{"id":"canvas1","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":90,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":252,"y":150.28}},"note":"firstVert, 2nd","canvasSize":373.92},{"id":"canvas2","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":180,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":206.28,"y":196}},"note":"secondHorz, 1st","canvasSize":373.92},{"id":"canvas3","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":180,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":45.72,"y":196}},"note":"secondHorz, 2nd","canvasSize":373.92},{"id":"canvas4","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":270,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":0,"y":150.28}},"note":"secondVert, 1st","canvasSize":373.92}]
+				// } else {
+				// 	roomsData = self.getData();
+				// }
+				
+				self.replaceState({ contentArea1: 
+										<h1> Add valid addValidFixtures </h1>,
+									contentArea2: <span></span>,
+									actionableQuestion: "Choose the toilet configuration that you want."
+									});
+		
+			});
+
+			
+
 			page('*', function (ctx) {
 				
-				self.setState({ contentArea1: 
-									<h1> This page doesn't exist yet </h1>,
-								contentArea2: <div />,
-								actionableQuestion: ""
-								});
-			});
+				self.replaceState({ contentArea1: 
+										<h1> This page doesn't exist yet </h1>,
+									contentArea2: <div />,
+									actionableQuestion: ""
+									});
+				});
 
 			page.start();
 
@@ -156,14 +170,15 @@
 
 		render: function () {
 			return (
+
 				<div>
-					<Header headerGreet={this.state.data.headerGreet}/>
+					<Header headerGreet={this.state.headerGreet}/>
 					
-					<ContentArea1 setData={this.state.setData}>
+					<ContentArea1>
 						{this.state.contentArea1}
 					</ContentArea1>
 					
-					<ContentArea2  setData={this.state.setData} newHttp={this.state.newHttp} actionableQuestion={this.state.actionableQuestion}>
+					<ContentArea2  setData={this.setData} newHttp={this.newHttp} actionableQuestion={this.state.actionableQuestion}>
 						{this.state.contentArea2}
 					</ContentArea2>
 					
