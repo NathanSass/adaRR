@@ -11,11 +11,10 @@
 	///////////////////////////////////////////
 	
 	exports.draw = function(data) {
+		
 		createDomResources();
 
-
 		toiletImg.onload = function() {
-			buildCanvas(data.room);
 			
 			init(data.room);
 
@@ -24,28 +23,12 @@
 			drawDoor();
 
 			drawToilet();
+		
 		};
 	};
 
-	function buildCanvas(data) {
-		var container = document.getElementById('roomsWithToilets');
-		var canvas    = document.createElement('canvas');
-		var link      = document.createElement('a');
-
-		link.className = 'roomWithToilet-link';
-		link.href      = 'javascript:void(0);';
-		
-		ctx    = canvas.getContext("2d");
-
-		canvas.id     = data.id;
-		canvas.width  = data.canvasSize;
-		canvas.height = data.canvasSize;
-
-		link.appendChild(canvas);
-		container.appendChild(link);
-	}
-
 	function init(data) {
+		ctx = document.getElementById(data.id).getContext("2d");
 
 		ROOM = {};
 		ROOM.id       = data.id;
