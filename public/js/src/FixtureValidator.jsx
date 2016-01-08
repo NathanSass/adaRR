@@ -1,20 +1,19 @@
 (function() {
 	var React = require('react');
-	// var DrawAddDoor = require('./draw/drawAddDoor.js');
+	var drawCanvas = require('./draw/drawAddDoor.jsx');
 
 	module.exports = React.createClass({
 		
 		componentDidMount: function() {
-			// var rect;
-			// this.props.rect ? rect = this.props.rect : rect = { h: 158, w: 235 }; //BUGBUG for development purposes
 			
-			// var params = {
-			// 	setData: this.props.setData,
-			// 	rect: rect
-			// };
+			var params = {
+				setData: this.props.setData,
+				room: this.props.data,
+				id: 'fixtureValidator'
+			};
 
 
-			// DrawAddDoor.init(params);
+			// drawCanvas.initFixtureValidator(params);
 
 		},
 

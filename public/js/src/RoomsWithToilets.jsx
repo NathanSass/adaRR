@@ -1,6 +1,6 @@
 (function() {
 	var React = require('react');
-	var Draw  = require('./draw/drawRoomsWithToilets.js');
+	var Draw  = require('./draw/drawRoomsWithToilets.jsx');
 
 	module.exports = React.createClass({
 

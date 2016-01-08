@@ -1,11 +1,11 @@
-import {Shape, Room, Door} from "../classes/Shape.js";
+import {Shape, Room, Door} from "../classes/Shape.jsx";
 
 (function() {
 	"use strict";
 	
 	var exports = module.exports;
 	
-	var Util    = require('./drawingUtil.js');
+	var Util    = require('./drawingUtil.jsx');
 
 	function CanvasState(canvas) {
 		
@@ -380,24 +380,29 @@ import {Shape, Room, Door} from "../classes/Shape.js";
 		this.setData({ data: data });
 	};
 	
-	function buildCanvas() {
+	function buildCanvas(params) {
 
-		var container = document.getElementById('addDoorContainer');
+		var container = document.getElementById(params.containerId);
 
 		var canvas    = document.createElement('canvas');
 
-		canvas.id     = "addDoorCanvas";
+		canvas.id     = params.canvasId;
 		canvas.width  = 500;
 		canvas.height = 400;
 
 		container.appendChild(canvas);
 	}
 
+	exports.initFixtureValidator= function(params) {
+		console.log("In initFixtureValidator");
+
+	};
+
 	exports.init = function(params) {
 		
-		buildCanvas();
+		buildCanvas( params );
 		
-		var C = new CanvasState(document.getElementById('addDoorCanvas'));
+		var C = new CanvasState(document.getElementById( params.canvasId ));
 		C.mouseDownListener();
 		C.mouseMoveListener();
 		C.mouseUpListener();
@@ -406,8 +411,8 @@ import {Shape, Room, Door} from "../classes/Shape.js";
 		var roomParams = {
 			x: 100,
 			y: 50,
-			w: params.rect.w,
-			h: params.rect.h,
+			w: params.room.w,
+			h: params.room.h,
 		};
 
 		C.setData = params.setData; // React function for sending data to frontend
