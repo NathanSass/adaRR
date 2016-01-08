@@ -12,6 +12,7 @@
 				containerId: 'addDoorContainer',
 				canvasId: 'addDoorCanvas',
 				setData: this.props.setData,
+				mode: 'locateDoor_',
 				room: rect
 			};
 

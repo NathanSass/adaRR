@@ -23,6 +23,10 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 		this.dragoffx  = 0;     // See mousedown and mousemove events for explanation
 		this.dragoffy  = 0;
 
+		// **** Flags! ****
+
+		this.locateDoor = false;
+
 		// **** Options! ****
   
 		this.selectionColor = '#39CCCC';
@@ -38,7 +42,7 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 		canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
 	}
 
-	CanvasState.prototype.mouseDownListener = function() {
+	CanvasState.prototype.locateDoor_mouseDown = function() {
 		this.canvas.addEventListener('mousedown', function(e) {
 			
 			var mouse  = this.getMouse(e);
@@ -69,7 +73,7 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 		}.bind(this), true);
 	};
 
-	CanvasState.prototype.mouseMoveListener = function() {
+	CanvasState.prototype.locateDoor_mouseMove = function() {
 		this.canvas.addEventListener('mousemove', function(e) {
 			var objectClass;
 			if (this.selection) { objectClass = this.selection.constructor.name; }
@@ -171,7 +175,7 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 		}.bind(this), true);
 	};
 
-	CanvasState.prototype.mouseUpListener = function() {
+	CanvasState.prototype.locateDoor_mouseUp   = function() {
 		this.canvas.addEventListener('mouseup', function(e) {
 			
 			var door = {
@@ -234,6 +238,8 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 			y: room.y + room.h
 		};
 		
+		this.locateDoor = true;
+
 		this.ROOM.room = room;
 
 		this.addShape(room);
@@ -299,7 +305,7 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 	    }
 	    
 	    // ** Add stuff you want drawn on top all the time here **
-	    this.drawTextForDoor();
+	    this.locateDoor && this.drawTextForDoor();
 	    
 	    this.valid = true;
 	  }
@@ -308,6 +314,7 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 	/*
 		Draws the text for the door locations
 		Could be refactored but currently is more readable like this
+		Maybe should be in shapes
 	*/
 	CanvasState.prototype.drawTextForDoor = function() {
 		var ctx = this.ctx;
@@ -403,10 +410,12 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 		buildCanvas( params );
 		
 		var C = new CanvasState(document.getElementById( params.canvasId ));
-		C.mouseDownListener();
-		C.mouseMoveListener();
-		C.mouseUpListener();
-		C.dblClickListener();
+
+		// Binds mouse events
+		C[ params.mode + 'mouseDown'] ();
+		C[ params.mode + 'mouseMove'] ();
+		C[ params.mode + 'mouseUp'  ] ();
+		// C.dblClickListener();
 		
 		var roomParams = {
 			x: 100,
@@ -415,7 +424,7 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 			h: params.room.h,
 		};
 
-		C.setData = params.setData; // React function for sending data to frontend
+		C.setData = params.setData; // React function for sending data to frontend		
 		
 		C.addRoom(new Room(roomParams));
 		C.addDoor(new Door());
