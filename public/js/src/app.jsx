@@ -9,10 +9,11 @@
 	var ContentArea2   = require('./ContentArea2.jsx');
 	var Footer         = require('./Footer.jsx');
 	
-	var RoomCards        = require('./RoomCards.jsx');
-	var ResizeableRoom   = require('./ResizeableRoom.jsx');
-	var AddDoor          = require('./AddDoor.jsx');
-	var RoomsWithToilets = require('./RoomsWithToilets.jsx');
+	var AddDoor           = require('./AddDoor.jsx');
+	var RoomCards         = require('./RoomCards.jsx');
+	var ResizeableRoom    = require('./ResizeableRoom.jsx');
+	var RoomsWithToilets  = require('./RoomsWithToilets.jsx');
+	var FixtureValidator  = require('./FixtureValidator.jsx');
 
 
 	var Router = React.createClass({
@@ -118,8 +119,9 @@
 			page('/chooseToiletLocation', function (ctx) {
 				var roomsData;
 				
-				if ( self.getData() == "" ) { //temporary for debugging
+				if ( self.getData().length === 0) {
 					roomsData = [{"id":"canvas1","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":90,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":252,"y":150.28}},"note":"firstVert, 2nd","canvasSize":373.92},{"id":"canvas2","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":180,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":206.28,"y":196}},"note":"secondHorz, 1st","canvasSize":373.92},{"id":"canvas3","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":180,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":45.72,"y":196}},"note":"secondHorz, 2nd","canvasSize":373.92},{"id":"canvas4","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":270,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":0,"y":150.28}},"note":"secondVert, 1st","canvasSize":373.92}]
+					console.log("chooseToiletLocation: Mock Data used.");
 				} else {
 					roomsData = self.getData();
 				}
@@ -134,9 +136,18 @@
 			});
 
 			page('/addValidFixtures', function (ctx) {
+
+				var roomData;
+				if (self.getData().length === 0) {
+					roomData = JSON.parse('{"data":{"id":"canvas1","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":90,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":252,"y":150.28}},"note":"firstVert, 2nd","canvasSize":373.92}}' );
+					console.log("addValidFixtures: Mock Data used.");
+				} else {
+					roomData = self.getData();
+				}
+
 				
 				self.replaceState({ contentArea1: 
-										<h1> Add valid fixtures </h1>,
+										<FixtureValidator setData={self.setData} data={roomData}/>,
 									contentArea2: <span></span>,
 									actionableQuestion: "Add the fixtures you want for your bathroom and drag them into place."
 									});
