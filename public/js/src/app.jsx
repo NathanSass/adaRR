@@ -105,9 +105,17 @@
 			});
 
 			page('/finddoor', function (ctx) {
+				var findDoorData;
+
+				if(self.getData().length ===0) {
+					findDoorData = {"room":{"maxX":305,"maxY":244}}
+					console.log("finddoor: Mock Data Used ", findDoorData );
+				}else {
+					findDoorData = self.getData();
+				}
 				
 				self.replaceState({ contentArea1: 
-										<AddDoor setData={self.setData} room={self.getData().room}/>,
+										<AddDoor setData={self.setData} room={findDoorData.room}/>,
 									contentArea2: <div />,
 									actionableQuestion: "Adjust the door until it is in the correct location.",
 									nextUrl: "chooseToiletLocation",
@@ -136,15 +144,14 @@
 			});
 
 			page('/addValidFixtures', function (ctx) {
-
 				var roomData;
+
 				if (self.getData().length === 0) {
 					roomData = JSON.parse('{"data":{"id":"canvas1","maxX":252,"maxY":196,"canvasOffset":60.96,"door":{"pos1":{"x":112.96000000000001,"y":60.96},"pos2":{"x":182.96,"y":60.96}},"rotation":90,"toilet":{"depth":71.12,"width":58.42,"loc":{"x":252,"y":150.28}},"note":"firstVert, 2nd","canvasSize":373.92}}' );
 					console.log("addValidFixtures: Mock Data used.");
 				} else {
 					roomData = self.getData();
 				}
-
 				
 				self.replaceState({ contentArea1: 
 										<FixtureValidator setData={self.setData} data={roomData}/>,

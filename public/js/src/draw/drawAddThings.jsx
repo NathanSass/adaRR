@@ -25,7 +25,8 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 
 		// **** Flags! ****
 
-		this.locateDoor = false;
+		this.locateFixtures = false;
+		this.locateDoor     = false;
 
 		// **** Options! ****
   
@@ -210,6 +211,18 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 		}.bind(this), true);
 	};
 
+	CanvasState.prototype.locateFixtures_mouseDown = function() {
+		console.log("locateFixtures: mouseDown");
+	};
+
+	CanvasState.prototype.locateFixtures_mouseMove = function() {
+		console.log("locateFixtures: mouseMove");
+	};
+
+	CanvasState.prototype.locateFixtures_mouseUp   = function() {
+		console.log("locateFixtures: mouseUp");
+	};
+
 	/*
 		Currently no double click implemented
 	*/
@@ -238,8 +251,6 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 			y: room.y + room.h
 		};
 		
-		this.locateDoor = true;
-
 		this.ROOM.room = room;
 
 		this.addShape(room);
@@ -257,7 +268,6 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 		
 		this.addShape(door);
 	};
-
 	
 	/*
 		Adds a new shapes
@@ -411,10 +421,12 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 		
 		var C = new CanvasState(document.getElementById( params.canvasId ));
 
+		C[ params.mode ] = true;
+
 		// Binds mouse events
-		C[ params.mode + 'mouseDown'] ();
-		C[ params.mode + 'mouseMove'] ();
-		C[ params.mode + 'mouseUp'  ] ();
+		C[ params.mode + '_mouseDown'] ();
+		C[ params.mode + '_mouseMove'] ();
+		C[ params.mode + '_mouseUp'  ] ();
 		// C.dblClickListener();
 		
 		var roomParams = {
@@ -427,9 +439,11 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 		C.setData = params.setData; // React function for sending data to frontend		
 		
 		C.addRoom(new Room(roomParams));
-		C.addDoor(new Door());
 
-		C.updateModelWithInitialData();
+		if ( C.locateDoor ) {
+			C.addDoor(new Door());
+			C.updateModelWithInitialData();
+		}
 	};
 
 }());

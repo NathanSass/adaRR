@@ -1,6 +1,6 @@
 (function() {
 	var React = require('react');
-	var DrawAddDoor = require('./draw/drawAddDoor.jsx');
+	var drawAddDoor = require('./draw/drawAddThings.jsx');
 
 	module.exports = React.createClass({
 		
@@ -12,12 +12,11 @@
 				containerId: 'addDoorContainer',
 				canvasId: 'addDoorCanvas',
 				setData: this.props.setData,
-				mode: 'locateDoor_',
+				mode: 'locateDoor',
 				room: room
 			};
 
-
-			DrawAddDoor.init(params);
+			drawAddDoor.init( params );
 
 		},
 
