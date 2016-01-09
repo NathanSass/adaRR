@@ -260,18 +260,29 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 		Adds door
 	*/
 	CanvasState.prototype.addDoor = function( params ) {
+		var door  = new Door();
 
 		if ( this.locateFixtures ) {
-			this.ROOM.door = params.room.door;
-			// var canvasOffset = params.room.canvasOffset;
-			// this.ROOM.door
-		} else {
-			var door  = new Door();
+			var doorParams   = params.room.door;
+			door.isDraggable = false;
+			door.x = doorParams.pos1.x;
+			door.y = doorParams.pos1.y;
+
+			
+			if (doorParams.pos1.x == doorParams.pos2.x) {
+				door.makeVert();
+				door.x -= this.ROOM.border;
+			} else {
+				door.y -= this.ROOM.border;
+			}
+
+		} else { // for locateDoor
 			door.x    = this.ROOM.min.x + this.ROOM.border;
 			door.y    = this.ROOM.min.y - this.ROOM.border;
-			this.door = door;
-			this.addShape(door);
 		}
+		
+		this.door = door;
+		this.addShape(door);
 		
 	};
 	
@@ -322,20 +333,7 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 	    
 	    // ** Add stuff you want drawn on top all the time here **
 	    this.locateDoor && this.drawTextForDoor();	
-
-	    if (this.locateFixtures) {
-	    	ctx.beginPath();
-
-			ctx.moveTo( this.ROOM.door.pos1.x, this.ROOM.door.pos1.y );
-			ctx.lineTo( this.ROOM.door.pos2.x, this.ROOM.door.pos2.y );
-			// ctx.lineWidth   = Util.inchToCm(2);
-			ctx.lineWidth   = 11;
-			ctx.strokeStyle = "#D8D8D8";
-
-			ctx.stroke();
-
-			ctx.closePath()
-	    }    
+  
 	    this.valid = true;
 	  }
 	};
