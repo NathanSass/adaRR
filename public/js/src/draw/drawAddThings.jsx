@@ -1,4 +1,6 @@
-import {Shape, Room, Door} from "../classes/Shape.jsx";
+import { Shape} from "../classes/Shape.jsx";
+import { Room } from "../classes/Room.jsx";
+import { Door } from "../classes/Door.jsx";
 
 (function() {
 	"use strict";
@@ -447,21 +449,19 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 		// C.dblClickListener();
 		
 		var canvasOffset = params.room.canvasOffset || 61;
-		var roomParams = {
+		
+		var roomParams   = {
 			x: canvasOffset,
 			y: canvasOffset,
 			w: params.room.maxX,
 			h: params.room.maxY
 		};
-
-		C.setData = params.setData; // React function for sending data to frontend		
 		
-		C.addRoom(new Room(roomParams));
+		C.addRoom( new Room(roomParams) );
 		C.addDoor( params );
 
-		if ( C.locateDoor ) {
-			C.updateModelWithInitialData();
-		}
+		C.setData = params.setData; // React function for sending data to frontend		
+		C.locateDoor &&	C.updateModelWithInitialData();
 	};
 
 }());

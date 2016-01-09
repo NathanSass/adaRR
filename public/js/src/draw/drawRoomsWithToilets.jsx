@@ -96,7 +96,7 @@
 	*/
 	function createDomResources() {
 		toiletImg     = document.createElement("img");
-		toiletImg.src = "public/img/toilet_top_vert.png";
+		toiletImg.src = "public/img/toilet_1.png";
 	}
 
 	//////////////////////////
