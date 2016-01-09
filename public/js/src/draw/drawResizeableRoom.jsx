@@ -36,7 +36,7 @@
 			h: 244
 		};
 
-		setData( { data: {w: rect.w, h: rect.h} } ); // Sets in initial value
+		setData( { data: {maxX: rect.w, maxY: rect.h} } ); // Sets in initial value
 
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 	    draw();
@@ -108,7 +108,7 @@
 
     function mouseUp() {
     	if (dragTL || dragTR || dragBL || dragBR) {
-    		setData( { data: {w: rect.w, h: rect.h} } );
+    		setData( { data: {maxX: rect.w, maxY: rect.h} } );
     	}
         dragTL = dragTR = dragBL = dragBR = false;
     }

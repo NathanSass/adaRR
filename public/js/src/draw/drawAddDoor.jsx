@@ -420,8 +420,8 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 		var roomParams = {
 			x: 100,
 			y: 50,
-			w: params.room.w,
-			h: params.room.h,
+			w: params.room.maxX,
+			h: params.room.maxY
 		};
 
 		C.setData = params.setData; // React function for sending data to frontend		

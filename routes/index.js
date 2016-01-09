@@ -15,7 +15,7 @@ router.post('/finddoor/:roomDimensions', function(req, res, next) {
 	var dirtyRoomDimensions = JSON.parse(req.params.roomDimensions);	
 	
 	var data = rrController.getRoomNoDoor(dirtyRoomDimensions);
-	data = JSON.stringify(data);
+	data     = JSON.stringify(data);
 	res.send(data);
 });
 

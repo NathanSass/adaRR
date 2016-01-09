@@ -107,7 +107,7 @@
 			page('/finddoor', function (ctx) {
 				
 				self.replaceState({ contentArea1: 
-										<AddDoor setData={self.setData} rect={self.getData().rect}/>,
+										<AddDoor setData={self.setData} room={self.getData().room}/>,
 									contentArea2: <div />,
 									actionableQuestion: "Adjust the door until it is in the correct location.",
 									nextUrl: "chooseToiletLocation",

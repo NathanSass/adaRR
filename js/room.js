@@ -8,7 +8,7 @@
 
 	exports.formatForFindDoor = function(room) {
 		return {
-			rect: room
+			room: room
 		};
 	};
 	///////////////////////////////////////////////////////////////
