@@ -259,14 +259,20 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 	/* 
 		Adds door
 	*/
-	CanvasState.prototype.addDoor = function(door){
+	CanvasState.prototype.addDoor = function( params ) {
+
+		if ( this.locateFixtures ) {
+			this.ROOM.door = params.room.door;
+			// var canvasOffset = params.room.canvasOffset;
+			// this.ROOM.door
+		} else {
+			var door  = new Door();
+			door.x    = this.ROOM.min.x + this.ROOM.border;
+			door.y    = this.ROOM.min.y - this.ROOM.border;
+			this.door = door;
+			this.addShape(door);
+		}
 		
-		door.x    = this.ROOM.min.x + this.ROOM.border;
-		door.y    = this.ROOM.min.y - this.ROOM.border;
-		
-		this.door = door;
-		
-		this.addShape(door);
 	};
 	
 	/*
@@ -315,8 +321,21 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 	    }
 	    
 	    // ** Add stuff you want drawn on top all the time here **
-	    this.locateDoor && this.drawTextForDoor();
-	    
+	    this.locateDoor && this.drawTextForDoor();	
+
+	    if (this.locateFixtures) {
+	    	ctx.beginPath();
+
+			ctx.moveTo( this.ROOM.door.pos1.x, this.ROOM.door.pos1.y );
+			ctx.lineTo( this.ROOM.door.pos2.x, this.ROOM.door.pos2.y );
+			// ctx.lineWidth   = Util.inchToCm(2);
+			ctx.lineWidth   = 11;
+			ctx.strokeStyle = "#D8D8D8";
+
+			ctx.stroke();
+
+			ctx.closePath()
+	    }    
 	    this.valid = true;
 	  }
 	};
@@ -429,9 +448,10 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 		C[ params.mode + '_mouseUp'  ] ();
 		// C.dblClickListener();
 		
+		var canvasOffset = params.room.canvasOffset || 61;
 		var roomParams = {
-			x: 100,
-			y: 50,
+			x: canvasOffset,
+			y: canvasOffset,
 			w: params.room.maxX,
 			h: params.room.maxY
 		};
@@ -439,9 +459,9 @@ import {Shape, Room, Door} from "../classes/Shape.jsx";
 		C.setData = params.setData; // React function for sending data to frontend		
 		
 		C.addRoom(new Room(roomParams));
+		C.addDoor( params );
 
 		if ( C.locateDoor ) {
-			C.addDoor(new Door());
 			C.updateModelWithInitialData();
 		}
 	};
