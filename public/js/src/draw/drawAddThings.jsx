@@ -1,6 +1,7 @@
-import { Shape} from "../classes/Shape.jsx";
-import { Room } from "../classes/Room.jsx";
-import { Door } from "../classes/Door.jsx";
+import { Toilet } from "../classes/Fixture.jsx";
+import { Shape  } from "../classes/Shape.jsx";
+import { Room   } from "../classes/Room.jsx";
+import { Door   } from "../classes/Door.jsx";
 
 (function() {
 	"use strict";
@@ -429,13 +430,8 @@ import { Door } from "../classes/Door.jsx";
 		container.appendChild(canvas);
 	}
 
-	exports.initFixtureValidator= function(params) {
-		console.log("In initFixtureValidator");
-
-	};
-
 	exports.init = function(params) {
-		
+		console.log("In drawAddThings params:", params);
 		buildCanvas( params );
 		
 		var C = new CanvasState(document.getElementById( params.canvasId ));
@@ -459,6 +455,8 @@ import { Door } from "../classes/Door.jsx";
 		
 		C.addRoom( new Room(roomParams) );
 		C.addDoor( params );
+
+		C.locateFixtures && C.addShape( new Toilet(params.room) );
 
 		C.setData = params.setData; // React function for sending data to frontend		
 		C.locateDoor &&	C.updateModelWithInitialData();
