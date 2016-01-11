@@ -4,17 +4,32 @@ import { Shape } from "./Shape.jsx";
 class Toilet extends Shape {
 	constructor(params) {
 		var superParams = {
-			x: params.toilet.loc.x,
-			y: params.toilet.loc.y,
+			x: params.toilet.loc.x + 61,
+			y: params.toilet.loc.y + 61,
 			w: params.toilet.depth,
 			h: params.toilet.width
 		};
 
-		if (params.rotation === 90 || params.rotation === 270) {
-			superParams.w = params.toilet.width;
-			superParams.h = params.toilet.depth;
-				
+
+		switch (params.rotation) {
+			case (90 || 270):
+				superParams.w = params.toilet.width;
+				superParams.h = params.toilet.depth;
+				break;
+			case 90:
+				console.log('90')
+				break;
+			default:
+				console.log('default');
+				break
+
 		}
+
+
+
+		// if (params.rotation === 90 || params.rotation === 270) {
+				
+		// }
 
 		super(superParams);
 		
