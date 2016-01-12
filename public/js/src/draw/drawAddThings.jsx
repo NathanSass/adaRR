@@ -444,7 +444,8 @@ import { Door   } from "../classes/Door.jsx";
 		C[ params.mode + '_mouseUp'  ] ();
 		// C.dblClickListener();
 		
-		var canvasOffset = params.room.canvasOffset || 61;
+		var canvasOffset    = params.room.canvasOffset || 61;
+		params.canvasOffset = canvasOffset;
 		
 		var roomParams   = {
 			x: canvasOffset,
@@ -452,11 +453,12 @@ import { Door   } from "../classes/Door.jsx";
 			w: params.room.maxX,
 			h: params.room.maxY
 		};
+
 		
 		C.addRoom( new Room(roomParams) );
 		C.addDoor( params );
 
-		C.locateFixtures && C.addShape( new Toilet(params.room) );
+		C.locateFixtures && C.addShape( new Toilet(params) );
 
 		C.setData = params.setData; // React function for sending data to frontend		
 		C.locateDoor &&	C.updateModelWithInitialData();
