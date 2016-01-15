@@ -10,7 +10,10 @@ class Toilet extends Shape {
 			canvasOffset = params.canvasOffset,
 			distFromWall = params.room.toilet.loc.distFromWall,
 		
-			superParams  = {};
+			superParams  = {
+				x: toilet.loc.x + canvasOffset,
+				y: toilet.loc.y + canvasOffset
+			};
 			
 
 		// /*
@@ -20,48 +23,44 @@ class Toilet extends Shape {
 		switch ( rotation ) {
 			case 0:
 				if (note.indexOf('1') >= 0) {
-					superParams.x = toilet.loc.x + canvasOffset - distFromWall;
-					superParams.y = toilet.loc.y + canvasOffset	;
+					superParams.x += - distFromWall;
 				} else {
-					superParams.x = toilet.loc.x + canvasOffset - toilet.bound.w + distFromWall;
-					superParams.y = toilet.loc.y + canvasOffset;
+					superParams.x += - toilet.bound.w + distFromWall;
 				}
 				break;
 			case 90:
 				if (note.indexOf('1') >= 0) {
-					superParams.x = toilet.loc.x + canvasOffset - toilet.bound.h;
-					superParams.y = toilet.loc.y + canvasOffset - distFromWall;																																				
+					superParams.x += - toilet.bound.h;
+					superParams.y += - distFromWall;																																				
 				} else {
-					superParams.x = toilet.loc.x + canvasOffset - toilet.bound.h;
-					superParams.y = toilet.loc.y + canvasOffset - toilet.bound.w + distFromWall;																																				
+					superParams.x += - toilet.bound.h;
+					superParams.y += - toilet.bound.w + distFromWall;																																				
 				}
 				break;
 			case 180:
 				if (note.indexOf('1') >= 0) {
-					superParams.x = toilet.loc.x + canvasOffset - toilet.bound.w + distFromWall;
-					superParams.y = toilet.loc.y + canvasOffset - toilet.bound.h;
+					superParams.x += - toilet.bound.w + distFromWall;
+					superParams.y += - toilet.bound.h;
 				} else {
-					superParams.x = toilet.loc.x + canvasOffset - distFromWall;
-					superParams.y = toilet.loc.y + canvasOffset - toilet.bound.h;
+					superParams.x += - distFromWall;
+					superParams.y += - toilet.bound.h;
 				}
 				break;
 			case 270:
 				if (note.indexOf('1') >= 0) {
-					superParams.x = toilet.loc.x + canvasOffset;
-					superParams.y = toilet.loc.y + canvasOffset - toilet.bound.w + distFromWall;																																				
+					superParams.y += -toilet.bound.w + distFromWall;																																				
 				} else {
-					superParams.x = toilet.loc.x + canvasOffset;
-					superParams.y = toilet.loc.y + canvasOffset - distFromWall;																																				
+					superParams.y -= distFromWall;																																				
 				}
 				break;
 		}
 		
 
 		if (rotation === 0 || rotation === 180) {
-			superParams.w = toilet.bound.w; // BUGBUG: Will need to update to coordinate with other crap
+			superParams.w = toilet.bound.w;
 			superParams.h = toilet.bound.h;
 		} else {
-			superParams.w = toilet.bound.h; // BUGBUG: Will need to update to coordinate with other crap
+			superParams.w = toilet.bound.h;
 			superParams.h = toilet.bound.w;
 		}
 
