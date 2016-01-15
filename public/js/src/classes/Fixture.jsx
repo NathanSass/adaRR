@@ -8,68 +8,88 @@ class Toilet extends Shape {
 			rotation     = params.room.rotation,
 			wallWidth    = 10,
 			canvasOffset = params.canvasOffset,
-			distFromWall = 45.72, //TODO: update mock data then use data
+			distFromWall = params.room.toilet.loc.distFromWall,
 		
 			superParams  = {};
+			
 
-
+		// /*
+		// 	Takes the toilet width & height.
+		// 	Translates the orientation to match the rotation.
+		// */
 		switch ( rotation ) {
 			case 0:
 				if (note.indexOf('1') >= 0) {
-					superParams.x = toilet.loc.x + (distFromWall / 2) - wallWidth;
+					superParams.x = toilet.loc.x + canvasOffset - distFromWall;
+					superParams.y = toilet.loc.y + canvasOffset	;
 				} else {
-					superParams.x = toilet.loc.x + canvasOffset - (distFromWall / 2);
+					superParams.x = toilet.loc.x + canvasOffset - toilet.bound.w + distFromWall;
+					superParams.y = toilet.loc.y + canvasOffset;
 				}
-				superParams.y = toilet.loc.y + canvasOffset;
 				break;
-			
-			case 180:
-				if (note.indexOf('1') >= 0) {
-					superParams.x = toilet.loc.x + canvasOffset - distFromWall / 2;
-				} else {
-					superParams.x = toilet.loc.x + (distFromWall / 2) - wallWidth;
-				}
-				superParams.y = toilet.loc.y + canvasOffset - toilet.width;
-				break;
-			
 			case 90:
 				if (note.indexOf('1') >= 0) {
-					superParams.y = toilet.loc.y + canvasOffset - distFromWall;
+					superParams.x = toilet.loc.x + canvasOffset - toilet.bound.h;
+					superParams.y = toilet.loc.y + canvasOffset - distFromWall;																																				
 				} else {
-					superParams.y = toilet.loc.y + canvasOffset - (distFromWall / 2);
+					superParams.x = toilet.loc.x + canvasOffset - toilet.bound.h;
+					superParams.y = toilet.loc.y + canvasOffset - toilet.bound.w + distFromWall;																																				
 				}
-				superParams.x = toilet.loc.x + canvasOffset - toilet.width;
 				break;
-			
-			case 270:
-				superParams.x = toilet.loc.x + canvasOffset;
+			case 180:
 				if (note.indexOf('1') >= 0) {
-					superParams.y = toilet.loc.y + canvasOffset - (distFromWall / 2);
+					superParams.x = toilet.loc.x + canvasOffset - toilet.bound.w + distFromWall;
+					superParams.y = toilet.loc.y + canvasOffset - toilet.bound.h;
 				} else {
-					superParams.y = toilet.loc.y + (distFromWall / 2) - wallWidth;					
+					superParams.x = toilet.loc.x + canvasOffset - distFromWall;
+					superParams.y = toilet.loc.y + canvasOffset - toilet.bound.h;
 				}
 				break;
-			
-			default:
+			case 270:
+				if (note.indexOf('1') >= 0) {
+					superParams.x = toilet.loc.x + canvasOffset;
+					superParams.y = toilet.loc.y + canvasOffset - toilet.bound.w + distFromWall;																																				
+				} else {
+					superParams.x = toilet.loc.x + canvasOffset;
+					superParams.y = toilet.loc.y + canvasOffset - distFromWall;																																				
+				}
 				break;
 		}
 		
-		if (rotation === 0 || rotation === 180) { // For Vert or Horiz toilet orientation
-				superParams.w = toilet.depth;
-				superParams.h = toilet.width;
 
+		if (rotation === 0 || rotation === 180) {
+			superParams.w = toilet.bound.w; // BUGBUG: Will need to update to coordinate with other crap
+			superParams.h = toilet.bound.h;
 		} else {
-				superParams.w = toilet.width;
-				superParams.h = toilet.depth;
-		
+			superParams.w = toilet.bound.h; // BUGBUG: Will need to update to coordinate with other crap
+			superParams.h = toilet.bound.w;
 		}
 
 		super(superParams);
 		
-		this.fillStyle   = 'transparent';
+		this.toilet      = params.room.toilet;
 		this.lineWidth   = 2;
 		this.strokeStyle = '#979797';
 		this.isDraggable = false;
+	}
+	/*
+		Overwrites Shape draw function
+	*/
+	draw(ctx) {
+		ctx.beginPath();
+			ctx.fillStyle = "red";
+			ctx.fillRect(this.toilet.loc.x + 61, this.toilet.loc.y + 61, 5, 5);
+		ctx.closePath();
+		
+		ctx.beginPath();
+		console.log("Custom toilet draw function");
+		
+			ctx.lineWidth   = this.lineWidth;
+			ctx.strokeStyle = this.strokeStyle;
+		    ctx.strokeRect(this.x, this.y, this.w, this.h);
+			ctx.stroke();
+
+		ctx.closePath();
 	}
 }
 

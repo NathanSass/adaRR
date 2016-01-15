@@ -7,8 +7,8 @@
 	var startingCoordinate;
 
 	var TOILET = {
-		w: 5,
-		d: 5,
+		w: 6,
+		d: 4,
 		loc: 1.5
 	};
 
@@ -58,7 +58,12 @@
 				toilet: {
 					depth: util.inchToCm(28),
 					width: util.inchToCm(23),
+					bound: {
+						h: util.ftToCmAndRound( TOILET.d ),
+						w: util.ftToCmAndRound( TOILET.w )
+					},
 					loc: {
+						distFromWall: util.ftToCmAndRound(TOILET.loc),
 						x:  util.ftToCmAndRound(validRR.loc.x),
 						y:  util.ftToCmAndRound(validRR.loc.y)
 					}
