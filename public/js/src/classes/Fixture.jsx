@@ -3,25 +3,49 @@ import { Shape } from "./Shape.jsx";
 
 class Fixture extends Shape {
 	constructor(params) {
-		var name         = params.name; //used for image retrieval & naming
-		
-		var fixtureObj   = params.room[name];
-		var fixtureImg   = {};
 
-		var note         = params.room.note;
+		var defaultParams = {
+			x: 0,
+			y: 0,
+			w: 0,
+			h: 0
+		};
+
+		super( defaultParams );
+
+		/* Variables for drawing */
+		this.lineWidth    = 2;
+		this.isDraggable  = false;
+		this.strokeStyle  = '#979797';
+		
+		/* These variables will be overwritting in findImageAndBoundary */
+		this.name         = this.constructor.name.toLowerCase(); //used for image retrieval & naming		
+		this.note         = params.room.note;
+		this.fixtureObj   = params.room[this.name];
+		this.fixtureImg   = {};
+		this.canvasOffset = params.canvasOffset;
+		this.orientation  = null;
+		
+		this.findImageAndBoundary( params );
+	}
+	/*
+		Calculates the fixture boundary and the location of the fixture image
+	*/
+
+	findImageAndBoundary (params) {
+		var name         = this.name;
+		var note         = this.note;
+		var fixtureObj   = this.fixtureObj;
+		var fixtureImg   = this.fixtureImg;
+		var orientation  = this.orientation;
+		var canvasOffset = this.canvasOffset;
+		
 		var rotation     = params.room.rotation;
-		
-		var wallWidth    = 10;
-		var orientation  = null;
-		var canvasOffset = params.canvasOffset;
 		var distFromWall = params.room[name].loc.distFromWall;
-
 		
-		var superParams  = {
-				x: fixtureObj.loc.x + canvasOffset,
-				y: fixtureObj.loc.y + canvasOffset
-			};
-
+		this.x = fixtureObj.loc.x + canvasOffset;
+		this.y = fixtureObj.loc.y + canvasOffset;
+		
 		/*
 			Takes the toilet width & height.
 			Translates the orientation to match the rotation.
@@ -33,9 +57,9 @@ class Fixture extends Shape {
 					Places the bounding rectangle in the proper spot depending if the fixture is left or right justified
 				*/
 				if (note.indexOf('1') >= 0) {
-					superParams.x += - distFromWall;
+					this.x += - distFromWall;
 				} else {
-					superParams.x += - fixtureObj.bound.w + distFromWall;
+					this.x += - fixtureObj.bound.w + distFromWall;
 				}
 				/*
 					Places the image so it is visually centered with the loc coordinates
@@ -47,11 +71,11 @@ class Fixture extends Shape {
 				break;
 			case 90:
 				if (note.indexOf('1') >= 0) {
-					superParams.x += - fixtureObj.bound.h;
-					superParams.y += - distFromWall;																																				
+					this.x += - fixtureObj.bound.h;
+					this.y += - distFromWall;																																				
 				} else {
-					superParams.x += - fixtureObj.bound.h;
-					superParams.y += - fixtureObj.bound.w + distFromWall;																																				
+					this.x += - fixtureObj.bound.h;
+					this.y += - fixtureObj.bound.w + distFromWall;																																				
 				}
 				
 				orientation   = 2;
@@ -61,11 +85,11 @@ class Fixture extends Shape {
 				break;
 			case 180:
 				if (note.indexOf('1') >= 0) {
-					superParams.x += - fixtureObj.bound.w + distFromWall;
-					superParams.y += - fixtureObj.bound.h;
+					this.x += - fixtureObj.bound.w + distFromWall;
+					this.y += - fixtureObj.bound.h;
 				} else {
-					superParams.x += - distFromWall;
-					superParams.y += - fixtureObj.bound.h;
+					this.x += - distFromWall;
+					this.y += - fixtureObj.bound.h;
 				}
 				
 				orientation = 3;
@@ -75,9 +99,9 @@ class Fixture extends Shape {
 				break;
 			case 270:
 				if (note.indexOf('1') >= 0) {
-					superParams.y += -fixtureObj.bound.w + distFromWall;																																				
+					this.y += -fixtureObj.bound.w + distFromWall;																																				
 				} else {
-					superParams.y -= distFromWall;																																				
+					this.y -= distFromWall;																																				
 				}
 				
 				orientation = 4;
@@ -89,23 +113,13 @@ class Fixture extends Shape {
 		
 
 		if ( rotation === 0 || rotation === 180 ) {
-			superParams.w = fixtureObj.bound.w;
-			superParams.h = fixtureObj.bound.h;
+			this.w = fixtureObj.bound.w;
+			this.h = fixtureObj.bound.h;
 		} else {
-			superParams.w = fixtureObj.bound.h;
-			superParams.h = fixtureObj.bound.w;
+			this.w = fixtureObj.bound.h;
+			this.h = fixtureObj.bound.w;
 		}
 
-		super( superParams );
-		
-		this.name             = name;
-		this.fixtureObj       = params.room[name];
-		this.lineWidth        = 2;
-		this.isDraggable      = false;
-		this.strokeStyle      = '#979797';
-		this.orientation      = orientation;
-		this.canvasOffset     = canvasOffset;
-		this.fixtureImg = fixtureImg;
 	}
 	
 	/*
