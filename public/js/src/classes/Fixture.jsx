@@ -3,110 +3,120 @@ import { Shape } from "./Shape.jsx";
 
 class Fixture extends Shape {
 	constructor(params) {
-		var note         = params.room.note,
-			toilet       = params.room.toilet,
-			rotation     = params.room.rotation,
-			toiletImg    = {},
-			wallWidth    = 10,
-			orientation  = null,
-			canvasOffset = params.canvasOffset,
-			distFromWall = params.room.toilet.loc.distFromWall,
+		var name         = params.name; //used for image retrieval & naming
+		
+		var fixtureObj   = params.room[name];
+		var fixtureImg   = {};
+
+		var note         = params.room.note;
+		var rotation     = params.room.rotation;
+		
+		var wallWidth    = 10;
+		var orientation  = null;
+		var canvasOffset = params.canvasOffset;
+		var distFromWall = params.room[name].loc.distFromWall;
 
 		
-			superParams  = {
-				x: toilet.loc.x + canvasOffset,
-				y: toilet.loc.y + canvasOffset
+		var superParams  = {
+				x: fixtureObj.loc.x + canvasOffset,
+				y: fixtureObj.loc.y + canvasOffset
 			};
 
-
-		// /*
-		// 	Takes the toilet width & height.
-		// 	Translates the orientation to match the rotation.
-		//  Selects the proper image and builds its proper location
-		// */
+		/*
+			Takes the toilet width & height.
+			Translates the orientation to match the rotation.
+			Selects the proper image and builds its proper location
+		*/
 		switch ( rotation ) {
 			case 0:
+				/*
+					Places the bounding rectangle in the proper spot depending if the fixture is left or right justified
+				*/
 				if (note.indexOf('1') >= 0) {
 					superParams.x += - distFromWall;
 				} else {
-					superParams.x += - toilet.bound.w + distFromWall;
+					superParams.x += - fixtureObj.bound.w + distFromWall;
 				}
-				
-				orientation   = 1;
-				toiletImg.img = document.getElementById("toilet" + orientation);
-				toiletImg.x   = toilet.loc.x + toiletImg.img.width / 2;
-				toiletImg.y   = toilet.loc.y +  toiletImg.img.height;
+				/*
+					Places the image so it is visually centered with the loc coordinates
+				*/
+				orientation    = 1;
+				fixtureImg.img = document.getElementById( name + orientation);
+				fixtureImg.x   = fixtureObj.loc.x +  fixtureImg.img.width / 2;
+				fixtureImg.y   = fixtureObj.loc.y +  fixtureImg.img.height;
 				break;
 			case 90:
 				if (note.indexOf('1') >= 0) {
-					superParams.x += - toilet.bound.h;
+					superParams.x += - fixtureObj.bound.h;
 					superParams.y += - distFromWall;																																				
 				} else {
-					superParams.x += - toilet.bound.h;
-					superParams.y += - toilet.bound.w + distFromWall;																																				
+					superParams.x += - fixtureObj.bound.h;
+					superParams.y += - fixtureObj.bound.w + distFromWall;																																				
 				}
 				
 				orientation   = 2;
-				toiletImg.img = document.getElementById("toilet" + orientation);
-				toiletImg.x   = toilet.loc.x;
-				toiletImg.y   = toilet.loc.y + toiletImg.img.height / 2;
+				fixtureImg.img = document.getElementById( name + orientation);
+				fixtureImg.x   = fixtureObj.loc.x;
+				fixtureImg.y   = fixtureObj.loc.y + fixtureImg.img.height / 2;
 				break;
 			case 180:
 				if (note.indexOf('1') >= 0) {
-					superParams.x += - toilet.bound.w + distFromWall;
-					superParams.y += - toilet.bound.h;
+					superParams.x += - fixtureObj.bound.w + distFromWall;
+					superParams.y += - fixtureObj.bound.h;
 				} else {
 					superParams.x += - distFromWall;
-					superParams.y += - toilet.bound.h;
+					superParams.y += - fixtureObj.bound.h;
 				}
 				
 				orientation = 3;
-				toiletImg.img = document.getElementById("toilet" + orientation);
-				toiletImg.x   = toilet.loc.x + toiletImg.img.width / 2;
-				toiletImg.y   = toilet.loc.y;
+				fixtureImg.img = document.getElementById( name + orientation);
+				fixtureImg.x   = fixtureObj.loc.x + fixtureImg.img.width / 2;
+				fixtureImg.y   = fixtureObj.loc.y;
 				break;
 			case 270:
 				if (note.indexOf('1') >= 0) {
-					superParams.y += -toilet.bound.w + distFromWall;																																				
+					superParams.y += -fixtureObj.bound.w + distFromWall;																																				
 				} else {
 					superParams.y -= distFromWall;																																				
 				}
 				
 				orientation = 4;
-				toiletImg.img = document.getElementById("toilet" + orientation);
-				toiletImg.x   = toilet.loc.x + toiletImg.img.height;
-				toiletImg.y   = toilet.loc.y + toiletImg.img.width / 2;
+				fixtureImg.img = document.getElementById( name + orientation);
+				fixtureImg.x   = fixtureObj.loc.x + fixtureImg.img.height;
+				fixtureImg.y   = fixtureObj.loc.y + fixtureImg.img.width / 2;
 				break;
 		}
 		
 
 		if ( rotation === 0 || rotation === 180 ) {
-			superParams.w = toilet.bound.w;
-			superParams.h = toilet.bound.h;
+			superParams.w = fixtureObj.bound.w;
+			superParams.h = fixtureObj.bound.h;
 		} else {
-			superParams.w = toilet.bound.h;
-			superParams.h = toilet.bound.w;
+			superParams.w = fixtureObj.bound.h;
+			superParams.h = fixtureObj.bound.w;
 		}
 
 		super( superParams );
 		
-		this.toilet           = params.room.toilet;
+		this.name             = name;
+		this.fixtureObj       = params.room[name];
 		this.lineWidth        = 2;
 		this.isDraggable      = false;
 		this.strokeStyle      = '#979797';
 		this.orientation      = orientation;
 		this.canvasOffset     = canvasOffset;
-		this.toilet.toiletImg = toiletImg;
+		this.fixtureImg = fixtureImg;
 	}
 	
 	/*
 		Overwrites Shape draw function
+		Draws a fixture image, a dot to grab the fixture, and boundary for the fixture
 	*/
 	draw(ctx) {
 		
-		ctx.drawImage( this.toilet.toiletImg.img, // draws image
-			this.toilet.toiletImg.x,
-			this.toilet.toiletImg.y
+		ctx.drawImage( this.fixtureImg.img, // draws image
+			this.fixtureImg.x,
+			this.fixtureImg.y
 		);
 		
 		ctx.beginPath(); // Draws bounding rectangle
@@ -120,7 +130,7 @@ class Fixture extends Shape {
 		
 		ctx.beginPath(); // Draws Dot
 	      
-	      ctx.arc(this.toilet.loc.x + 61,this.toilet.loc.y + 61, 7, 0, 2 * Math.PI, false);
+	      ctx.arc(this.fixtureObj.loc.x + 61,this.fixtureObj.loc.y + 61, 7, 0, 2 * Math.PI, false);
 	      ctx.fillStyle = '#39CCCC';
 	      ctx.fill();
 		
