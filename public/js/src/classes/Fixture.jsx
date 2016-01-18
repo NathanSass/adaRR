@@ -98,29 +98,32 @@ class Toilet extends Shape {
 		this.canvasOffset     = canvasOffset;
 		this.toilet.toiletImg = toiletImg;
 	}
+	
 	/*
 		Overwrites Shape draw function
 	*/
 	draw(ctx) {
-		ctx.beginPath();
-			ctx.fillStyle = "red";
-			ctx.fillRect(this.toilet.loc.x + 61, this.toilet.loc.y + 61, 5, 5);
-		ctx.closePath();
 		
-		ctx.drawImage( this.toilet.toiletImg.img,
+		ctx.drawImage( this.toilet.toiletImg.img, // draws image
 			this.toilet.toiletImg.x,
 			this.toilet.toiletImg.y
-		)
-
+		);
 		
-		ctx.beginPath();
-		console.log("Custom toilet draw function");
+		ctx.beginPath(); // Draws bounding rectangle
 		
 			ctx.lineWidth   = this.lineWidth;
 			ctx.strokeStyle = this.strokeStyle;
 		    ctx.strokeRect(this.x, this.y, this.w, this.h);
 			ctx.stroke();
 
+		ctx.closePath();
+		
+		ctx.beginPath(); // Draws Dot
+	      
+	      ctx.arc(this.toilet.loc.x + 61,this.toilet.loc.y + 61, 7, 0, 2 * Math.PI, false);
+	      ctx.fillStyle = '#39CCCC';
+	      ctx.fill();
+		
 		ctx.closePath();
 	}
 }
