@@ -1,4 +1,4 @@
-import { Toilet } from "../classes/Fixture.jsx";
+import { Toilet } from "../classes/Toilet.jsx";
 import { Shape  } from "../classes/Shape.jsx";
 import { Room   } from "../classes/Room.jsx";
 import { Door   } from "../classes/Door.jsx";

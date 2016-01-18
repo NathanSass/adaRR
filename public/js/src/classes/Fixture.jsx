@@ -1,7 +1,7 @@
 import { Shape } from "./Shape.jsx";
 "use strict";
 
-class Toilet extends Shape {
+class Fixture extends Shape {
 	constructor(params) {
 		var note         = params.room.note,
 			toilet       = params.room.toilet,
@@ -128,4 +128,4 @@ class Toilet extends Shape {
 	}
 }
 
-export { Toilet };
+export { Fixture };
