@@ -11,7 +11,7 @@ class Shape extends null {
 		this.isDraggable = true;
 	}
 	
-	// Draws this shape to a given context
+	/* Draws the shape to a given context */
 	draw(ctx) {
 		
 		ctx.beginPath();
@@ -29,7 +29,7 @@ class Shape extends null {
 		ctx.closePath();
 	}
 
-	// Determine if a point is inside the shape's bounds
+	/* Determine if a point is inside the shape */
 	contains(mx, my) {
 		// All we have to do is make sure the Mouse X,Y fall in the area between
 		// the shape's X and (X + Width) and its Y and (Y + Height)
