@@ -17,6 +17,10 @@
 						<img id="toilet2" src="public/img/toilet_2.png" height="60px" width="60px"/>
 						<img id="toilet3" src="public/img/toilet_3.png" height="60px" width="60px"/>
 						<img id="toilet4" src="public/img/toilet_4.png" height="60px" width="60px"/>
+						<img id="sink1" src="public/img/sink_1.png" height="60px" width="60px"/>
+						<img id="sink2" src="public/img/sink_2.png" height="60px" width="60px"/>
+						<img id="sink3" src="public/img/sink_3.png" height="60px" width="60px"/>
+						<img id="sink4" src="public/img/sink_4.png" height="60px" width="60px"/>
 					</div>
 				</footer>
 			)

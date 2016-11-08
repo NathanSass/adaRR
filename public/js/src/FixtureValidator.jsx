@@ -3,6 +3,8 @@
 	var drawFixtures = require('./draw/drawAddThings.jsx');
 
 	module.exports = React.createClass({
+
+		canvasState: null,
 		
 		componentDidMount: function() {
 			
@@ -14,8 +16,12 @@
 				room: this.props.data.data
 			};
 
-			drawFixtures.init( params );
+			this.canvasState = drawFixtures.init( params );
 
+		},
+
+		addSink: function() {
+			drawFixtures.addSink(this.canvasState);
 		},
 
 		render: function() {
@@ -23,7 +29,11 @@
 			return (
 				<div>
 					<div id="fixtureValidator" className="fixtureValidator" />
-					<h1> FixtureMenu </h1>
+					<div className="fixtureMenuContainer"> 
+						<h1> FixtureMenu </h1>
+						<button type="button" onClick={this.addSink}> Add a sink </button>
+					</div>
+
 				</div>
 
 			)

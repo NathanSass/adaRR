@@ -1,3 +1,4 @@
+import { Sink } from "../classes/Sink.jsx";
 import { Toilet } from "../classes/Toilet.jsx";
 import { Shape  } from "../classes/Shape.jsx";
 import { Room   } from "../classes/Room.jsx";
@@ -288,7 +289,15 @@ import { Door   } from "../classes/Door.jsx";
 		this.addShape(door);
 		
 	};
-	
+
+	/*
+		Adds Sink
+	*/
+	CanvasState.prototype.addSink = function() {
+		// Params will allow sink to find a valid location
+		var sink = new Sink(this.params);
+		this.addShape( sink )
+	};
 	/*
 		Adds a new shapes
 	*/
@@ -430,6 +439,10 @@ import { Door   } from "../classes/Door.jsx";
 		container.appendChild(canvas);
 	}
 
+	exports.addSink = function(C) {
+		C.addSink();
+	};
+
 	exports.init = function(params) {
 		console.log("In drawAddThings params:", params);
 		buildCanvas( params );
@@ -462,6 +475,9 @@ import { Door   } from "../classes/Door.jsx";
 
 		C.setData = params.setData; // React function for sending data to frontend		
 		C.locateDoor &&	C.updateModelWithInitialData();
+		C.params = params; // Not exactly sure how all this stuff is getting dealt with but wanted consistency with creating toilets & sink
+
+		return C;
 	};
 
 }());
