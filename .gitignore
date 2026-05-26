@@ -1,0 +1,9 @@
+# npm
+node_modules
+*.log
+*.gz
+*.css
+.jshintrc
+lib
+public/js/build
+bower_components
